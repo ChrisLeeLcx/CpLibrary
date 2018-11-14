@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cp_province_line_border">#D0D0D0</color>
+    <color name="cp_white">#ffffff</color>
+    <color name="cp_bg_main">#fffffe</color>
+    <color name="cp_gray_remin">#999999</color>
+    <color name="cp_font6c">#6C6C6C</color>
+    <color name="cp_retry_color">#C0C0C0</color>
+    <color name="cp_font3">#333333</color>
+    <color name="cp_transparent">#00000000</color>
+    <!--=============loadingview==========-->
+    <color name="cp_triangle">#aa72d572</color>
+    <color name="cp_circle">#aa738ffe</color>
+    <color name="cp_rect">#aae84e40</color>
+    <color name="cp_view_bg">#00000000</color>
+    <color name="cp_shadow">#25808080</color>
+    <color name="cp_dialog_bg">#f5f5f5</color>
+    <!--=============dateDialog==========-->
+    <color name="cp_data_dialog_title_bar">#1086d1</color>
+    <!--=============rangeseekbar==========-->
+    <color name="cp_colorAccent">#2ed184</color>
+    <color name="cp_rsbColorSeekBarDefault">#c3c3c3</color>
+    <color name="cp_rsbColorThumbPressed">#FFE7E7E7</color>
+    <color name="cp_rsbColorThumbDefault">#FFFFFF</color>
+    <color name="cp_rsbColorThumbBorder">#FFD7D7D7</color>
+    <!--=============PwdKeyboardView==========-->
+    <color name="cp_colorKeyPress">#cccccc</color>
+</resources>

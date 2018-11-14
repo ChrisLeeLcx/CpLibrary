@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cp_layout_margin">8dp</dimen>
+    <dimen name="cp_marge_left">16dp</dimen>
+
+</resources>

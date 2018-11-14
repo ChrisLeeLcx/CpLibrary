@@ -1,0 +1,20 @@
+1、cplibrary集成 访问相册和拍照功能 过程
+（1）包cn.lee.cplibrary.util.takephotos;两个类 ImageUtils和PhotoUtil及其相应的drawable和布局文件
+（2）xml文件包和文件拷贝cp_file_paths
+（3）AndroidManifest.xml文件中权限添加
+    <!--拍照需要的权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+（4）AndroidManifest.xml文件中application下添加
+    //注意：每个项目的provider的android:authorities必须是唯一的，如果主项目包名一样，相同authorities的两个项目是冲突的，不能同时安装
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/cp_file_paths" />
+        </provider>

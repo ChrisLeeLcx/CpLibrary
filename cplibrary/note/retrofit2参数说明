@@ -1,0 +1,202 @@
+网络框架请求请求参数说明
+package com.fxj.fangxiangjia.net.base;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
+import rx.Observable;
+
+/**
+ * function:http://duanyytop.github.io/2016/08/06/Retrofit%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/
+ * Retrofit是Square公司开发的一款针对Android网络请求的框架，Retrofit2底层基于OkHttp实现的
+ * 本类讲解Retrofit的各种参数格式用法
+ * Created by ChrisLee on 2018/5/9.
+ */
+
+/**
+ * 注解的含义：
+ * 1、请求方式：
+ *
+ * @GET：获取/查询资源信息--- 查，
+ * @POST ：更新资源信息 ---改，
+ * @PUT：---增 向服务器增加信息
+ * @DELETE：---删 向服务器发信号 删除信息
+ * @PATCH： patch请求，该请求是对put请求的补充，用于更新局部资源
+ * 2、方式类型：
+ * @Path：（可用于任何请求方式，包括Get，Post，Put，Delete等等）请求的相对地址也是需要调用方传递，可以使用@Path注解，
+ * @Query：（Get）表示请求参数，将会以key=value的方式拼接在url后面
+ * @QueryMap：（Get）如果Query参数比较多，那么可以通过@QueryMap方式将所有的参数集成在一个Map统一传递
+ * @field:(Post)
+ * @Body：
+ * @FieldMap 注意：@GET的上面不能用@FromUrlEncoded注解，否则报异常java.lang.IllegalArgumentException:FormUrlEncoded can only be specified on HTTP methods with request body (e.g., @POST)
+ */
+public interface DemoServer {
+//     String BASE_URL = "http://121.43.36.248:8080/api/v1/";  需要在Retrofit里面配置
+    //---------------------------------GET请求方式:---- @Query参数-----------------------------
+
+    /**
+     * path: http://121.43.36.248:8080/api/v1/invoice/public/payments?pageNumber=1&pageSize=20
+     * 如果Query请求参数为非必填，则调用处传入null即可
+     */
+    @GET("invoice/{type}/payments")
+    Observable<BaseResponse> getInvoiceOrderList(@Path("type") String type, @Query("pageNumber") int pageNumber, @Query("pageSize") int pageSize);
+
+    /**
+     * 参数比较多，可以用使用QueryMap作为容器来传值
+     * path: http://121.43.36.248:8080/api/v1/invoice/public/payments?pageNumber=1&pageSize=20
+     * 参数：type = "public"
+     * Map<String, String> options = new HashMap<>();
+     * options.put("pageNumber","1");
+     * options.put("pageSize", 20);
+     */
+    @GET("invoice/{type}/payments")
+    Observable<BaseResponse> getInvoiceOrderList(@Path("type") String type, @QueryMap Map<String, String> options);
+
+    /**
+     * 参数是一个key，多个value的情况
+     * path: http://121.43.36.248:8080/api/v1/book/search?q=leadership&q=beyond%20feelings
+     * 参数：List<String> name = new ArrayList<>();
+     * name.add("leadership");
+     * name.add("beyond%20feelings");
+     */
+    @GET("book/search")
+    Observable<BaseResponse> getInvoiceOrderList(@Query("q") List<String> name);
+
+
+    //-----------------------------------POST请求方式:------@Field--@FieldMap--@Body---------------------------------
+    //*****@field*****//
+
+    /**
+     * path:http://121.43.36.248:8080/api/v1/book/reviews
+     * 1、@FormUrlEncoded将会自动将请求参数的类型调整为application/x-www-form-urlencoded，
+     * 假如content传递的参数为Good Luck，那么最后得到的请求体就是content=Good+Luck，FormUrlEncoded不能用于Get请求.而且在至少有一个@Field的时候才能使用
+     * <p>
+     * 2、@Field注解：将每一个请求参数都存放至请求体中
+     * 3、@Field 还可以添加encoded参数，该参数为boolean型，encoded参数为true的话，key-value-pair将会被编码，即将中文和特殊字符进行编码转换
+     * 注意：使用POST的@Field或者@FieldMap后 必須使用@FromUrlEncoded注解，否则抛出异常java.lang.IllegalArgumentException: @Field parameters can only be used with form encoding. (parameter #1)
+     *
+     * @param bookId
+     */
+    @FormUrlEncoded
+    @POST("book/reviews")
+    Observable<BaseResponse> getInvoiceOrderList(@Field("book") String bookId, @Field(value = "title", encoded = true) String title);
+
+    //*****@FieldMap*****//
+
+    /**
+     * 如果有更多的参数，可以用@FieldMap
+     * eg：
+     * Map<String, String> fields = new HashMap<>();
+     * fields.put("book","1111111");
+     * fields.put("title", "chrislee");
+     *
+     * @param fields
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("book/reviews")
+    Observable<BaseResponse> getInvoiceOrderList(@FieldMap Map<String, String> fields);
+
+    //*****@Body*****//
+
+    /**
+     * 如果Post请求参数有多个，那么统一封装到类中应该会更好，这样维护起来会非常方便
+     */
+    @POST("book/reviews")
+    Observable<BaseResponse> getInvoiceOrderList(@Body Reviews reviews);
+
+    public class Reviews {
+        public String book;
+        public String title;
+    }
+
+    //-----------------------------------Put、Delete请求方式:用法和Post方式-------------------------------------------
+    @DELETE("car/{carId}")
+    Observable<BaseResponse> deleteCar(@Path("carId") String carId);
+
+    @PUT("book/reviews")
+    Observable<BaseResponse> updateUserInfo(@Body Reviews reviews);
+
+    @PATCH("member/password")
+    Observable<BaseResponse> resetPassWord(@Body ResetPassWordRequest resetPassWordRequest);
+
+    public class ResetPassWordRequest {
+        public String pass;
+        public String code;
+    }
+
+    //--------------------------------@Path参数 例子见 GET请求方式 @Query参数 前两个getInvoiceOrderList-----------------------------
+    //@Path可用于任何请求方式，包括Get，Post，Put，Delete等等）
+
+
+    //----------------------------------------------------------- 添加自定义的header--------------------------------------------------------
+
+    /**
+     * 方法1、静态方法添加Header：不能随不同的请求进行变化，头部信息在初始化的时候就固定了
+     */
+
+    @Headers("Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0IjoiZHJpdmVyIiwiZXhwIjoxNTI2OTYxMTQ4LCJ1c2VySWQiOjY0fQ.bhfJqVe3GWnpf4LZrBKV4RLaiVAoZo6mN8HKPCWknKA")
+    @GET("my/queryinformation")
+    Observable<HybDriverBean> queryinformation();
+
+    /**
+     * 方法2、静态方法添加多个Header：
+     */
+    @Headers({
+            "Accept: application/vnd.yourapi.v1.full+json",
+            "User-Agent: Your-App-Name"
+    })
+    @GET("my/queryinformation")
+    Observable<HybDriverBean> queryinformation1();
+
+    /**
+     * 方法3、通过Interceptor来定义静态请求头，然后在OkHttp创建Client实例new OkHttpClient.Builder()时，
+     * 通过addInterceptor(new RequestInterceptor()) 添加RequestInterceptor即可
+     * 添加header参数Request提供了两个方法，
+     * （1）header(key, value)：如果有重名的将会覆盖，（2）addHeader(key, value)：许相同key值的header存在
+     */
+    public class RequestInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request original = chain.request();
+            Request request = original.newBuilder()
+                    .header("User-Agent", "Your-App-Name")
+                    .addHeader("Accept", "application/vnd.yourapi.v1.full+json")
+                    .method(original.method(), original.body())
+                    .build();
+            return chain.proceed(request);
+        }
+    }
+
+
+    /**
+     * 方法4、动态方法添加Header：必须为每个请求都要单独设置，可以随着每次请求而变化
+     */
+    @POST("my/queryinformation")
+    Observable<HybDriverBean> queryinformation(@Header("Authorization") String Authorization);
+
+
+    //---- @Url参数：为某个请求设置完整的URL:解决某一个请求不是以base_url开头，--------------------------------------------------------
+
+    @POST("my/queryinformation")
+    Observable<HybDriverBean> queryinformation(@Url String path, @Header("Authorization") String Authorization);
+}

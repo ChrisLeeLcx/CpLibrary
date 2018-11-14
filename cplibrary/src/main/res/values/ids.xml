@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cp_viewpager_inner" type="id" />
+    <!--RecyclerView List请求列表的id-->
+    <item name="cp_recycler_view" type="id" ></item>
+    <item name="cp_swipe_refresh_layout" type="id" ></item>
+    <item name="cp_state_layout" type="id"/>
+</resources>

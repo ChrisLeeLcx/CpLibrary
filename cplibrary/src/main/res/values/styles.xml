@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--侧滑返回效果-->
+    <style name="cp_SwipeBackLayout">
+        <item name="cp_edge_size">50dip</item>
+        <item name="cp_shadow_left">@drawable/shadow_left</item>
+        <item name="cp_shadow_right">@drawable/shadow_right</item>
+        <item name="cp_shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+    <!--材料设计中：AlertDialog的Them需要重新设置：1、在Dialog的布局跟控件处设置 并且在Dialog初始化的时候设置-->
+    <style name="cp_MyDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/cp_transparent</item>
+    </style>
+
+    <style name="cp_AnimBottomFade" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/cp_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/cp_push_bottom_out</item>
+    </style>
+
+    <style name="cp_AnimRightFade" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/cp_push_right_in</item>
+        <item name="android:windowExitAnimation">@anim/cp_push_right_out</item>
+    </style>
+
+    <style name="cp_AnimLeftFade" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/cp_push_left_in</item>
+        <item name="android:windowExitAnimation">@anim/cp_push_left_out</item>
+    </style>
+    <!-- dialog -->
+    <style name="cp_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/cp_transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+</resources>

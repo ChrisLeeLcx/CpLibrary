@@ -1,0 +1,11 @@
+<resources>
+    <string name="cp_app_name">CPLibrary</string>
+    <string name="cp_empty_tip">暂无数据</string>
+    <string name="cp_no_network_tip">没有网络</string>
+    <string name="cp_error_tip">服务器开小差了..</string>
+    <string name="cp_time_out_tip">加载超时</string>
+    <string name="cp_btn_login">登录</string>
+    <string name="cp_loading_tip">加载中...</string>
+    <string name="cp_retry_tip">轻触屏幕重试</string>
+    <string name="cp_no_login_tip">你还没有登录</string>
+</resources>

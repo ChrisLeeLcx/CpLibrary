@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="content" />
+
+    <LinearLayout
+        android:id="@+id/ll_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/btn_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_empty"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="empty" />
+
+        <Button
+            android:id="@+id/btn_not_network"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="not network"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_error"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="fail" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_button1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ll_button"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_loading"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="loading" />
+
+        <Button
+            android:id="@+id/btn_loading_no_tip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="loading(no tip)" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_time_out"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="time out" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="sign in" />
+
+        <Button
+            android:id="@+id/btn_custom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="custom" />
+    </LinearLayout>
+
+    <cn.lee.cplibrary.widget.statelayout.StateLayout xmlns:sl="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_button1"
+        sl:cp_emptyImg="@drawable/ic_state_empty"
+        sl:cp_emptyText="@string/cp_empty_tip"
+        sl:cp_errorImg="@drawable/ic_state_error"
+        sl:cp_errorText="@string/cp_error_tip"
+        sl:cp_loadingText="@string/cp_loading_tip"
+        sl:cp_loginImg="@drawable/ic_state_login"
+        sl:cp_loginText="@string/cp_no_login_tip"
+        sl:cp_noNetworkImg="@drawable/ic_state_no_network"
+        sl:cp_noNetworkText="@string/cp_no_network_tip"
+        sl:cp_timeOutImg="@drawable/ic_state_time_out"
+        sl:cp_timeOutText="@string/cp_time_out_tip">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我是内容哈哈哈哈哈哈" />
+
+        </RelativeLayout>
+
+    </cn.lee.cplibrary.widget.statelayout.StateLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_custom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/state_layout"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我是自定义内容" />
+
+    </RelativeLayout>
+
+</LinearLayout>

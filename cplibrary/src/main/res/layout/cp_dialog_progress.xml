@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
+        android:background="@drawable/cp_shape_bg_loading_dialog"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/cp_loading_rotate"
+            android:indeterminateDuration="1000" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图片加载中"
+            android:textColor="@color/cp_white"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</LinearLayout>
