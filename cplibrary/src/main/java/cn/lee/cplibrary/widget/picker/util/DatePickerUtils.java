@@ -48,11 +48,12 @@ public class DatePickerUtils {
             return AlertDialog.THEME_HOLO_LIGHT;
         }
     }
+
     /**
      * 显示年月日
      */
     public static void showDate(final Context context,
-                                       final DateCallBack callBack) {
+                                final DateCallBack callBack) {
         Calendar c = Calendar.getInstance();
         int curYear = c.get(Calendar.YEAR);
         int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
@@ -61,7 +62,7 @@ public class DatePickerUtils {
         final Dialog dialog = ComDialogUtil.getBottomDialog(context, true, view);
         view.findViewById(R.id.new_hour).setVisibility(View.GONE);
         view.findViewById(R.id.new_mins).setVisibility(View.GONE);
-        year =  view.findViewById(R.id.new_year);
+        year = view.findViewById(R.id.new_year);
         initYear(context);
         month = view.findViewById(R.id.new_month);
         initMonth(context);
@@ -105,6 +106,7 @@ public class DatePickerUtils {
         });
 
     }
+
     /**
      * 显示全部日期
      */
@@ -116,27 +118,17 @@ public class DatePickerUtils {
         int curDate = c.get(Calendar.DATE);
         int curHour = c.get(Calendar.HOUR_OF_DAY);
         int curMin = c.get(Calendar.MINUTE);
-
-        final AlertDialog dialog = new AlertDialog.Builder(context,getDialogTheme()).create();
-        dialog.show();
-        Window window = dialog.getWindow();
-        // 设置布局
-        window.setContentView(R.layout.cp_date_time_picker_layout);
-        // 设置宽高
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        // 设置弹出的动画效果
-        window.setWindowAnimations(R.style.cp_AnimBottomFade);
-
-        year = (WheelView) window.findViewById(R.id.new_year);
+        View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
+        final Dialog dialog = ComDialogUtil.getBottomDialog(context, true, view);
+        year = (WheelView) view.findViewById(R.id.new_year);
         initYear(context);
-        month = (WheelView) window.findViewById(R.id.new_month);
+        month = (WheelView) view.findViewById(R.id.new_month);
         initMonth(context);
-        day = (WheelView) window.findViewById(R.id.new_day);
+        day = (WheelView) view.findViewById(R.id.new_day);
         initDay(context, curYear, curMonth);
-        hour = (WheelView) window.findViewById(R.id.new_hour);
+        hour = (WheelView) view.findViewById(R.id.new_hour);
         initHour(context);
-        mins = (WheelView) window.findViewById(R.id.new_mins);
+        mins = (WheelView) view.findViewById(R.id.new_mins);
         initMins(context);
         OnWheelChangedListener listener = new OnWheelChangedListener() {
             @Override
@@ -162,8 +154,8 @@ public class DatePickerUtils {
         mins.setVisibleItems(vsibleItemNum);
 
         // 设置监听
-        TextView ok = (TextView) window.findViewById(R.id.set);
-        TextView cancel = (TextView) window.findViewById(R.id.cancel);
+        TextView ok = (TextView) view.findViewById(R.id.set);
+        TextView cancel = (TextView) view.findViewById(R.id.cancel);
         ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,7 +178,7 @@ public class DatePickerUtils {
                 dialog.cancel();
             }
         });
-        LinearLayout cancelLayout = (LinearLayout) window
+        LinearLayout cancelLayout = (LinearLayout) view
                 .findViewById(R.id.view_none);
         cancelLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -197,9 +189,10 @@ public class DatePickerUtils {
         });
 
     }
+
     private static void updateDays(Context context, WheelView year,
                                    WheelView month, WheelView day) {
-		String label=" 日";
+        String label = " 日";
 //        String label = "";
         int maxDays = getDays(context, year.getCurrentItem() + 1950,
                 month.getCurrentItem() + 1);
@@ -218,7 +211,7 @@ public class DatePickerUtils {
      * 初始化年
      */
     private static void initYear(Context context) {
-        String label=" 年";
+        String label = " 年";
 //        String label = "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 1950, 2050);
@@ -232,7 +225,7 @@ public class DatePickerUtils {
      * 初始化月
      */
     private static void initMonth(Context context) {
-        String label=" 月";
+        String label = " 月";
 //        String label = "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 1, 12, "%02d");
@@ -246,7 +239,7 @@ public class DatePickerUtils {
      * 初始化天
      */
     private static void initDay(Context context, int y, int m) {
-        String label=" 日";
+        String label = " 日";
 //        String label = "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 1, getDays(context, y, m), "%02d");
@@ -260,7 +253,7 @@ public class DatePickerUtils {
      * 初始化时
      */
     private static void initHour(Context context) {
-        String label=" 时";
+        String label = " 时";
 //        String label = "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 0, 23, "%02d");
@@ -274,7 +267,7 @@ public class DatePickerUtils {
      * 初始化分
      */
     private static void initMins(Context context) {
-        String label=" 分";
+        String label = " 分";
 //        String label = "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 0, 59, "%02d");
@@ -315,20 +308,31 @@ public class DatePickerUtils {
         public void cancel();
     }
 
-    public static String formatDateAndTime(int year, int month, int day,
-                                           int hour, int min) {
+    /**
+     * @return :格式 例如 2018-02-09 05：30
+     */
+    public static String format(int year, int month, int day,
+                                int hour, int min) {
         String dateAndTime = String.format(Locale.CHINA,
                 "%04d-%02d-%02d %02d:%02d", year, month, day, hour, min);
         return dateAndTime;
     }
-    public static String formatDate(int year, int month, int day) {
+
+    /**
+     * @return :格式 例如 2018-02-09
+     */
+    public static String format(int year, int month, int day) {
         String date = String.format(Locale.CHINA,
-                "%04d-%02d-%02d", year, month, day );
+                "%04d-%02d-%02d", year, month, day);
         return date;
     }
+
+    /**
+     * @return :格式 例如 2018.02.09
+     */
     public static String formatDateDot(int year, int month, int day) {
         String date = String.format(Locale.CHINA,
-                "%04d.%02d.%02d", year, month, day );
+                "%04d.%02d.%02d", year, month, day);
         return date;
     }
 

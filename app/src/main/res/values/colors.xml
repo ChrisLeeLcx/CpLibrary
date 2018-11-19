@@ -3,4 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!-- common -->
+    <color name="transparent">#00000000</color>
+    <color name="translucency">#66000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="bg_f7">#F7F7F7</color>
+    <color name="bg_dcd">#dcdddd</color>
+    <color name="bg_f4">#F4F4F4</color>
+    <color name="bg_fa">#FAFAFA</color>
+
+    <color name="font_8d">#8d8d8d</color>
+    <color name="font_32">#323232</color>
+    <color name="font_14">#141414</color>
+    <color name="font_7D">#7D7D7D</color>
+    <color name="font_b1">#b1b1b1</color>
+
 </resources>
