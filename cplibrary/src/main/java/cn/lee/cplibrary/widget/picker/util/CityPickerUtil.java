@@ -12,16 +12,14 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.lee.cplibrary.R;
-import cn.lee.cplibrary.util.ComDialogUtil;
+import cn.lee.cplibrary.util.CpDialogUtil;
 import cn.lee.cplibrary.util.LogUtil;
-import cn.lee.cplibrary.util.timer.TimeUtils;
 import cn.lee.cplibrary.widget.picker.adapter.TextualWheelAdapter;
 import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
 import cn.lee.cplibrary.widget.picker.widget.OnWheelChangedListener;
@@ -113,7 +111,7 @@ public class CityPickerUtil {
      */
     private void showProvinceDialog(final Context context, final CityPickerCallBack callBack) {
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
-        final Dialog dialog = ComDialogUtil.getBottomDialog(context, true, view);
+        final Dialog dialog = CpDialogUtil.getBottomDialog(context, true, view);
         view.findViewById(R.id.new_hour).setVisibility(View.GONE);
         view.findViewById(R.id.new_mins).setVisibility(View.GONE);
         final WheelView provinceView = view.findViewById(R.id.new_year);

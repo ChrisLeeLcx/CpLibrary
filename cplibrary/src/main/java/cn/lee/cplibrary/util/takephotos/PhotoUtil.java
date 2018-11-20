@@ -26,7 +26,7 @@ import java.io.File;
 
 import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.AppUtils;
-import cn.lee.cplibrary.util.ComDialogUtil;
+import cn.lee.cplibrary.util.CpDialogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtils;
 
@@ -131,7 +131,7 @@ public class PhotoUtil {
     public static Dialog showPicChooseDialog(final Activity activity) {
 //        if (picDialog == null) {
         View view = LayoutInflater.from(activity).inflate(R.layout.cp_dialog_pic_choose, null);
-        picDialog = ComDialogUtil.getBottomDialog(activity, true, view);
+        picDialog = CpDialogUtil.getBottomDialog(activity, true, view);
         //相册
         view.findViewById(R.id.photoAlbum).setOnClickListener(new View.OnClickListener() {
             @Override
