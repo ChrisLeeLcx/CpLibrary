@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        totalList.add(new ActivityBean("DialogActivity", DialogActivity.class));
-        totalList.add(new ActivityBean("PermissionActivity", PermissionActivity.class));
-        totalList.add(new ActivityBean("PhotoActivity", PhotoActivity.class));
+        totalList.add(new ActivityBean("各种选框", DialogActivity.class));
+        totalList.add(new ActivityBean("安卓6.0运行时权限", PermissionActivity.class));
+        totalList.add(new ActivityBean("拍照相册", PhotoActivity.class));
         totalList.add(new ActivityBean("图片点击放大", ImageZoomActivity.class));
     }
 

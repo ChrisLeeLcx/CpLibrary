@@ -12,7 +12,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.sql.Time;
+
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.timer.TimeUtils;
 
 /**
  * 获取通用样式的Dialog，回调时间和具体设置的内容需要额外设置
@@ -30,8 +33,12 @@ public class ComDialogUtil {
      *
      * @param cancel ：是否可以点击外部取消Dialog
      * @param view   ：Dialog的布局view
+     *               注意：如果点过快 连续点击 则返回null ，注意判断
      */
     public static Dialog getBottomDialog(Context context, boolean cancel, View view) {
+        if (TimeUtils.isFastClick()) {
+            return null;
+        }
         final Dialog dialog = new Dialog(context, R.style.cp_dialog);
         dialog.setContentView(view, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -54,8 +61,12 @@ public class ComDialogUtil {
      *
      * @param cancel ：是否可以点击外部取消Dialog
      * @param view   ：Dialog的布局view
+     *               注意：如果点过快 连续点击 则返回null ，注意判断
      */
     public static Dialog getCenterDialog(Context context, boolean cancel, View view) {
+        if (TimeUtils.isFastClick()) {
+            return null;
+        }
         final Dialog dialog = new Dialog(context, R.style.cp_dialog);
         dialog.setContentView(view, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -74,8 +85,12 @@ public class ComDialogUtil {
 
     /**
      * 获取通用从右向左弹出的页面底部Dialog
+     * 注意：如果点过快 连续点击 则返回null ，注意判断
      */
     public static Dialog getRightBottomDialog(Context context, boolean cancel, View view) {
+        if (TimeUtils.isFastClick()) {
+            return null;
+        }
         final Dialog dialog = new Dialog(context, R.style.cp_dialog);
         dialog.setContentView(view, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -113,9 +128,9 @@ public class ComDialogUtil {
         TextView textView = mProgressDialog
                 .findViewById(R.id.tv_info);
 
-        if (textView==null || ObjectUtils.isEmpty(content)) {
+        if (textView == null || ObjectUtils.isEmpty(content)) {
             textView.setVisibility(View.GONE);
-        } else{
+        } else {
             textView.setVisibility(View.VISIBLE);
             textView.setText(content);
         }

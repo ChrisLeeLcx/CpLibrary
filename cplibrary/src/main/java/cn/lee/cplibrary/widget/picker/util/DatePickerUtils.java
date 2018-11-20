@@ -1,16 +1,12 @@
 package cn.lee.cplibrary.widget.picker.util;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
+import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -22,6 +18,8 @@ import java.util.Locale;
 
 import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.ComDialogUtil;
+import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.widget.picker.adapter.NumericWheelAdapter;
 import cn.lee.cplibrary.widget.picker.widget.OnWheelChangedListener;
 import cn.lee.cplibrary.widget.picker.widget.WheelView;
@@ -36,30 +34,30 @@ public class DatePickerUtils {
     private static int vsibleItemNum = 6;
     private static boolean isCyclic = true;
 
-    public static int getDialogTheme() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return R.style.cp_MyDialogTheme;
-//            return android.R.style.Theme_NoTitleBar;
-//            return android.R.style.Theme_Light_NoTitleBar;
-//            id:style/Theme.Light.NoTitleBar
-//            return android.R.style.Theme_Holo_Dialog_NoActionBar;
-//            return android.R.style.Theme_Material_Light_Dialog_Alert;
-        } else {
-            return AlertDialog.THEME_HOLO_LIGHT;
-        }
+    //ui设置
+    private Context context;
+    private int tBgColor;
+    private int tTxtColor;
+    private int tTxtSize; //单位 sp ，默认值是7，相当于布局中的14sp
+    private String tTitle;
+    private boolean isShowLabel;
+
+    private DatePickerUtils(Context context) {
+        this.context = context;
     }
 
     /**
      * 显示年月日
      */
-    public static void showDate(final Context context,
-                                final DateCallBack callBack) {
+    public void showDate(
+            final DateCallBack callBack) {
         Calendar c = Calendar.getInstance();
         int curYear = c.get(Calendar.YEAR);
         int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
         int curDate = c.get(Calendar.DATE);
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
         final Dialog dialog = ComDialogUtil.getBottomDialog(context, true, view);
+        setView(view);
         view.findViewById(R.id.new_hour).setVisibility(View.GONE);
         view.findViewById(R.id.new_mins).setVisibility(View.GONE);
         year = view.findViewById(R.id.new_year);
@@ -86,8 +84,6 @@ public class DatePickerUtils {
         year.setVisibleItems(vsibleItemNum);
         month.setVisibleItems(vsibleItemNum);
         day.setVisibleItems(vsibleItemNum);
-
-
         // 设置监听
         view.findViewById(R.id.set).setOnClickListener(new OnClickListener() {
             @Override
@@ -110,8 +106,8 @@ public class DatePickerUtils {
     /**
      * 显示全部日期
      */
-    public static void showDateAndTime(final Context context,
-                                       final DateAndTimeCallBack callBack) {
+    public void showDateAndTime(
+            final DateAndTimeCallBack callBack) {
         Calendar c = Calendar.getInstance();
         int curYear = c.get(Calendar.YEAR);
         int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
@@ -120,6 +116,7 @@ public class DatePickerUtils {
         int curMin = c.get(Calendar.MINUTE);
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
         final Dialog dialog = ComDialogUtil.getBottomDialog(context, true, view);
+        setView(view);
         year = (WheelView) view.findViewById(R.id.new_year);
         initYear(context);
         month = (WheelView) view.findViewById(R.id.new_month);
@@ -139,7 +136,6 @@ public class DatePickerUtils {
         };
         year.addChangingListener(listener);
         month.addChangingListener(listener);
-
         // 设置当前时间
         year.setCurrentItem(curYear - 1950);
         month.setCurrentItem(curMonth - 1);
@@ -152,19 +148,12 @@ public class DatePickerUtils {
         day.setVisibleItems(vsibleItemNum);
         hour.setVisibleItems(vsibleItemNum);
         mins.setVisibleItems(vsibleItemNum);
-
         // 设置监听
         TextView ok = (TextView) view.findViewById(R.id.set);
         TextView cancel = (TextView) view.findViewById(R.id.cancel);
         ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // String time = String.format(Locale.CHINA,
-                // "%04d年%02d月%02d日 %02d时%02d分",
-                // year.getCurrentItem() + 1950,
-                // month.getCurrentItem() + 1, day.getCurrentItem() + 1,
-                // hour.getCurrentItem(), mins.getCurrentItem());
-                // Toast.makeText(context, time, Toast.LENGTH_LONG).show();
                 callBack.sure(year.getCurrentItem() + 1950,
                         month.getCurrentItem() + 1, day.getCurrentItem() + 1,
                         hour.getCurrentItem(), mins.getCurrentItem());
@@ -178,22 +167,41 @@ public class DatePickerUtils {
                 dialog.cancel();
             }
         });
-        LinearLayout cancelLayout = (LinearLayout) view
-                .findViewById(R.id.view_none);
-        cancelLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                dialog.cancel();
-                return false;
-            }
-        });
-
     }
 
-    private static void updateDays(Context context, WheelView year,
-                                   WheelView month, WheelView day) {
-        String label = " 日";
-//        String label = "";
+    /**
+     * 设置对话框外观
+     */
+    private void setView(View titleBar, TextView tvTitle, TextView tvLeftBtn, TextView tvRightBtn) {
+        titleBar.setBackgroundColor(tBgColor);
+        if (!ObjectUtils.isEmpty(tTitle)) {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(tTitle);
+            tvTitle.setTextColor(tTxtColor);
+            tvTitle.setTextSize(ScreenUtil.dp2px(context, tTxtSize));
+        } else {
+            tvTitle.setVisibility(View.GONE);
+        }
+        tvLeftBtn.setTextColor(tTxtColor);
+        tvRightBtn.setTextColor(tTxtColor);
+        tvLeftBtn.setTextSize(ScreenUtil.dp2px(context, tTxtSize));
+        tvRightBtn.setTextSize(ScreenUtil.dp2px(context, tTxtSize));
+    }
+
+    /**
+     * 设置对话框外观
+     */
+    private void setView(View layout) {
+        View titleBar = layout.findViewById(R.id.rl_title);
+        TextView tvTitle = layout.findViewById(R.id.tv_title);
+        TextView tvLeftBtn = layout.findViewById(R.id.cancel);
+        TextView tvRightBtn = layout.findViewById(R.id.set);
+        setView(titleBar, tvTitle, tvLeftBtn, tvRightBtn);
+    }
+
+    private void updateDays(Context context, WheelView year,
+                            WheelView month, WheelView day) {
+        String label = isShowLabel ? " 日" : "";
         int maxDays = getDays(context, year.getCurrentItem() + 1950,
                 month.getCurrentItem() + 1);
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
@@ -210,9 +218,8 @@ public class DatePickerUtils {
     /**
      * 初始化年
      */
-    private static void initYear(Context context) {
-        String label = " 年";
-//        String label = "";
+    private void initYear(Context context) {
+        String label = isShowLabel ? " 年" : "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 1950, 2050);
         numericWheelAdapter.setLabel(label);
@@ -224,9 +231,8 @@ public class DatePickerUtils {
     /**
      * 初始化月
      */
-    private static void initMonth(Context context) {
-        String label = " 月";
-//        String label = "";
+    private void initMonth(Context context) {
+        String label = isShowLabel ? " 月" : "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 1, 12, "%02d");
         numericWheelAdapter.setLabel(label);
@@ -238,9 +244,8 @@ public class DatePickerUtils {
     /**
      * 初始化天
      */
-    private static void initDay(Context context, int y, int m) {
-        String label = " 日";
-//        String label = "";
+    private void initDay(Context context, int y, int m) {
+        String label = isShowLabel ? " 日" : "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 1, getDays(context, y, m), "%02d");
         numericWheelAdapter.setLabel(label);
@@ -252,9 +257,8 @@ public class DatePickerUtils {
     /**
      * 初始化时
      */
-    private static void initHour(Context context) {
-        String label = " 时";
-//        String label = "";
+    private void initHour(Context context) {
+        String label = isShowLabel ? " 时" : "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 0, 23, "%02d");
         numericWheelAdapter.setLabel(label);
@@ -266,9 +270,8 @@ public class DatePickerUtils {
     /**
      * 初始化分
      */
-    private static void initMins(Context context) {
-        String label = " 分";
-//        String label = "";
+    private void initMins(Context context) {
+        String label = isShowLabel ? " 分" : "";
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(
                 context, 0, 59, "%02d");
         numericWheelAdapter.setLabel(label);
@@ -336,4 +339,84 @@ public class DatePickerUtils {
         return date;
     }
 
+
+    private void settBgColor(int tBgColor) {
+        this.tBgColor = tBgColor;
+    }
+
+
+    private void settTxtColor(int tTxtColor) {
+        this.tTxtColor = tTxtColor;
+    }
+
+    private void settTxtSize(int tTxtSize) {
+        this.tTxtSize = tTxtSize;
+    }
+
+    private void settTitle(String tTitle) {
+        this.tTitle = tTitle;
+    }
+
+    private void setShowLabel(boolean showLabel) {
+        isShowLabel = showLabel;
+    }
+
+    public static class Builder {
+        private Context context;
+        private int tBgColor = Color.parseColor("#1086D1");//时间选择框标题栏背景色
+        private int tTxtColor = Color.parseColor("#FFFFFF");//标题栏：文字颜色（确定、取消按钮、标题）
+        private int tTxtSize = 7;//标题栏：文字大小（确定、取消按钮、标题） 单位sp
+        private String tTitle;//标题栏：标题文字
+        private boolean isShowLabel = true;//时间控件是否显示label 年月日等
+
+        private Builder(Context context) {
+            this.context = context;
+        }
+
+        public static Builder builder(Context context) {
+            return new Builder(context);
+        }
+
+        public DatePickerUtils build() {
+            DatePickerUtils util = new DatePickerUtils(context);
+            util.settBgColor(tBgColor);
+            util.settTxtColor(tTxtColor);
+            util.settTxtSize(tTxtSize);
+            util.settTitle(tTitle);
+            util.setShowLabel(isShowLabel);
+            return util;
+        }
+
+        public Context getContext() {
+            return context;
+        }
+
+        public Builder settBgColor(int tBgColor) {
+            this.tBgColor = tBgColor;
+            return this;
+        }
+
+        public Builder settTxtColor(int tTxtColor) {
+            this.tTxtColor = tTxtColor;
+            return this;
+        }
+
+        /**
+         * @param tTxtSize 单位 sp ，默认值是7，相当于布局中的14sp
+         */
+        public Builder settTxtSize(int tTxtSize) {
+            this.tTxtSize = tTxtSize;
+            return this;
+        }
+
+        public Builder settTitle(String tTitle) {
+            this.tTitle = tTitle;
+            return this;
+        }
+
+        public Builder setShowLabel(boolean showLabel) {
+            isShowLabel = showLabel;
+            return this;
+        }
+    }
 }

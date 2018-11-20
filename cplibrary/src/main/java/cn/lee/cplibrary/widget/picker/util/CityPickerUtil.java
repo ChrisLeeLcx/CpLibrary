@@ -96,9 +96,6 @@ public class CityPickerUtil {
      * 显示省市区
      */
     public void showProvince(final CityPickerCallBack callBack) {
-        if (TimeUtils.isFastClick()) {
-            return;
-        }
         if (isLoaded) {
             showProvinceDialog(context, callBack);
         } else {
