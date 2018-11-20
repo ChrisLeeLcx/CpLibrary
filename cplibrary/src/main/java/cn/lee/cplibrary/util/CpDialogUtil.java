@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.lee.cplibrary.R;
@@ -22,6 +23,7 @@ import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
 /**
  * 获取通用样式的Dialog，回调时间和具体设置的内容需要额外设置
  * 样式：底部弹出Dialog、 屏幕中间弹出Dialog、进度条
+ * 通用1个按钮的对话框 ，2个按钮的对话框
  *
  * @author: ChrisLee
  * @time: 2018/7/30
@@ -29,11 +31,12 @@ import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
 
 public class CpDialogUtil {
     private Context context;
-    //配置
+    //配置 1个按钮、2个按钮对话框外观参数
     private String title, content, txtCancel, sure;
     private int btnColor, titleColor, contentColor;
     private int titleSize, contentSize, btnSize;
     private boolean isCancel;
+    private int width, height;//对话框的宽、除去按钮后的高
 
     private CpDialogUtil(Context context) {
         this.context = context;
@@ -211,6 +214,7 @@ public class CpDialogUtil {
         TextView tvContent = view.findViewById(R.id.tv_content);
         TextView btnCancel = view.findViewById(R.id.btn_cancel);
         TextView btnSure = view.findViewById(R.id.btn_sure);
+        LinearLayout llTop = view.findViewById(R.id.ll_top);//设置对话框的宽和高
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
         } else {
@@ -236,6 +240,18 @@ public class CpDialogUtil {
             btnSure.setText(sure);
             btnSure.setTextColor(btnColor);
             btnSure.setTextSize(ScreenUtil.dp2px(context, btnSize));
+        }
+        //设置宽高
+        if (width != 245 || height != LinearLayout.LayoutParams.WRAP_CONTENT) {//不是默认值
+            int w = width, h = height;
+            if (width != LinearLayout.LayoutParams.MATCH_PARENT && width != LinearLayout.LayoutParams.WRAP_CONTENT) {
+                w = ScreenUtil.dp2px(context, width);
+            }
+            if (height != LinearLayout.LayoutParams.MATCH_PARENT && height != LinearLayout.LayoutParams.WRAP_CONTENT) {
+                h = ScreenUtil.dp2px(context, height);
+            }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(w, h);
+            llTop.setLayoutParams(params);
         }
     }
 
@@ -295,6 +311,14 @@ public class CpDialogUtil {
         isCancel = cancel;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public static class Builder {
         private Context context;
         private String title, content, txtCancel, sure;//标题、内容、取消按钮、确定按钮的文案
@@ -304,6 +328,7 @@ public class CpDialogUtil {
         private int titleSize = 8,//标题文字大小 单位sp
                 contentSize = 6, btnSize = 8;//内容 按钮 文字大小、
         private boolean isCancel = true;//是否可以取消,默认可以
+        private int width = 245, height = LinearLayout.LayoutParams.WRAP_CONTENT;//对话框的宽、除去按钮后的高 单位dp
 
         private Builder(Context context) {
             this.context = context;
@@ -326,6 +351,8 @@ public class CpDialogUtil {
             util.setContentSize(contentSize);
             util.setBtnSize(btnSize);
             util.setCancel(isCancel);
+            util.setWidth(width);
+            util.setHeight(height);
             return util;
         }
 
@@ -381,6 +408,24 @@ public class CpDialogUtil {
 
         public Builder setCancel(boolean cancel) {
             isCancel = cancel;
+            return this;
+        }
+
+        /**
+         * @param width:可以为数值单位dp、LinearLayout.LayoutParams.WRAP_CONTENT、LinearLayout.LayoutParams.MATCH_PARENT
+         *             注意：值为LinearLayout.LayoutParams.MATCH_PARENT时候，实际上离屏幕左右还有20dp左右距离
+         */
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        /**
+         * @param height:可以为数值单位dp、LinearLayout.LayoutParams.WRAP_CONTENT
+         *              注意：不支持LinearLayout.LayoutParams.MATCH_PARENT
+         */
+        public Builder setHeight(int height) {
+            this.height = height;
             return this;
         }
     }

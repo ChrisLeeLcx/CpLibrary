@@ -2,10 +2,13 @@ package com.lee.cplibrary.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lee.cplibrary.R;
 import com.lee.cplibrary.base.SwipeBackActivity;
+
+import java.security.Permission;
 
 import cn.lee.cplibrary.util.CpDialogUtil;
 import cn.lee.cplibrary.util.ScreenUtil;
@@ -107,6 +110,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         setTitle("提示").setContent("清空历史记录吗?").setTxtCancel("忽略").setSure("更新")
                         .setTitleSize(10).setContentSize(8).setBtnSize(10)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
+                        .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setCancel(false)
                         .build().show2BtnDialog(new CpDialogUtil.Dialog2BtnCallBack() {
                     @Override
