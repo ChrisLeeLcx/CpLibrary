@@ -14,7 +14,7 @@
         android:id="@+id/photoAlbum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/cp_photo_bgt5_selector"
+        android:background="@drawable/cp_photo_bgt10_selector"
         android:padding="10dp"
         android:text="图库"
         android:textSize="16sp" />
@@ -28,7 +28,7 @@
         android:id="@+id/photograph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/cp_photo_bgb5_selector"
+        android:background="@drawable/cp_photo_bgb10_selector"
         android:padding="10dp"
         android:text="拍照"
         android:textSize="16sp" />
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:background="@drawable/cp_photo_bg5_selector"
+        android:background="@drawable/cp_photo_bg10_selector"
         android:padding="10dp"
         android:text="取消"
         android:textSize="16sp" />

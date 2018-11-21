@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cp_white"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#dcdcdc" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="军官证"
+        android:textColor="@color/cp_font3"
+        android:textSize="14sp"
+        android:background="@drawable/cp_photo_selector"
+        />
+</LinearLayout>

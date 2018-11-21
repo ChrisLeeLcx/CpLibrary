@@ -1,9 +1,10 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.util.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
@@ -12,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.util.timer.TimeUtils;
-import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
 
 /**
  * 获取通用样式的Dialog，回调时间和具体设置的内容需要额外设置
@@ -29,7 +30,7 @@ import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
  * @time: 2018/7/30
  */
 
-public class CpDialogUtil {
+public class CpComDialog {
     private Context context;
     //配置 1个按钮、2个按钮对话框外观参数
     private String title, content, txtCancel, sure;
@@ -38,7 +39,7 @@ public class CpDialogUtil {
     private boolean isCancel;
     private int width, height;//对话框的宽、除去按钮后的高
 
-    private CpDialogUtil(Context context) {
+    private CpComDialog(Context context) {
         this.context = context;
     }
 
@@ -221,7 +222,7 @@ public class CpDialogUtil {
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(title);
             tvTitle.setTextColor(titleColor);
-            tvTitle.setTextSize(ScreenUtil.dp2px(context, titleSize));
+            tvTitle.setTextSize(ScreenUtil.sp2px(context, titleSize));
         }
         if (TextUtils.isEmpty(content)) {
             tvContent.setVisibility(View.GONE);
@@ -229,17 +230,17 @@ public class CpDialogUtil {
             tvContent.setVisibility(View.VISIBLE);
             tvContent.setText(content);
             tvContent.setTextColor(contentColor);
-            tvContent.setTextSize(ScreenUtil.dp2px(context, contentSize));
+            tvContent.setTextSize(ScreenUtil.sp2px(context, contentSize));
         }
         if (!TextUtils.isEmpty(txtCancel)) {
             btnCancel.setText(txtCancel);
             btnCancel.setTextColor(btnColor);
-            btnCancel.setTextSize(ScreenUtil.dp2px(context, btnSize));
+            btnCancel.setTextSize(ScreenUtil.sp2px(context, btnSize));
         }
         if (!TextUtils.isEmpty(sure)) {
             btnSure.setText(sure);
             btnSure.setTextColor(btnColor);
-            btnSure.setTextSize(ScreenUtil.dp2px(context, btnSize));
+            btnSure.setTextSize(ScreenUtil.sp2px(context, btnSize));
         }
         //设置宽高
         if (width != 245 || height != LinearLayout.LayoutParams.WRAP_CONTENT) {//不是默认值
@@ -283,15 +284,15 @@ public class CpDialogUtil {
         this.sure = sure;
     }
 
-    public void setBtnColor(int btnColor) {
+    public void setBtnColor(@ColorInt int btnColor) {
         this.btnColor = btnColor;
     }
 
-    public void setTitleColor(int titleColor) {
+    public void setTitleColor(@ColorInt int titleColor) {
         this.titleColor = titleColor;
     }
 
-    public void setContentColor(int contentColor) {
+    public void setContentColor(@ColorInt int contentColor) {
         this.contentColor = contentColor;
     }
 
@@ -338,8 +339,8 @@ public class CpDialogUtil {
             return new Builder(context);
         }
 
-        public CpDialogUtil build() {
-            CpDialogUtil util = new CpDialogUtil(context);
+        public CpComDialog build() {
+            CpComDialog util = new CpComDialog(context);
             util.setTitle(title);
             util.setContent(content);
             util.setTxtCancel(txtCancel);
@@ -376,17 +377,17 @@ public class CpDialogUtil {
             return this;
         }
 
-        public Builder setBtnColor(int btnColor) {
+        public Builder setBtnColor(@ColorInt  int btnColor) {
             this.btnColor = btnColor;
             return this;
         }
 
-        public Builder setTitleColor(int titleColor) {
+        public Builder setTitleColor(@ColorInt int titleColor) {
             this.titleColor = titleColor;
             return this;
         }
 
-        public Builder setContentColor(int contentColor) {
+        public Builder setContentColor(@ColorInt int contentColor) {
             this.contentColor = contentColor;
             return this;
         }

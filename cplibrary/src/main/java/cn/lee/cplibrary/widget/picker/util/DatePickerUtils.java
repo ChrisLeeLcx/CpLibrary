@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import cn.lee.cplibrary.R;
-import cn.lee.cplibrary.util.CpDialogUtil;
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.widget.picker.adapter.NumericWheelAdapter;
@@ -56,7 +56,7 @@ public class DatePickerUtils {
         int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
         int curDate = c.get(Calendar.DATE);
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
-        final Dialog dialog = CpDialogUtil.getBottomDialog(context, true, view);
+        final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
         setView(view);
         view.findViewById(R.id.new_hour).setVisibility(View.GONE);
         view.findViewById(R.id.new_mins).setVisibility(View.GONE);
@@ -115,7 +115,7 @@ public class DatePickerUtils {
         int curHour = c.get(Calendar.HOUR_OF_DAY);
         int curMin = c.get(Calendar.MINUTE);
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
-        final Dialog dialog = CpDialogUtil.getBottomDialog(context, true, view);
+        final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
         setView(view);
         year = (WheelView) view.findViewById(R.id.new_year);
         initYear(context);
@@ -178,14 +178,14 @@ public class DatePickerUtils {
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(tTitle);
             tvTitle.setTextColor(tTxtColor);
-            tvTitle.setTextSize(ScreenUtil.dp2px(context, tTxtSize));
+            tvTitle.setTextSize(ScreenUtil.sp2px(context, tTxtSize));
         } else {
             tvTitle.setVisibility(View.GONE);
         }
         tvLeftBtn.setTextColor(tTxtColor);
         tvRightBtn.setTextColor(tTxtColor);
-        tvLeftBtn.setTextSize(ScreenUtil.dp2px(context, tTxtSize));
-        tvRightBtn.setTextSize(ScreenUtil.dp2px(context, tTxtSize));
+        tvLeftBtn.setTextSize(ScreenUtil.sp2px(context, tTxtSize));
+        tvRightBtn.setTextSize(ScreenUtil.sp2px(context, tTxtSize));
     }
 
     /**

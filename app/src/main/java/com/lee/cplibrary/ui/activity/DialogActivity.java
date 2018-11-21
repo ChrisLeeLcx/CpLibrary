@@ -8,10 +8,15 @@ import android.widget.TextView;
 import com.lee.cplibrary.R;
 import com.lee.cplibrary.base.SwipeBackActivity;
 
-import java.security.Permission;
+import java.util.ArrayList;
+import java.util.List;
 
-import cn.lee.cplibrary.util.CpDialogUtil;
-import cn.lee.cplibrary.util.ScreenUtil;
+import cn.lee.cplibrary.util.dialog.bottom.BaseDialogBean;
+import cn.lee.cplibrary.util.dialog.bottom.BottomDialogAdapter;
+import cn.lee.cplibrary.util.dialog.bottomround.BottomRoundDialogAdapter;
+import cn.lee.cplibrary.util.dialog.bottom.CpBottomDialog;
+import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.widget.picker.util.CityPickerUtil;
 import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
@@ -41,6 +46,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         tvAddr.setOnClickListener(this);
         findViewById(R.id.btn_1btn).setOnClickListener(this);
         findViewById(R.id.btn_2btn).setOnClickListener(this);
+        findViewById(R.id.btn_bottom).setOnClickListener(this);
+        findViewById(R.id.btn_bottom_round).setOnClickListener(this);
         cityPickerUtil = new CityPickerUtil(getSelfActivity());
     }
 
@@ -96,9 +103,9 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 });
                 break;
             case R.id.btn_1btn:
-                CpDialogUtil.Builder.builder(getSelfActivity())
+                CpComDialog.Builder.builder(getSelfActivity())
                         .setTitle("我是标题哦！").build().show1BtnDialog(
-                        new CpDialogUtil.Dialog1BtnCallBack() {
+                        new CpComDialog.Dialog1BtnCallBack() {
                             @Override
                             public void sure() {
                                 ToastUtil.showToast(getSelfActivity(), "确定");
@@ -106,13 +113,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         });
                 break;
             case R.id.btn_2btn:
-                CpDialogUtil.Builder.builder(getSelfActivity()).
+                CpComDialog.Builder.builder(getSelfActivity()).
                         setTitle("提示").setContent("清空历史记录吗?").setTxtCancel("忽略").setSure("更新")
                         .setTitleSize(10).setContentSize(8).setBtnSize(10)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setCancel(false)
-                        .build().show2BtnDialog(new CpDialogUtil.Dialog2BtnCallBack() {
+                        .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
                     @Override
                     public void sure() {
                         ToastUtil.showToast(getSelfActivity(), "更新");
@@ -121,6 +128,67 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                     @Override
                     public void cancel() {
                         ToastUtil.showToast(getSelfActivity(), "忽略");
+                    }
+                });
+                break;
+            case R.id.btn_bottom:
+                final List<MyDialogBean> list = new ArrayList<>();
+                list.add(new MyDialogBean("第1个", "1"));
+                list.add(new MyDialogBean("第2个", "2"));
+                CpBottomDialog.Builder.builder(getSelfActivity(), list)
+                        .setBgColor(getResources().getColor(R.color.colorAccent))
+                        .setItemHeight(50).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
+                        .setShowCancel(true)//设置cancel
+                        .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
+                        .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
+                        .setCancelSize(8)
+                        .setCancelHeight(50)
+                        .setShowTitle(true)//设置标题
+                        .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
+                        .setTitleColor(getResources().getColor(R.color.colorAccent))
+                        .setTitleHeight(60)
+                        .setTitleSize(7)
+                        .setChangeBg(false)//设置可以改变各自背景色
+                        .build().showDialog(new CpBottomDialog.DialogCertificateCallBack() {
+                    @Override
+                    public void sure(BottomDialogAdapter adapter, View rootView, int position) {
+                        ToastUtil.showToast(getSelfActivity(), list.get(position).getName() + "-----" + list.get(position).getId());
+
+                    }
+
+                    @Override
+                    public void cancel() {
+                        ToastUtil.showToast(getSelfActivity(), "取消");
+                    }
+                });
+                break;
+            case R.id.btn_bottom_round:
+                final List<MyDialogBean> list1 = new ArrayList<>();
+                list1.add(new MyDialogBean("哈哈哈", "1"));
+                list1.add(new MyDialogBean("呵呵呵", "2"));
+                list1.add(new MyDialogBean("大大", "3"));
+                list1.add(new MyDialogBean("小小", "4"));
+                CpBottomRoundDialog.Builder.builder(getSelfActivity(), list1)
+//                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+//                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
+                        .setShowCancel(true)
+//                        .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
+//                        .setCancelSize(8)
+//                        .setCancelHeight(50)
+                        .setShowTitle(true)
+                        .setTitleColor(getResources().getColor(R.color.colorPrimary))
+                        .setTitleHeight(30)
+                        .setTitleSize(5)
+                        .build().showDialog(new CpBottomRoundDialog.DialogCertificateCallBack() {
+                    @Override
+                    public void sure(BottomRoundDialogAdapter adapter, View rootView, int position) {
+                        ToastUtil.showToast(getSelfActivity(), list1.get(position).getName() + "-----" + list1.get(position).getId());
+                    }
+
+                    @Override
+                    public void cancel() {
+                        ToastUtil.showToast(getSelfActivity(), "取消");
                     }
                 });
                 break;
@@ -133,5 +201,22 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         cityPickerUtil.destroyHandler();
+    }
+
+    public class MyDialogBean extends BaseDialogBean {
+        private String id;
+
+        public MyDialogBean(String name, String id) {
+            super(name);
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
     }
 }

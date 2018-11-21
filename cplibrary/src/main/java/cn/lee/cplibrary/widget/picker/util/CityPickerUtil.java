@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lee.cplibrary.R;
-import cn.lee.cplibrary.util.CpDialogUtil;
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.widget.picker.adapter.TextualWheelAdapter;
 import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
@@ -111,7 +111,7 @@ public class CityPickerUtil {
      */
     private void showProvinceDialog(final Context context, final CityPickerCallBack callBack) {
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
-        final Dialog dialog = CpDialogUtil.getBottomDialog(context, true, view);
+        final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
         view.findViewById(R.id.new_hour).setVisibility(View.GONE);
         view.findViewById(R.id.new_mins).setVisibility(View.GONE);
         final WheelView provinceView = view.findViewById(R.id.new_year);
