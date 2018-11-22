@@ -20,7 +20,9 @@
         <activity android:name=".ui.activity.DialogActivity" />
         <activity android:name=".ui.activity.PermissionActivity" />
         <activity android:name=".ui.activity.PhotoActivity" />
-        <activity android:name=".ui.activity.ImageZoomActivity"></activity>
+        <activity android:name=".ui.activity.ImageZoomActivity" />
+        <activity android:name=".ui.activity.StateLayoutActivity" />
+        <activity android:name=".ui.activity.SignActivity"></activity>
     </application>
 
 </manifest>

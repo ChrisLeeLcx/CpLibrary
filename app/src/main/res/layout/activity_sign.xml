@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <cn.lee.cplibrary.widget.sign.view.HandWriteView
+        android:id="@+id/handWriteView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        app:cp_paintColor="#000000"
+        app:cp_paintMaxWidth="10dp"
+        app:cp_paintMinWidth="5dp" />
+
+    <CheckBox
+        android:id="@+id/cb_agree"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:text="本人已经阅读并理解前一页的合同内容，并同意合同全部条款"
+        android:textColor="#666666"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cb_agree"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/cb_agree"
+        android:text="完成"
+        android:textColor="#ff7924"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_seller_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="注：卖方签名用于申请表签名"
+        android:textColor="@android:color/holo_red_light" />
+
+
+    <TextView
+        android:id="@+id/tv_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/tv_seller_toast"
+        android:text="清除"
+        android:textColor="#ff7924"
+        android:textSize="18sp" />
+</RelativeLayout>
