@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.bankcard;
+package cn.lee.cplibrary.widget.bankcard;
 
 import android.text.Editable;
 import android.text.Selection;

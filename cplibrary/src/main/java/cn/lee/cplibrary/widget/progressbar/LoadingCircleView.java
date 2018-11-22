@@ -337,8 +337,8 @@ public class LoadingCircleView extends View {
         if (animatorDrawLoading != null && animatorDrawLoading.isStarted()) {
             animatorDrawLoading.end();
             mCurrentState = STATE_STOP;
-            animatorSetFail.start();
             animatorSetFail.cancel();
+            animatorSetFail.start();
         }
     }
     protected int dp2px(int dpVal) {

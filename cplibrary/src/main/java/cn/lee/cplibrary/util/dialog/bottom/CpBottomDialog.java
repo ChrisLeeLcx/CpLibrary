@@ -35,7 +35,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
     private int txtColor, bgColor;
     private int cancelSize, cancelTxtColor, cancelBgColor, cancelHeight;
     private int titleSize, titleColor, titleHeight, titleBgColor;
-
+    private String title;
     private CpBottomDialog(Context context) {
         this.context = context;
     }
@@ -162,6 +162,10 @@ public class CpBottomDialog<T extends BaseDialogBean> {
         return isChangeBg;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     /**
      * 设置Dialog外观
      */
@@ -203,6 +207,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
         } else {
             tvTitle.setVisibility(View.GONE);
         }
+        tvTitle.setText(title);
         tvTitle.setTextSize(ScreenUtil.sp2px(context, titleSize));
         tvTitle.setTextColor(titleColor);
         if (isChangeBg) {
@@ -227,7 +232,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
         private List<K> list;//数据源
         private boolean isShowCancel,//最后是否显示取消按钮
                 isShowTitle,//是否显示标题栏
-                isChangeBg;//取消按钮、item、标题 是否改变背景（只有isChageBg = true时 设置其相应背景色才会改变）
+                isChangeBg;//是否改变取消按钮、item、标题的背景颜色（只有isChageBg = true时 设置其相应背景色才会改变）
         private int rvHeight = LinearLayout.LayoutParams.WRAP_CONTENT, itemHeight = 40;   //recyclerView的高，单位dp，和布局文件中一致即可;一个Item的高、
         private int txtSize = 7;   //文字大小，单位sp，效果是不居中的size的一半
         private int txtColor = Color.parseColor("#333333"); //recyclerView中文字颜色
@@ -243,7 +248,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
                 titleColor = -999, //Title文字颜色
                 titleHeight = -999, //Title高
                 titleBgColor = -999;  //Title背景颜色
-
+        private String title="标题";//标题内容
         private Builder(Context context, List<K> list) {
             this.context = context;
             this.list = list;
@@ -277,6 +282,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
             titleSize = titleSize == -999 ? txtSize : titleSize;
             titleColor = titleColor == -999 ? txtColor : titleColor;
             titleHeight = titleHeight == -999 ? itemHeight : titleHeight;
+            dialog.setTitle(title);
             dialog.setTitleSize(titleSize);
             dialog.setTitleColor(titleColor);
             dialog.setTitleBgColor(titleBgColor);
@@ -367,6 +373,11 @@ public class CpBottomDialog<T extends BaseDialogBean> {
 
         public Builder setTitleBgColor(int titleBgColor) {
             this.titleBgColor = titleBgColor;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
             return this;
         }
     }

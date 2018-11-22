@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cpbv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--<attr name="cp_circleBgStrokeWidth" format="dimension" /> &lt;!&ndash;进度条 背景线宽&ndash;&gt;-->
+    <!--<attr name="cp_progressStrokeWidth" format="dimension" />&lt;!&ndash;进度条 进度线宽&ndash;&gt;-->
+    <!--<attr name="cp_circleBgColor" format="color" />&lt;!&ndash;进度条 背景线底色颜色&ndash;&gt;-->
+    <!--<attr name="cp_progressColor" format="color" />&lt;!&ndash;进度条 进度线的颜色&ndash;&gt;-->
+    <!--<attr name="cp_circleAnimationDuration" format="integer" />&lt;!&ndash;动画执行时间&ndash;&gt;-->
+    <!--<attr name="cp_isDrawCenterProgressText" format="boolean" />&lt;!&ndash;是否显示圆中心的文字&ndash;&gt;-->
+    <!--<attr name="cp_centerProgressTextColor" format="color" /> &lt;!&ndash;圆中心文字的颜色&ndash;&gt;-->
+    <!--<attr name="cp_centerProgressTextSize" format="dimension" />&lt;!&ndash;圆中心文字的大小&ndash;&gt;-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <!--使用了所有属性-->
+        <cn.lee.cplibrary.widget.progressbar.CircleProgressBarView
+            android:id="@+id/circle_progress_view"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            cpbv:cp_centerProgressTextColor="@color/colorPrimary"
+            cpbv:cp_centerProgressTextSize="20sp"
+            cpbv:cp_circleAnimationDuration="2000"
+            cpbv:cp_circleBgColor="@color/black"
+            cpbv:cp_circleBgStrokeWidth="15dp"
+            cpbv:cp_isDrawCenterProgressText="true"
+            cpbv:cp_progressColor="@color/colorAccent"
+            cpbv:cp_progressStrokeWidth="10dp" />
+        <!--使用了默认属性-->
+        <cn.lee.cplibrary.widget.progressbar.CircleProgressBarView
+            android:id="@+id/circle_progress_view1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/progress_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <cn.lee.cplibrary.widget.progressbar.HorizontalProgressBar
+        android:id="@+id/horizontal_progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        cpbv:cp_bgColor="@color/black"
+        cpbv:cp_duration="2000"
+        cpbv:cp_hProgressColor="@color/colorAccent"
+        cpbv:cp_isDrawText="true"
+        cpbv:cp_progressWidth="5dp"
+        cpbv:cp_textSize="8sp" />
+
+    <cn.lee.cplibrary.widget.progressbar.HorizontalProgressBar
+        android:id="@+id/horizontal_progress_view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp" />
+
+    <cn.lee.cplibrary.widget.progressbar.ProductProgressBar
+        android:id="@+id/product_progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" />
+
+    <cn.lee.cplibrary.widget.progressbar.LoadingLineView
+        android:id="@+id/loading_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        cpbv:cp_lineWidth="3dp"
+        cpbv:cp_lineBgColor="@color/font_8d"
+        cpbv:cp_linePgColor="#ff0000"/>
+
+    <cn.lee.cplibrary.widget.progressbar.LoadingCircleView
+        android:id="@+id/loading_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        cpbv:cp_circleBgdColor="@color/bg_fa"
+        cpbv:cp_circlePgColor="@color/colorAccent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="启动动画" />
+        <Button
+            android:id="@+id/btn_success"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="成功" />
+        <Button
+            android:id="@+id/btn_fail"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="失败" />
+    </LinearLayout>
+
+</LinearLayout>

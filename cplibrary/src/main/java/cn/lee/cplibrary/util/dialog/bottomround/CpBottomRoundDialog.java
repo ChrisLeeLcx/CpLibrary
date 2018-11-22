@@ -36,6 +36,7 @@ public class CpBottomRoundDialog<T extends BaseDialogBean> {
     private int txtColor;
     private int cancelSize, cancelTxtColor, cancelHeight;
     private int titleSize, titleColor, titleHeight;
+    private String title;
 
 
     private CpBottomRoundDialog(Context context) {
@@ -143,6 +144,10 @@ public class CpBottomRoundDialog<T extends BaseDialogBean> {
         return isShowTitle;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     /**
      * 设置Dialog外观
      */
@@ -178,6 +183,7 @@ public class CpBottomRoundDialog<T extends BaseDialogBean> {
         } else {
             tvTitle.setVisibility(View.GONE);
         }
+        tvTitle.setText(title);
         tvTitle.setTextSize(ScreenUtil.sp2px(context, titleSize));
         tvTitle.setTextColor(titleColor);
         int titleHeight = this.titleHeight;
@@ -210,6 +216,7 @@ public class CpBottomRoundDialog<T extends BaseDialogBean> {
         private int titleSize = -999,   //Title文字大小
                 titleColor = -999, //Title文字颜色
                 titleHeight = -999; //Title高
+        private String title="标题";//标题内容
 
         private Builder(Context context, List<K> list) {
             this.context = context;
@@ -240,6 +247,7 @@ public class CpBottomRoundDialog<T extends BaseDialogBean> {
             titleSize = titleSize == -999 ? txtSize : titleSize;
             titleColor = titleColor == -999 ? txtColor : titleColor;
             titleHeight = titleHeight == -999 ? itemHeight : titleHeight;
+            dialog.setTitle(title);
             dialog.setTitleSize(titleSize);
             dialog.setTitleColor(titleColor);
             dialog.setTitleHeight(titleHeight);
@@ -310,6 +318,11 @@ public class CpBottomRoundDialog<T extends BaseDialogBean> {
 
         public Builder setTitleHeight(int titleHeight) {
             this.titleHeight = titleHeight;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
             return this;
         }
     }

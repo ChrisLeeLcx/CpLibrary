@@ -145,9 +145,7 @@ public class CircleProgressBarView extends View {
 
     private void initPaint() {
         circleBgPaint = getPaint(circleBgStrokeWidth, circleBgColor);
-
         progressPaint = getPaint(progressStrokeWidth, progressColor);
-
     }
 
     private Paint getPaint(int strokeWidth, int color) {
@@ -227,6 +225,9 @@ public class CircleProgressBarView extends View {
     }
 
 
+    /**
+     * 开始动画
+     */
     public void startProgressAnimation() {
         progressAnimator.start();
     }
@@ -236,13 +237,13 @@ public class CircleProgressBarView extends View {
         progressAnimator.pause();
     }
 
+    public void stopProgressAnimation() {
+        progressAnimator.end();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void resumeProgressAnimation() {
         progressAnimator.resume();
-    }
-
-    public void stopProgressAnimation() {
-        progressAnimator.end();
     }
 
 

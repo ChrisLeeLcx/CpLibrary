@@ -146,22 +146,36 @@
     </declare-styleable>
     <!--************** Created by Allen:github地址：https://github.com/lygttpod/AndroidCustomView -CircleProgressBarView**************-->
     <declare-styleable name="cp_CircleProgressBarView">
-        <attr name="cp_circleBgStrokeWidth" format="dimension" />
-        <attr name="cp_progressStrokeWidth" format="dimension" />
-        <attr name="cp_circleBgColor" format="color" />
-        <attr name="cp_progressColor" format="color" />
-        <attr name="cp_circleAnimationDuration" format="integer" />
-        <attr name="cp_isDrawCenterProgressText" format="boolean" />
-        <attr name="cp_centerProgressTextColor" format="color" />
-        <attr name="cp_centerProgressTextSize" format="dimension" />
+        <attr name="cp_circleBgStrokeWidth" format="dimension" /> <!--进度条 背景线宽-->
+        <attr name="cp_progressStrokeWidth" format="dimension" /><!--进度条 进度线宽-->
+        <attr name="cp_circleBgColor" format="color" /><!--进度条 背景线底色颜色-->
+        <attr name="cp_progressColor" format="color" /><!--进度条 进度线的颜色-->
+        <attr name="cp_circleAnimationDuration" format="integer" /><!--动画执行时间：单位ms-->
+        <attr name="cp_isDrawCenterProgressText" format="boolean" /><!--是否显示圆中心的文字-->
+        <attr name="cp_centerProgressTextColor" format="color" /> <!--圆中心文字的颜色-->
+        <attr name="cp_centerProgressTextSize" format="dimension" /><!--圆中心文字的大小-->
     </declare-styleable>
-    <!--************** LoadingCircleVieww**************-->0
+
+    <declare-styleable name="cp_horizontalProgressBar">
+        <attr name="cp_progressWidth" format="dimension" /><!--进度条 进度线宽-->
+        <attr name="cp_bgColor" format="color" /><!--进度条 背景线底色颜色-->
+        <attr name="cp_hProgressColor" format="color" /><!--进度条 进度线的颜色-->
+        <attr name="cp_duration" format="integer" /><!--动画执行时间：单位ms-->
+        <attr name="cp_isDrawText" format="boolean" /><!--是否进度文字-->
+        <attr name="cp_textSize" format="dimension" /><!--进度文字的大小-->
+    </declare-styleable>
+    <declare-styleable name="cp_LoadingLineView">
+        <attr name="cp_lineWidth" format="dimension" /><!--进度条线宽-->
+        <attr name="cp_linePgColor" format="reference|color" /> <!--进度线的颜色-->
+        <attr name="cp_lineBgColor" format="reference|color" /><!--背景颜色-->
+    </declare-styleable>
+    <!--************** LoadingCircleVieww**************-->
 
     <declare-styleable name="cp_LoadingCircleView">
         <attr name="cp_circlePgColor" format="reference|color" />
         <attr name="cp_circleBgdColor" format="reference|color" />
     </declare-styleable>
-    <!--************** PayPsdInputView**************-->0
+    <!--************** PayPsdInputView**************-->
     <declare-styleable name="cp_PayPsdInputView">
         <!--
         cp_maxCount：密码框位数
@@ -181,7 +195,7 @@
         <attr name="cp_divideLineWidth" format="dimension" />
         <attr name="cp_divideLineColor" format="color" />
         <attr name="cp_rectAngle" format="dimension" />
-        <attr name="cp_focusedColor" format="color"/>
+        <attr name="cp_focusedColor" format="color" />
         <attr name="cp_psdType" format="enum">
             <enum name="weChat" value="0" />
             <enum name="bottomLine" value="1" />

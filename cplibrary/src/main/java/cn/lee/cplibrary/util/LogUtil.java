@@ -6,6 +6,7 @@ import cn.lee.cplibrary.constant.CpConfig;
 
 
 /**
+ * 使用方式：默认不开启log，请在应用的Application中使用  LogUtil.setIsDebug(true);开启debug
  * @author ChrisLee
  * @desc:打印Log工具
  * @time 2017-4-6 上午10:19:23
@@ -94,6 +95,7 @@ public class LogUtil {
     public static boolean isIsDebug() {
         return isDebug;
     }
+
 
     public static void setIsDebug(boolean isDebug) {
         LogUtil.isDebug = isDebug;

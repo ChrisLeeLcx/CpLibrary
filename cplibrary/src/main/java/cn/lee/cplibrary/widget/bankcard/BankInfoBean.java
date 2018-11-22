@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.bankcard;
+package cn.lee.cplibrary.widget.bankcard;
 
 import java.util.regex.Pattern;
 

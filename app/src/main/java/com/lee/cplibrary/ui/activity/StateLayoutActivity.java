@@ -16,6 +16,10 @@ import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.widget.statelayout.SampleActivity;
 import cn.lee.cplibrary.widget.statelayout.StateLayout;
 
+/**
+ * StateLayout功能 ：是引用 第三方的项目
+ * 链接：https://github.com/fingdo/stateLayout
+ */
 public class StateLayoutActivity extends AppCompatActivity implements View.OnClickListener{
 
 

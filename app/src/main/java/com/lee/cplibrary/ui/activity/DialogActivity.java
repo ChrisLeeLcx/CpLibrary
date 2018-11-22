@@ -139,17 +139,18 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setBgColor(getResources().getColor(R.color.colorAccent))
                         .setItemHeight(50).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
-                        .setShowCancel(true)//设置cancel
+                        .setShowCancel(true)//设置cancel按钮
                         .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
                         .setCancelSize(8)
                         .setCancelHeight(50)
                         .setShowTitle(true)//设置标题
+                        .setTitle("我是普通的标题！")
                         .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
                         .setTitleHeight(60)
                         .setTitleSize(7)
-                        .setChangeBg(false)//设置可以改变各自背景色
+                        .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
                         .build().showDialog(new CpBottomDialog.DialogCertificateCallBack() {
                     @Override
                     public void sure(BottomDialogAdapter adapter, View rootView, int position) {
@@ -176,7 +177,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
 //                        .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
 //                        .setCancelSize(8)
 //                        .setCancelHeight(50)
-                        .setShowTitle(true)
+                        .setShowTitle(true).setTitle("我是好看的标题！")
                         .setTitleColor(getResources().getColor(R.color.colorPrimary))
                         .setTitleHeight(30)
                         .setTitleSize(5)

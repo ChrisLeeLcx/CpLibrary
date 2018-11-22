@@ -2,6 +2,7 @@ package cn.lee.cplibrary.widget.progressbar;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+
+import cn.lee.cplibrary.R;
 
 /**
  * Created by Allen on 2018/1/31.
@@ -93,7 +96,7 @@ public class LoadingLineView extends View {
 
     public LoadingLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        getAtt(attrs);
+        getAtt(context,attrs);
         init();
     }
 
@@ -102,12 +105,15 @@ public class LoadingLineView extends View {
      *
      * @param attrs attrs
      */
-    private void getAtt(AttributeSet attrs) {
-
+    private void getAtt(Context context,AttributeSet attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.cp_LoadingLineView, 0, 0);
+        bgColor = ta.getColor(R.styleable.cp_LoadingLineView_cp_lineBgColor, bgColor);
+        loadingColor = ta.getColor(R.styleable.cp_LoadingLineView_cp_linePgColor, loadingColor);
+        paintWidth = ta.getDimensionPixelOffset(R.styleable.cp_LoadingLineView_cp_lineWidth, 4);
+        ta.recycle();
     }
-
     private void init() {
-        paintWidth = dp2px(2);
+//        paintWidth = dp2px(2);
         mViewHeight = paintWidth;
         bgPaint = getPaint(paintWidth, bgColor, Paint.Style.FILL);
         loadingPaint = getPaint(paintWidth, loadingColor, Paint.Style.FILL);

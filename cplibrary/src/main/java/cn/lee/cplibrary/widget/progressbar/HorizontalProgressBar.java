@@ -2,6 +2,7 @@ package cn.lee.cplibrary.widget.progressbar;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,6 +19,9 @@ import android.view.animation.LinearInterpolator;
 
 import java.text.DecimalFormat;
 
+import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.LogUtil;
+
 /**
  * Created by Allen on 2017/5/14.
  * <p>
@@ -25,7 +29,7 @@ import java.text.DecimalFormat;
  */
 
 public class HorizontalProgressBar extends View {
-
+    private Context mContext;
     private Paint bgPaint;
     private Paint progressPaint;
 
@@ -51,13 +55,13 @@ public class HorizontalProgressBar extends View {
     private ValueAnimator progressAnimator;
 
     /**
-     * 动画执行时间
-     */
-    private int duration = 1000;
-    /**
      * 动画延时启动时间
      */
     private int startDelay = 500;
+    /**
+     * 动画执行时间
+     */
+    private int duration = 1000;
 
     /**
      * 进度条画笔的宽度
@@ -127,6 +131,10 @@ public class HorizontalProgressBar extends View {
      * 进度监听回调
      */
     private ProgressListener progressListener;
+    /**
+     * 是否显示进度文字框
+     */
+    private boolean isDrawText;
 
     public HorizontalProgressBar(Context context) {
         super(context);
@@ -134,8 +142,21 @@ public class HorizontalProgressBar extends View {
 
     public HorizontalProgressBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         init();
+        getAttr(attrs);
         initPaint();
+    }
+
+    private void getAttr(AttributeSet attrs) {
+        TypedArray typedArray = mContext.obtainStyledAttributes(attrs, R.styleable.cp_horizontalProgressBar);
+        progressPaintWidth = typedArray.getDimensionPixelOffset(R.styleable.cp_horizontalProgressBar_cp_progressWidth, 8);
+        bgColor = typedArray.getColor(R.styleable.cp_horizontalProgressBar_cp_bgColor, bgColor);
+        progressColor = typedArray.getColor(R.styleable.cp_horizontalProgressBar_cp_hProgressColor, progressColor);
+        duration = typedArray.getColor(R.styleable.cp_horizontalProgressBar_cp_duration, duration);
+        isDrawText = typedArray.getBoolean(R.styleable.cp_horizontalProgressBar_cp_isDrawText, false);
+        textPaintSize = typedArray.getDimensionPixelOffset(R.styleable.cp_horizontalProgressBar_cp_textSize, sp2px(10));
+        typedArray.recycle();
     }
 
     /**
@@ -202,7 +223,6 @@ public class HorizontalProgressBar extends View {
 
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
-
         setMeasuredDimension(measureWidth(widthMode, width), measureHeight(heightMode, height));
     }
 
@@ -261,8 +281,10 @@ public class HorizontalProgressBar extends View {
                 tipHeight + progressMarginTop,
                 progressPaint);
 
-        drawTipView(canvas);
-        drawText(canvas, textString);
+        if (isDrawText) {
+            drawTipView(canvas);
+            drawText(canvas, textString);
+        }
 
     }
 
@@ -373,6 +395,13 @@ public class HorizontalProgressBar extends View {
         mProgress = progress;
         currentProgress = progress * mWidth / 100;
         textString = formatNum(format2Int(progress));
+        //计算moveDis
+        if (currentProgress >= (tipWidth / 2) &&
+                currentProgress <= (mWidth - tipWidth / 2)) {
+            moveDis = currentProgress - tipWidth / 2;
+        } else if (currentProgress > (mWidth - tipWidth / 2)) {
+            moveDis = mWidth - tipWidth;
+        }
         invalidate();
         return this;
     }
