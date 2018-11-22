@@ -126,20 +126,14 @@ public class CircleProgressBarView extends View {
 
     private void getAttr(AttributeSet attrs) {
         TypedArray typedArray = mContext.obtainStyledAttributes(attrs, R.styleable.cp_CircleProgressBarView);
-
         circleBgStrokeWidth = typedArray.getDimensionPixelOffset(R.styleable.cp_CircleProgressBarView_cp_circleBgStrokeWidth, defaultStrokeWidth);
         progressStrokeWidth = typedArray.getDimensionPixelOffset(R.styleable.cp_CircleProgressBarView_cp_progressStrokeWidth, defaultStrokeWidth);
-
         circleBgColor = typedArray.getColor(R.styleable.cp_CircleProgressBarView_cp_circleBgColor, circleBgColor);
         progressColor = typedArray.getColor(R.styleable.cp_CircleProgressBarView_cp_progressColor, progressColor);
-
         duration = typedArray.getColor(R.styleable.cp_CircleProgressBarView_cp_circleAnimationDuration, duration);
-
         isDrawCenterProgressText = typedArray.getBoolean(R.styleable.cp_CircleProgressBarView_cp_isDrawCenterProgressText, false);
-
         centerProgressTextColor = typedArray.getColor(R.styleable.cp_CircleProgressBarView_cp_centerProgressTextColor, centerProgressTextColor);
         centerProgressTextSize = typedArray.getDimensionPixelOffset(R.styleable.cp_CircleProgressBarView_cp_centerProgressTextSize, sp2px(centerProgressTextSize));
-
         typedArray.recycle();
     }
 
