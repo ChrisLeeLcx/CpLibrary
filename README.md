@@ -36,3 +36,4 @@ Android 通用工具类 版本1.0.0
 
 ![进度条和loading](进度条loading.gif)
 ![dialog](dialog.gif)	
+![dialog](品牌列表.gif)
