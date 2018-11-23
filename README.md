@@ -34,3 +34,4 @@ Android 通用工具类 版本1.0.0
         compile "com.android.support:appcompat-v7:27.1.1"
         implementation project(':cplibrary')
 
+![进度条和loading](进度条和loading.gif)
