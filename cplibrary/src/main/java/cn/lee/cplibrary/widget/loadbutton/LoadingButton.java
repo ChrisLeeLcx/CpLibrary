@@ -417,7 +417,7 @@ public class LoadingButton extends View {
                 mButtonRectF.right = width - mScaleWidth;
                 canvas.drawRoundRect(mButtonRectF, cornerRadius, cornerRadius, mPaint);
                 if (mCurrentState == STATE_BUTTON) {
-                    canvas.drawText(mText, (width - mTextWidth) / 2, (height - mTextHeight) / 2 + mPadding * 2, mTextPaint);
+                    canvas.drawText(mText, (width - mTextWidth) / 2, (height - mTextHeight) / 2 + mPadding *2, mTextPaint);
                     if (mTouchX > 0 || mTouchY > 0) {
                         canvas.clipRect(0, mPadding, width, height - mPadding);
                         canvas.drawCircle(mTouchX, mTouchY, mRippleRadius, ripplePaint);

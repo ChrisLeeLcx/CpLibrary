@@ -48,6 +48,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         findViewById(R.id.btn_2btn).setOnClickListener(this);
         findViewById(R.id.btn_bottom).setOnClickListener(this);
         findViewById(R.id.btn_bottom_round).setOnClickListener(this);
+        findViewById(R.id.btn_pWindow).setOnClickListener(this);
         cityPickerUtil = new CityPickerUtil(getSelfActivity());
     }
 
@@ -192,6 +193,9 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         ToastUtil.showToast(getSelfActivity(), "取消");
                     }
                 });
+                break;
+            case R.id.btn_pWindow:
+
                 break;
             default:
                 break;

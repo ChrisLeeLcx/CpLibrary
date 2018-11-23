@@ -17,11 +17,11 @@ import cn.lee.cplibrary.R;
 
 
 /**
- *
+ * 在LoadingView中使用
  * @author zzz40500
  * @date 15/4/4
  */
-public class ShapeLoadingView extends View {
+class ShapeLoadingView extends View {
 
 
     private static final float genhao3 = 1.7320508075689f;
