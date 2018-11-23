@@ -33,4 +33,4 @@ Android 通用工具类 版本1.0.0
     module中依赖
         compile "com.android.support:appcompat-v7:27.1.1"
         implementation project(':cplibrary')
- ![jdk配置](TIM截图20181123114216.png)
+ ![进度条和loading](进度条和loading.gif)
