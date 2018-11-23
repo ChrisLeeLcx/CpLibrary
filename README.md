@@ -35,3 +35,4 @@ Android 通用工具类 版本1.0.0
         implementation project(':cplibrary')
 
 ![进度条和loading](进度条loading.gif)
+ ![dialog](dialog.gif)	
