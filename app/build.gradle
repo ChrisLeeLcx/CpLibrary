@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+       javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
 
     signingConfigs {
@@ -43,4 +44,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'    //glide
     compile 'jp.wasabeef:glide-transformations:2.0.1'  //高斯模糊
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    compile 'cc.solart:turbo-recyclerview-helper:1.0.3-beta'
+    compile 'com.jakewharton:butterknife:7.0.0'
 }

@@ -16,8 +16,8 @@ import cn.lee.cplibrary.widget.swipeback.Utils;
  * 侧滑返回的Activity：使用方式
  * 1、Activity 继承SwipeBackActivity即可
  */
-public abstract  class SwipeBackActivity extends AppCompatActivity implements SwipeBackActivityBase {
-    protected abstract SwipeBackActivity getSelfActivity();
+public abstract  class SwipeBackActivity extends BaseActivity implements SwipeBackActivityBase {
+
     private SwipeBackActivityHelper mHelper;
     public SwipeBackLayout mSwipeBackLayout;
     @Override

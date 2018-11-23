@@ -7,19 +7,22 @@ import android.widget.TextView;
 
 import com.lee.cplibrary.R;
 import com.lee.cplibrary.base.SwipeBackActivity;
+import com.lee.cplibrary.util.PopupWindowUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.ToastUtil;
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.dialog.bottom.BaseDialogBean;
 import cn.lee.cplibrary.util.dialog.bottom.BottomDialogAdapter;
-import cn.lee.cplibrary.util.dialog.bottomround.BottomRoundDialogAdapter;
 import cn.lee.cplibrary.util.dialog.bottom.CpBottomDialog;
+import cn.lee.cplibrary.util.dialog.bottomround.BottomRoundDialogAdapter;
 import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
-import cn.lee.cplibrary.util.dialog.CpComDialog;
-import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.widget.picker.util.CityPickerUtil;
 import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
+import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
 
 /**
  * 各种Dialog的Demo
@@ -28,6 +31,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
 
     private TextView tvDate, tvAddr, tvTime;
     private CityPickerUtil cityPickerUtil;
+    private TextView tvSort;
+    private PopupWindowUtil popupWindowUtil;
 
     @Override
     protected SwipeBackActivity getSelfActivity() {
@@ -41,6 +46,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvAddr = (TextView) findViewById(R.id.tv_addr);
+        tvSort = (TextView) findViewById(R.id.tv_sort);
+        tvSort.setOnClickListener(this);
         tvDate.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         tvAddr.setOnClickListener(this);
@@ -48,8 +55,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         findViewById(R.id.btn_2btn).setOnClickListener(this);
         findViewById(R.id.btn_bottom).setOnClickListener(this);
         findViewById(R.id.btn_bottom_round).setOnClickListener(this);
-        findViewById(R.id.btn_pWindow).setOnClickListener(this);
         cityPickerUtil = new CityPickerUtil(getSelfActivity());
+        popupWindowUtil = new PopupWindowUtil();
     }
 
     @Override
@@ -61,7 +68,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .settTitle("请选择时间")
                         .settTxtColor(getResources().getColor(R.color.font_14))
                         .settTxtSize(8)
-                        .setShowLabel(false)
+                        .setShowLabel(true)
                         .build().
                         showDate(new DatePickerUtils.DateCallBack() {
                             @Override
@@ -138,7 +145,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 list.add(new MyDialogBean("第2个", "2"));
                 CpBottomDialog.Builder.builder(getSelfActivity(), list)
                         .setBgColor(getResources().getColor(R.color.colorAccent))
-                        .setItemHeight(50).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
                         .setShowCancel(true)//设置cancel按钮
                         .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
@@ -149,13 +156,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setTitle("我是普通的标题！")
                         .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
-                        .setTitleHeight(60)
+                        .setTitleHeight(50)
                         .setTitleSize(7)
                         .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
                         .build().showDialog(new CpBottomDialog.DialogCertificateCallBack() {
                     @Override
                     public void sure(BottomDialogAdapter adapter, View rootView, int position) {
-                        ToastUtil.showToast(getSelfActivity(), list.get(position).getName() + "-----" + list.get(position).getId());
+                        ToastUtil.showToast(getSelfActivity(), list.get(position).getName() + "-" + list.get(position).getId());
 
                     }
 
@@ -167,10 +174,10 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 break;
             case R.id.btn_bottom_round:
                 final List<MyDialogBean> list1 = new ArrayList<>();
-                list1.add(new MyDialogBean("哈哈哈", "1"));
-                list1.add(new MyDialogBean("呵呵呵", "2"));
-                list1.add(new MyDialogBean("大大", "3"));
-                list1.add(new MyDialogBean("小小", "4"));
+                list1.add(new MyDialogBean("西游记", "1"));
+                list1.add(new MyDialogBean("红楼梦", "2"));
+                list1.add(new MyDialogBean("三国演义", "3"));
+                list1.add(new MyDialogBean("水浒传", "4"));
                 CpBottomRoundDialog.Builder.builder(getSelfActivity(), list1)
 //                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
 //                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
@@ -185,7 +192,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .build().showDialog(new CpBottomRoundDialog.DialogCertificateCallBack() {
                     @Override
                     public void sure(BottomRoundDialogAdapter adapter, View rootView, int position) {
-                        ToastUtil.showToast(getSelfActivity(), list1.get(position).getName() + "-----" + list1.get(position).getId());
+                        ToastUtil.showToast(getSelfActivity(), list1.get(position).getName() + "-" + list1.get(position).getId());
                     }
 
                     @Override
@@ -194,8 +201,15 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                     }
                 });
                 break;
-            case R.id.btn_pWindow:
-
+            case R.id.tv_sort:
+                popupWindowUtil.showPWindow(getSelfActivity(), tvSort, tvSort, new CommonPopupWindow.ViewInterface() {
+                    @Override
+                    public void getChildView(View view, int layoutResId) {
+                        if (layoutResId == R.layout.pwindow) {
+                           LogUtil.i("","","我是布局activity_state_layout");
+                        }
+                    }
+                });
                 break;
             default:
                 break;

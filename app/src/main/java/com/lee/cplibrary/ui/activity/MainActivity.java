@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("签名", SignActivity.class));
         totalList.add(new ActivityBean("各种状态下布局", StateLayoutActivity.class));
         totalList.add(new ActivityBean("各种进度条", ProgressBarActivity.class));
+        totalList.add(new ActivityBean("仿瓜子二手车品牌选择", BrandActivity.class));
     }
 
     private void initRecyclerView() {

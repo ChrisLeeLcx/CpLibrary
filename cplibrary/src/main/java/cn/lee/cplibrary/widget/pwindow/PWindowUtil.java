@@ -20,7 +20,7 @@ import cn.lee.cplibrary.widget.flexbox.FlexRadioGroup;
  *  使用时候，应该先实例化PopupWindowUtil，然后其对象调用相应的showPopWindow方法
  *  具体使用方式见新能源newenergy项目的SelectCarActivity
  */
-class PopupWindowUtil {
+class PWindowUtil {
     private CommonPopupWindow pWindowFilter;
     //筛选Window种的内容
     //车辆级别
