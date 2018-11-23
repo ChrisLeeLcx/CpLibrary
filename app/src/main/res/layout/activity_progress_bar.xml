@@ -16,6 +16,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             cpbv:cp_circleBgdColor="@color/bg_fa"
             cpbv:cp_circlePgColor="@color/colorAccent" />
         <!--使用了所有属性-->
@@ -28,10 +29,10 @@
             cpbv:cp_centerProgressTextSize="20sp"
             cpbv:cp_circleAnimationDuration="2000"
             cpbv:cp_circleBgColor="@color/black"
-            cpbv:cp_circleBgStrokeWidth="15dp"
+            cpbv:cp_circleBgStrokeWidth="10dp"
             cpbv:cp_isDrawCenterProgressText="true"
             cpbv:cp_progressColor="@color/colorAccent"
-            cpbv:cp_progressStrokeWidth="10dp" />
+            cpbv:cp_progressStrokeWidth="8dp" />
         <!--使用了默认属性-->
         <cn.lee.cplibrary.widget.progressbar.CircleProgressBarView
             android:id="@+id/circle_progress_view1"
@@ -54,7 +55,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
-        cpbv:cp_bgColor="@color/black"
+        cpbv:cp_bgColor="#e1e5e8"
         cpbv:cp_duration="2000"
         cpbv:cp_hProgressColor="@color/colorAccent"
         cpbv:cp_isDrawText="true"
@@ -81,9 +82,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        cpbv:cp_lineBgColor="@color/font_8d"
-        cpbv:cp_linePgColor="#ff0000"
-        cpbv:cp_lineWidth="3dp" />
+        cpbv:cp_lineBgColor="#e1e5e8"
+        cpbv:cp_linePgColor="#ff7924"
+        cpbv:cp_lineWidth="2dp" />
 
 
     <LinearLayout

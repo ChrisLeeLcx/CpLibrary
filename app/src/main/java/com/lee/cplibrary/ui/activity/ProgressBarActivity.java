@@ -153,8 +153,6 @@ public class ProgressBarActivity extends SwipeBackActivity implements View.OnCli
                 //3种loading
                 loadingLineView.startLoading();
                 loadingView.loadingStart();
-                showProgressDialog();
-
                 break;
             case R.id.btn_success:
                 loadingView.loadingSuccessful();
@@ -168,6 +166,7 @@ public class ProgressBarActivity extends SwipeBackActivity implements View.OnCli
                 break;
             case R.id.btn_login:
                 btnLogin.startLoading();
+                showProgressDialog();
                 break;
             default:
                 break;
