@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.widget.edittext;
 
 /**
  * 身份证前6位【ABCDEF】为行政区划数字代码（简称数字码）说明（参考《GB/T 2260-2007 中华人民共和国行政区划代码》）：

@@ -27,7 +27,11 @@
         <activity android:name=".ui.activity.SignActivity" />
         <activity android:name=".ui.activity.ProgressBarActivity" />
         <activity android:name=".ui.activity.BrandActivity" />
-        <activity android:name=".ui.activity.EditTextActivity"></activity>
+        <activity android:name=".ui.activity.EditTextActivity" />
+        <activity android:name=".ui.activity.ObjectRippleActivity" />
+        <activity android:name=".base.BaseWebViewActivity" />
+        <activity android:name=".ui.activity.RollPagerActivity" />
+        <activity android:name=".ui.activity.OtherActivity"></activity>
     </application>
 
 </manifest>

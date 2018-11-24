@@ -45,5 +45,5 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'  //高斯模糊
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     compile 'cc.solart:turbo-recyclerview-helper:1.0.3-beta'
-    compile 'com.jakewharton:butterknife:7.0.0'
+
 }

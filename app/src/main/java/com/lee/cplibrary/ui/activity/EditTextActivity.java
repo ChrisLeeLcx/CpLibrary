@@ -2,8 +2,8 @@ package com.lee.cplibrary.ui.activity;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,7 +12,8 @@ import com.lee.cplibrary.R;
 import com.lee.cplibrary.base.BaseActivity;
 import com.lee.cplibrary.base.SwipeBackActivity;
 
-import cn.lee.cplibrary.util.IdcardValidator;
+import cn.lee.cplibrary.widget.edittext.DecimalInputFilter;
+import cn.lee.cplibrary.widget.edittext.IdcardValidator;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.SystemUtil;
@@ -25,7 +26,7 @@ import cn.lee.cplibrary.widget.keyboardview.PwdKeyboardView;
 
 public class EditTextActivity extends SwipeBackActivity {
 
-    private EditText etBankCardNum, etIdcardno;
+    private EditText etPrice,etBankCardNum, etIdcardno;
     private PayPsdInputView etSetPsd, etSetPsd1;
     private TextView tvNo;
 
@@ -43,11 +44,17 @@ public class EditTextActivity extends SwipeBackActivity {
     }
 
     private void initView() {
+        etPrice = (EditText) findViewById(R.id.et_price);
         etBankCardNum = (EditText) findViewById(R.id.et_bank_card_num);
         etIdcardno = (EditText) findViewById(R.id.et_idcardno);
         etSetPsd = (PayPsdInputView) findViewById(R.id.et_setPsd);
         etSetPsd1 = (PayPsdInputView) findViewById(R.id.et_setPsd1);
         tvNo = (TextView) findViewById(R.id.tv_no);
+        PwdKeyboardView keyboardView = (PwdKeyboardView) findViewById(R.id.key_board);
+        //限制只能输入2位小数
+        InputFilter[] filtersPrice = {new DecimalInputFilter(2)};
+        etPrice.setFilters(filtersPrice);
+        //监听
         BankCardTextWatcher.bind(etBankCardNum);//实现每4个卡号空一格
         etBankCardNum.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,7 +79,6 @@ public class EditTextActivity extends SwipeBackActivity {
             }
         });
 
-        PwdKeyboardView keyboardView = (PwdKeyboardView) findViewById(R.id.key_board);
         keyboardView.setOnKeyListener(new PwdKeyboardView.OnKeyListener() {
             @Override
             public void onInput(String text) {
@@ -82,7 +88,6 @@ public class EditTextActivity extends SwipeBackActivity {
                 LogUtil.i("", "", "onInput: content = " + content);
 
             }
-
             @Override
             public void onDelete() {
                 LogUtil.i("", "", "onDelete:  " );
@@ -90,16 +95,15 @@ public class EditTextActivity extends SwipeBackActivity {
                 if (content.length() > 0) {
                     etSetPsd1.setText(content.substring(0, content.length() - 1));
                 }
-
-
             }
         });
 
-        ViewUtil.setEditTextEditState(false,etSetPsd1);//设置不可线性密码框 不可编辑，则不能弹出系统键盘
+
     }
 
     private void initPsdInputView() {
-        SystemUtil.setEtFocusChangeSystemFit(getSelfActivity(), etSetPsd);
+        SystemUtil.setEtFocusChangeSystemFit(getSelfActivity(), etSetPsd,etSetPsd1);
+        ViewUtil.setEditTextEditState(false,etSetPsd1);//设置不可线性密码框 不可编辑，则不能弹出系统键盘
         etSetPsd.setComparePassword(new PayPsdInputView.onPasswordListener() {
             @Override
             public void onDifference(String oldPsd, String newPsd) {//两次输入不同
@@ -166,7 +170,6 @@ public class EditTextActivity extends SwipeBackActivity {
             toast("身份证不正确");
             return false;
         }
-
         tvNo.setText("银行卡："+cardNum+"\n身份证："+idcardNo);
         return true;
     }

@@ -21,5 +21,30 @@
         <item name="android:layout_margin">5dp</item>
     </style>
 
-
+    <style name="ratingBarEvaluate" parent="@android:style/Widget.RatingBar">
+        <item name="android:indeterminateDrawable">@null</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxHeight">20dp</item>
+        <item name="android:isIndicator">false</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1.0</item>
+        <item name="android:rating">0.0</item>
+        <item name="android:layout_width">180dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--
+       Disabled for correct behavior on Android 4.x, see
+       https://github.com/android/platform_frameworks_base/commit/911743652b597057a1bd7ef8a921e9ff8dce0f4a#diff-149f45c5ff2d3185bb79688ba17bc432L536
+       <item name="android:progressDrawable">@null</item>
+       -->
+    <!--<style name="ratingBar" parent="android:Widget.RatingBar">-->
+    <style name="ratingBarIsIndicator" parent="@android:style/Widget.RatingBar">
+        <item name="android:indeterminateDrawable">@null</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:maxHeight">14dp</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1.0</item>
+        <item name="android:rating">1.0</item>
+    </style>
 </resources>

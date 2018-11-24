@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar
+        android:id="@+id/rating_bar"
+        style="@style/ratingBarEvaluate"
+        app:cp_mrb_progressBackgroundTint="#FFFD5858"
+        app:cp_mrb_progressTint="#FFFD5858" />
+
+
+
+    <!--app:cp_mrb_progressBackgroundTint="@color/transparent"-->
+    <!--app:cp_mrb_indeterminateTint="#FF0021FD"-->
+    <!--控制星星控件的大小 和 间距用layout_width即可-->
+    <!--cp_mrb_fillBackgroundStars：true 没有选中的星星为实心，false：则为空心-->
+    <cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar
+        android:id="@+id/material_rating_bar"
+        style="@style/ratingBarIsIndicator"
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        app:cp_mrb_fillBackgroundStars="true"
+        app:cp_mrb_progressTint="#FFFD5858"
+        app:cp_mrb_secondaryProgressTint="#FFFD5858" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="" />
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取数据" />
+</LinearLayout>

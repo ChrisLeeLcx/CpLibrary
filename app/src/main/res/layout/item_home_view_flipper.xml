@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_title"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+   android:gravity="center_vertical"
+    android:ellipsize="end"
+    android:singleLine="true"
+    android:text="小米6来了：晓龙835+8G运存！小米6来了：晓龙835+8G运存！小米6来了：晓龙835+8G运存！"
+    android:textColor="#7D7D7D"
+    android:textSize="12sp" />

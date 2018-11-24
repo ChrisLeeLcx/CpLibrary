@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <cn.lee.cplibrary.widget.rollviewpager.RollPagerView
+        android:id="@+id/rollPagerView"
+        android:layout_width="match_parent"
+        android:layout_height="211dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_launcher"
+        app:cp_rollviewpager_hint_paddingBottom="8dp"
+        app:cp_rollviewpager_play_delay="3000" />
+
+    <!--注意：
+     flipInterval的大小是anim_marquee_in和anim_marquee_out的时间之和-->
+    <cn.lee.cplibrary.widget.viewflipper.CLViewFlipper
+        android:id="@+id/vFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="5dp"
+        android:background="@drawable/bg_xm"
+        android:layout_margin="20dp"
+        android:autoStart="true"
+        android:flipInterval="2000"
+        android:inAnimation="@anim/cp_anim_marquee_in"
+        android:outAnimation="@anim/cp_anim_marquee_out" />
+</LinearLayout>

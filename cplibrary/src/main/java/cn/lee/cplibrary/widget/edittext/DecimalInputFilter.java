@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.widget.edittext;
 
 import android.text.InputFilter;
 import android.text.Spanned;

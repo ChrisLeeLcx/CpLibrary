@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lee.cplibrary.R;
+import com.lee.cplibrary.base.BaseWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("各种进度条", ProgressBarActivity.class));
         totalList.add(new ActivityBean("仿瓜子二手车品牌选择", BrandActivity.class));
         totalList.add(new ActivityBean("各种EditText", EditTextActivity.class));
+        totalList.add(new ActivityBean("水波纹效果", ObjectRippleActivity.class));
+        totalList.add(new ActivityBean("网页加载", BaseWebViewActivity.class));
+        totalList.add(new ActivityBean("轮播图和滚轮广告", RollPagerActivity.class));
+        totalList.add(new ActivityBean("其他", OtherActivity.class));
     }
 
     private void initRecyclerView() {
