@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cp_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="密码框1：设置6位数字支付密码"
+        android:textColor="@color/font_32"
+        android:textSize="16sp" />
+
+    <cn.lee.cplibrary.widget.edittext.PayPsdInputView
+        android:id="@+id/et_setPsd"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:inputType="number"
+        app:cp_circleColor="@color/font_32"
+        app:cp_focusedColor="@color/font_32"
+        app:cp_maxCount="6"
+        app:cp_psdType="weChat"
+        app:cp_radius="6dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="密码框1的线性样式"
+        android:textColor="@color/font_32"
+        android:textSize="16sp" />
+
+    <cn.lee.cplibrary.widget.edittext.PayPsdInputView
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:inputType="number"
+        app:cp_circleColor="@color/font_32"
+        app:cp_focusedColor="@color/font_32"
+        app:cp_maxCount="6"
+        app:cp_psdType="bottomLine"
+        app:cp_radius="6dp" />
+
+    <cn.lee.cplibrary.widget.edittext.ClearEditText
+        android:id="@+id/et_bank_card_num"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/cp_photo_bg10_normal"
+        android:drawableRight="@drawable/zhuce_btn_delete"
+        android:hint="请输入银行卡号"
+        android:inputType="number"
+        android:maxLength="26"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:textSize="14sp" />
+
+    <cn.lee.cplibrary.widget.edittext.ClearEditText
+        android:id="@+id/et_idcardno"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/cp_photo_bg10_normal"
+        android:drawableRight="@drawable/zhuce_btn_delete"
+        android:hint="请输入身份证"
+        android:maxLength="26"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/tv_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/btn_sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="验证" />
+
+</LinearLayout>

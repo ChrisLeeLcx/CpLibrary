@@ -26,7 +26,8 @@
         <activity android:name=".ui.activity.StateLayoutActivity" />
         <activity android:name=".ui.activity.SignActivity" />
         <activity android:name=".ui.activity.ProgressBarActivity" />
-        <activity android:name=".ui.activity.BrandActivity"></activity>
+        <activity android:name=".ui.activity.BrandActivity" />
+        <activity android:name=".ui.activity.EditTextActivity"></activity>
     </application>
 
 </manifest>
