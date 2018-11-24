@@ -39,7 +39,7 @@ public class PwdKeyboardView extends KeyboardView implements KeyboardView.OnKeyb
 
     private static final int KEY_EMPTY = -10;
 
-    private int delKeyBackgroundColor = 0xffcccccc;
+    private int delKeyBackgroundColor = 0xffebebeb;
 
     private Rect keyIconRect;
 
