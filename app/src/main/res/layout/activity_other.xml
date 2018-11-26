@@ -13,7 +13,6 @@
         app:cp_mrb_progressTint="#FFFD5858" />
 
 
-
     <!--app:cp_mrb_progressBackgroundTint="@color/transparent"-->
     <!--app:cp_mrb_indeterminateTint="#FF0021FD"-->
     <!--控制星星控件的大小 和 间距用layout_width即可-->
@@ -35,9 +34,30 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="" />
+
     <Button
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="获取数据" />
+
+
+    <TextView
+        android:id="@+id/tv_right_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="right"
+        android:text="14-38万"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <cn.lee.cplibrary.widget.rangeseekbar.RangeSeekBar
+        android:id="@+id/rangeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        app:cp_rsb_indicator_height="17dp"
+        app:cp_rsb_indicator_width="20dp" />
 </LinearLayout>

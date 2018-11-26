@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.StringUtil;
 import cn.lee.cplibrary.widget.rollviewpager.RollPagerView;
 import cn.lee.cplibrary.widget.rollviewpager.RollViewPagerUtil;
 import cn.lee.cplibrary.widget.rollviewpager.adapter.LoopPagerAdapter;
