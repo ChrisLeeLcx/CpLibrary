@@ -31,7 +31,8 @@
         <activity android:name=".ui.activity.ObjectRippleActivity" />
         <activity android:name=".base.BaseWebViewActivity" />
         <activity android:name=".ui.activity.RollPagerActivity" />
-        <activity android:name=".ui.activity.OtherActivity"></activity>
+        <activity android:name=".ui.activity.OtherActivity" />
+        <activity android:name=".ui.activity.DragSortRvActivity"></activity>
     </application>
 
 </manifest>

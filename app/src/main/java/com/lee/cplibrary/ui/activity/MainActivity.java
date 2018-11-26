@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("水波纹效果", ObjectRippleActivity.class));
         totalList.add(new ActivityBean("网页加载", BaseWebViewActivity.class));
         totalList.add(new ActivityBean("轮播图和滚轮广告", RollPagerActivity.class));
+        totalList.add(new ActivityBean("拖拽排序RecyclerView", DragSortRvActivity.class));
         totalList.add(new ActivityBean("其他", OtherActivity.class));
     }
 
