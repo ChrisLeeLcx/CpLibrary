@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lee.cplibrary.R;
+import com.lee.cplibrary.base.BaseActivity;
+import com.lee.cplibrary.base.SwipeBackActivity;
 import com.lee.cplibrary.util.BitmapUtils;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ZoomTutorial;
 import cn.lee.cplibrary.widget.imageview.photoview.PhotoView;
 
-public class ImageZoomActivity extends AppCompatActivity {
+public class ImageZoomActivity extends SwipeBackActivity {
 
     private PhotoView ivLarge;
     private ImageView  ivSmall;
@@ -30,14 +32,6 @@ public class ImageZoomActivity extends AppCompatActivity {
     private List<String> list = new ArrayList<>();
     public static final String url = "https://static.firefoxchina.cn/img/201711/7_5a0ba48885d170.png";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_zoom);
-        initView();
-        BitmapUtils.displayImageFromUrl(url, ivSmall);
-        initRecyclerView();
-    }
 
     private void initRecyclerView() {
         list.add(url);
@@ -50,11 +44,31 @@ public class ImageZoomActivity extends AppCompatActivity {
         recyclerView.setAdapter(new CarImgAdapter(list, container, ivLarge));
     }
 
-    private void initView() {
-        ivLarge = findViewById(R.id.iv_large);
-        ivSmall = findViewById(R.id.iv_small);
+    @Override
+    protected BaseActivity getSelfActivity() {
+        return this;
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_image_zoom;
+    }
+
+    @Override
+    public String getPagerTitle() {
+        return "图片点击放大";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+    @Override
+    public void initView() {
+        ivLarge = (PhotoView) findViewById(R.id.iv_large);
+        ivSmall = (ImageView) findViewById(R.id.iv_small);
         container = findViewById(R.id.container);
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ivSmall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +77,12 @@ public class ImageZoomActivity extends AppCompatActivity {
             }
         });
         ivLarge.enable();
+    }
+
+    @Override
+    protected void initData() {
+        BitmapUtils.displayImageFromUrl(url, ivSmall);
+        initRecyclerView();
     }
 
 

@@ -1,7 +1,6 @@
 package com.lee.cplibrary.base;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.ProgressBar;
 
@@ -23,12 +22,21 @@ public class BaseWebViewActivity extends SwipeBackActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_web_view);
-        initView();
-        webview.loadUrl(url);
+    protected int getLayoutResId() {
+        return R.layout.activity_base_web_view;
     }
+
+    @Override
+    public String getPagerTitle() {
+        return title;
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
     public void initView() {
         webview = getSelfActivity().findViewById(R.id.webview);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -37,6 +45,12 @@ public class BaseWebViewActivity extends SwipeBackActivity {
         title = intent.getStringExtra(KEY_TITLE);
         url = ObjectUtils.isEmpty(intent.getStringExtra(KEY_URL))?url:intent.getStringExtra(KEY_URL);
     }
+
+    @Override
+    protected void initData() {
+        webview.loadUrl(url);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {

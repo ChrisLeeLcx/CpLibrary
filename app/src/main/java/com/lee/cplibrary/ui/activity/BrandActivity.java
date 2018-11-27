@@ -48,19 +48,26 @@ public class BrandActivity extends SwipeBackActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_brand);
+    protected int getLayoutResId() {
+        return R.layout.activity_brand;
+    }
+
+    @Override
+    public String getPagerTitle() {
+        return "品牌";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+    @Override
+    public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         tvDialog = (TextView) findViewById(R.id.tv_dialog);
         sidebarView = (SideBar) findViewById(R.id.sidebar_view);
         btn = (Button) findViewById(R.id.btn);
         drawerLayout = (NoShadowDrawerLayout) findViewById(R.id.drawerLayout);
-        initView();
-        initData();
-    }
-
-    public void initView() {
         tvDialog.setBackground(DrawableUtil.createSolidOvalDrawable(Color.parseColor("#EDEDED")));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sidebarView.setTextViewDialog(tvDialog);
@@ -112,7 +119,7 @@ public class BrandActivity extends SwipeBackActivity {
                 });
     }
 
-
+    @Override
     protected void initData() {
         initDrawer();
         String[] array = getResources().getStringArray(

@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,10 +15,8 @@ import com.lee.cplibrary.base.SwipeBackActivity;
 import com.lee.cplibrary.util.BitmapUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import cn.lee.cplibrary.util.DrawableUtil;
 import cn.lee.cplibrary.widget.recycler.RvDragSortItemTouchHelper;
 
 public class DragSortRvActivity extends SwipeBackActivity {
@@ -32,12 +29,32 @@ public class DragSortRvActivity extends SwipeBackActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public String getPagerTitle() {
+        return null;
+    }
+
+    @Override
+    public String getPagerRight() {
+        return "拖拽排序";
+    }
+
+    @Override
+    public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         initRecyclerView();
     }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
 
     private void initRecyclerView() {
         String[] imgs = getResources().getStringArray(

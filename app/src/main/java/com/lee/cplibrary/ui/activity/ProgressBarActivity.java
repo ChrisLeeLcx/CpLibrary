@@ -82,14 +82,22 @@ public class ProgressBarActivity extends SwipeBackActivity implements View.OnCli
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progress_bar);
-        initView();
-        initData();
+    protected int getLayoutResId() {
+        return R.layout.activity_progress_bar;
     }
 
-    private void initData() {
+    @Override
+    public String getPagerTitle() {
+        return "进度条";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
+    protected void initData() {
         //productProgressBar
         productProgressBar.setProgress(60).setProgressListener(new ProductProgressBar.ProgressListener() {
             @Override
@@ -122,8 +130,8 @@ public class ProgressBarActivity extends SwipeBackActivity implements View.OnCli
             }
         });
     }
-
-    private void initView() {
+    @Override
+    public void initView() {
         circleView = (CircleProgressBarView) findViewById(R.id.circle_progress_view);
         circleView1 = (CircleProgressBarView) findViewById(R.id.circle_progress_view1);
         horizontalBar = (HorizontalProgressBar) findViewById(R.id.horizontal_progress_view);

@@ -36,11 +36,28 @@ public class OtherActivity extends SwipeBackActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_other);
+    protected int getLayoutResId() {
+        return R.layout.activity_other;
+    }
+
+    @Override
+    public String getPagerTitle() {
+        return "其他";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
+    public void initView() {
         initRatingBar();
         initSeekBar();
+    }
+
+    @Override
+    protected void initData() {
 
     }
 

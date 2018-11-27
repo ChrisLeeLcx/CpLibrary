@@ -1,8 +1,7 @@
 package com.lee.cplibrary.ui.activity;
 
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -14,7 +13,6 @@ import cn.lee.cplibrary.constant.CpConfig;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.util.ToastUtil;
-import cn.lee.cplibrary.widget.sign.SignDemoActivity;
 import cn.lee.cplibrary.widget.sign.view.HandWriteView;
 
 public class SignActivity extends AppCompatActivity {

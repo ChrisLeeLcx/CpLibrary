@@ -36,14 +36,22 @@ public class EditTextActivity extends SwipeBackActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_text);
-        initView();
-        initPsdInputView();
+    protected int getLayoutResId() {
+        return R.layout.activity_edit_text;
     }
 
-    private void initView() {
+    @Override
+    public String getPagerTitle() {
+        return "各种输入框";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
+    public void initView() {
         etPrice = (EditText) findViewById(R.id.et_price);
         etBankCardNum = (EditText) findViewById(R.id.et_bank_card_num);
         etIdcardno = (EditText) findViewById(R.id.et_idcardno);
@@ -99,6 +107,11 @@ public class EditTextActivity extends SwipeBackActivity {
         });
 
 
+    }
+
+    @Override
+    protected void initData() {
+        initPsdInputView();
     }
 
     private void initPsdInputView() {

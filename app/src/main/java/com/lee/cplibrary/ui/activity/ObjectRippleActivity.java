@@ -20,6 +20,38 @@ public class ObjectRippleActivity extends SwipeBackActivity {
     protected BaseActivity getSelfActivity() {
         return this;
     }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_object_ripple;
+    }
+
+    @Override
+    public String getPagerTitle() {
+        return "水波纹效果";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
+    public void initView() {
+        initObjectRippleView();
+        findViewById(R.id.btn_home_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toast("点击了");
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
     private void initObjectRippleView() {
         rippleview = (ObjectRippleView) findViewById(R.id.rippleview);
         rippleview.setDuration(10000);
@@ -32,17 +64,4 @@ public class ObjectRippleActivity extends SwipeBackActivity {
         rippleview.setMaxRadius(400);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_object_ripple);
-
-        initObjectRippleView();
-        findViewById(R.id.btn_home_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toast("点击了");
-            }
-        });
-    }
 }

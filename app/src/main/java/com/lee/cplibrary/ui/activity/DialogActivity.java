@@ -1,6 +1,5 @@
 package com.lee.cplibrary.ui.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,9 +39,22 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dialog);
+    protected int getLayoutResId() {
+        return R.layout.activity_dialog;
+    }
+
+    @Override
+    public String getPagerTitle() {
+        return "对话框";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
+    public void initView() {
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvAddr = (TextView) findViewById(R.id.tv_addr);
@@ -58,6 +70,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         cityPickerUtil = new CityPickerUtil(getSelfActivity());
         popupWindowUtil = new PopupWindowUtil();
     }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
 
     @Override
     public void onClick(final View v) {

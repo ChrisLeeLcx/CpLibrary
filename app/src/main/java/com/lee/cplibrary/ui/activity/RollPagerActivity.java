@@ -43,14 +43,22 @@ public class RollPagerActivity extends SwipeBackActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roll_pager);
-        initView();
-        initData();
+    protected int getLayoutResId() {
+        return R.layout.activity_roll_pager;
     }
 
-    private void initData() {
+    @Override
+    public String getPagerTitle() {
+        return "轮播图";
+    }
+
+    @Override
+    public String getPagerRight() {
+        return null;
+    }
+
+    @Override
+    protected void initData() {
         //初始化数据源
         String[] imgs = getResources().getStringArray(
                 R.array.img_src_data);
@@ -67,8 +75,8 @@ public class RollPagerActivity extends SwipeBackActivity {
         vFlipper.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-
-    private void initView() {
+    @Override
+    public void initView() {
         rollPagerView = (RollPagerView) findViewById(R.id.rollPagerView);
         vFlipper = (CLViewFlipper) findViewById(R.id.vFlipper);
     }

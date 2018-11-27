@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2dp"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <cn.lee.cplibrary.widget.easyswipemenulibrary.EasySwipeMenuLayout
+        android:id="@+id/es_menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cp_contentView="@+id/content"
+        app:cp_leftMenuView="@+id/left"
+        app:cp_rightMenuView="@+id/right">
+
+        <LinearLayout
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_share1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="分享1"
+                android:background="@android:color/holo_blue_bright"/>
+
+            <TextView
+                android:id="@+id/tv_share2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="分享2"
+                android:background="@android:color/holo_orange_dark"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_f7"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="意见内容"
+                android:textColor="@color/font_32"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_addvice_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="意见内容意见内容意内见内意见内容"
+                android:textColor="@color/font_8d"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_light"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_blue_bright"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="删除" />
+
+            <TextView
+                android:id="@+id/right_menu_2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_orange_dark"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="收藏" />
+
+        </LinearLayout>
+    </cn.lee.cplibrary.widget.easyswipemenulibrary.EasySwipeMenuLayout>
+</LinearLayout>
+
