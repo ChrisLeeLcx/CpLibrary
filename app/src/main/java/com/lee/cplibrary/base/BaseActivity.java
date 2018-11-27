@@ -256,21 +256,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtil.showToast(getSelfActivity(), msg);
     }
 
-//    protected void rootviewSetting() {
-//        View rootview = getSelfActivity().findViewById(
-//                R.id.rootview);
-//        if (rootview != null) {
-//            rootview.setOnClickListener(new View.OnClickListener() {
-//
-//                @Override
-//                public void onClick(View v) {
-//                    SystemUtil.closeKeyboard(getSelfActivity());
-//                }
-//            });
-//        }
-//
-//    }
-
 
     /*****************************************页面跳转方法*******************************************************/
     /**

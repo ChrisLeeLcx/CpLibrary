@@ -8,13 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import cn.lee.cplibrary.util.LogUtil;
 
 /**
  * 让RecyclerView具有可拖拽Item功能的ItemTouchHelper

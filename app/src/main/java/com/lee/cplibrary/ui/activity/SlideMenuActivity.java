@@ -17,6 +17,7 @@ import java.util.List;
 
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.widget.easyswipemenulibrary.EasySwipeMenuLayout;
+import cn.lee.cplibrary.widget.recycler.ScrollTopPoiLinearLayoutManager;
 
 /**
  * 滑动点击删除Demo
@@ -49,6 +50,12 @@ public class SlideMenuActivity extends SwipeBackActivity {
     @Override
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        findViewById(R.id.iv_to_top).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
     }
 
     @Override
@@ -56,12 +63,20 @@ public class SlideMenuActivity extends SwipeBackActivity {
         initRecyclerView();
     }
 
+
+    // 1、recyclerView.setNestedScrollingEnabled(false);解决使用NestedScrollView嵌套RecyclerView时,滑动卡顿
+    // 原因：setNestedScrollingEnabled(true),是支持嵌套滚动的,即当它recyclerView嵌套在NestedScrollView中时,默认会随着NestedScrollView滚动而滚动,放弃了自己的滚动.
+    // 所以给我们的感觉就是滞留、卡顿.主动将该值置false可以有效解决该问题
+    // 2、recyclerView.setFocusableInTouchMode(false);  解决  使用NestedScrollView嵌套RecyclerView时,每次打开界面都是定位在RecyclerView在屏幕顶端,列表上面的布局都被顶上去了.
+    // 原因：RecyclerView抢占了焦点,自动滚动导致的
     private void initRecyclerView() {
         List<String> totaList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             totaList.add("三国演义" + i);
         }
-        recyclerView.setLayoutManager(new LinearLayoutManager(getSelfActivity(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new ScrollTopPoiLinearLayoutManager(getSelfActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setFocusableInTouchMode(false);
         SlideAdapter adapter = new SlideAdapter(this, totaList, recyclerView);
         recyclerView.setAdapter(adapter);
     }
@@ -79,7 +94,7 @@ public class SlideMenuActivity extends SwipeBackActivity {
 
         @Override
         protected void convert(final BaseViewHolder helper, final String bean) {
-            helper.setText(R.id.tv_addvice_content,"我是内容"+bean);
+            helper.setText(R.id.tv_addvice_content, "我是内容" + bean);
             final int position = helper.getLayoutPosition();
             helper.getView(R.id.tv_delete).setOnClickListener(new View.OnClickListener() {
                 @Override

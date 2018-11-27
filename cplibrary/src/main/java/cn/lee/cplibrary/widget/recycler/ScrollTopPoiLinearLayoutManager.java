@@ -10,8 +10,7 @@ import android.util.AttributeSet;
  * 当调用RecyclerView的方法smoothScrollToPosition(int position)时候：缓慢滑动position位置并置顶，
  */
 
-public class
-ScrollTopPoiLinearLayoutManager extends LinearLayoutManager {
+public class ScrollTopPoiLinearLayoutManager extends LinearLayoutManager {
     public ScrollTopPoiLinearLayoutManager(Context context) {
         super(context);
     }

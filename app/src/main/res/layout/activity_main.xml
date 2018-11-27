@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cp_white"
+    android:background="@color/bg_f7"
     android:orientation="vertical">
 
 
@@ -10,4 +10,17 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-</LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_to_top"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/cp_shadow_oval"
+        android:scaleType="centerInside"
+        android:src="@drawable/to_top" />
+</RelativeLayout>
