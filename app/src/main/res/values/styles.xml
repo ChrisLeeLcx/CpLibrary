@@ -47,4 +47,9 @@
         <item name="android:stepSize">1.0</item>
         <item name="android:rating">1.0</item>
     </style>
+
+    <style name="tablayout">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

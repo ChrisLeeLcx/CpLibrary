@@ -34,7 +34,8 @@
         <activity android:name=".ui.activity.OtherActivity" />
         <activity android:name=".ui.activity.DragSortRvActivity" />
         <activity android:name=".ui.activity.SlideMenuActivity" />
-        <activity android:name=".ui.activity.SlideDeleteRvActivity"></activity>
+        <activity android:name=".ui.activity.SlideDeleteRvActivity" />
+        <activity android:name=".ui.activity.OrderActivity"></activity>
     </application>
 
 </manifest>

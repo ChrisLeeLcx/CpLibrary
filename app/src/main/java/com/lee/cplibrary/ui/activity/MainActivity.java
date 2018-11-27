@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("轮播图和滚轮广告", RollPagerActivity.class));
         totalList.add(new ActivityBean("拖拽排序RecyclerView", DragSortRvActivity.class));
         totalList.add(new ActivityBean("滑动删除Rv", SlideMenuActivity.class));
+        totalList.add(new ActivityBean("懒加载ViewPager", OrderActivity.class));
         totalList.add(new ActivityBean("其他", OtherActivity.class));
     }
 

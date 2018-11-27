@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.widget.rollview;
+package cn.lee.cplibrary.widget.scrollview;
 
 import android.content.Context;
 import android.graphics.Rect;
