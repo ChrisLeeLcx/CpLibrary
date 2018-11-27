@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.widget.recycler;
+package cn.lee.cplibrary.widget.recycler.help;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;

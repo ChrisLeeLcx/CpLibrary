@@ -1,7 +1,6 @@
 package com.lee.cplibrary.ui.activity;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,7 +16,7 @@ import com.lee.cplibrary.util.BitmapUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.lee.cplibrary.widget.recycler.RvDragSortItemTouchHelper;
+import cn.lee.cplibrary.widget.recycler.help.RvDragSortItemTouchHelper;
 
 public class DragSortRvActivity extends SwipeBackActivity {
 
