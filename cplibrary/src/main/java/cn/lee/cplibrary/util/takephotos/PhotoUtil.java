@@ -3,7 +3,7 @@ package cn.lee.cplibrary.util.takephotos;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,19 +15,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
-
 import java.io.File;
 
-import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.AppUtils;
-import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.ToastUtil;
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtils;
 
 /**
@@ -79,20 +78,24 @@ public class PhotoUtil {
      */
     public static void checkPermission(Activity activity, Bundle savedInstanceState) {
         PermissionUtils.checkPermissionArray(activity, permissionArray, 0x10);
-        PhotoUtil.createCameraTempFile(savedInstanceState);
+        cn.lee.cplibrary.util.takephotos.PhotoUtil.createCameraTempFile(savedInstanceState);
     }
 
     public static void checkPermission(Fragment fragment, Bundle savedInstanceState) {
         PermissionUtils.checkPermissionArray(fragment, permissionArray, 0x10);
-        PhotoUtil.createCameraTempFile(savedInstanceState);
+        cn.lee.cplibrary.util.takephotos.PhotoUtil.createCameraTempFile(savedInstanceState);
     }
 
     /**
      * 跳到系统相册页面
      */
-    public static void gotoPhoto(Activity activity) {
+    public static void gotoPhoto(Activity activity, Fragment fragment) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        activity.startActivityForResult(Intent.createChooser(intent, "请选择图片"), REQUEST_PICK);
+        if (fragment == null) {
+            activity.startActivityForResult(Intent.createChooser(intent, "请选择图片"), REQUEST_PICK);
+        } else {
+            fragment.startActivityForResult(Intent.createChooser(intent, "请选择图片"), REQUEST_PICK);
+        }
     }
 
     /**
@@ -126,14 +129,16 @@ public class PhotoUtil {
     /**
      * 打开上传图片的Dialog 必须重写onActivityResult
      *
+     * @param activity
+     * @param fragment 不为null表示在Fragment中上传图片 ，是null表示在Activity中上传图片
      * @return
      */
-    public static Dialog showPicChooseDialog(final Activity activity) {
+    public static Dialog showPicChooseDialog(final Activity activity, final Fragment fragment) {
 //        if (picDialog == null) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.cp_dialog_pic_choose, null);
+        View view = LayoutInflater.from(activity).inflate(cn.lee.cplibrary.R.layout.cp_dialog_pic_choose, null);
         picDialog = CpComDialog.getBottomDialog(activity, true, view);
         //相册
-        view.findViewById(R.id.photoAlbum).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(cn.lee.cplibrary.R.id.photoAlbum).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
@@ -147,14 +152,14 @@ public class PhotoUtil {
                 } else if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED) {
                     //跳转到调用系统图库
-                    gotoPhoto(activity);
+                    gotoPhoto(activity, fragment);
                 } else {
                     ToastUtil.showToast(activity, "请允许访问相册");
                 }
             }
         });
         //照相
-        view.findViewById(R.id.photograph).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(cn.lee.cplibrary.R.id.photograph).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
@@ -168,14 +173,14 @@ public class PhotoUtil {
                 } else if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_GRANTED) {
                     //跳转到调用系统相机
-                    gotoCarema(activity);
+                    gotoCarema(activity, fragment);
                 } else {
                     ToastUtil.showToast(activity, "需设置权限才可拍照");
                 }
             }
         });
 
-        view.findViewById(R.id.cancel)
+        view.findViewById(cn.lee.cplibrary.R.id.cancel)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -196,7 +201,7 @@ public class PhotoUtil {
      * Activity在onCreate方法中必须已经调用了方法PhotoUtil.init(this,savedInstanceState);
      * 跳转到照相机页
      */
-    public static void gotoCarema(Activity activity) {
+    public static void gotoCarema(Activity activity, Fragment fragment) {
         if (Build.VERSION.SDK_INT >= 23) {//FileProvider只能用于高版本的app中
             int checkCallPhonePermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
             if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
@@ -207,12 +212,20 @@ public class PhotoUtil {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Uri imgUri = FileProvider.getUriForFile(activity, AppUtils.getAppId(activity) + ".provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-                activity.startActivityForResult(intent, REQUEST_CAPTURE);
+                if (fragment == null) {
+                    activity.startActivityForResult(intent, REQUEST_CAPTURE);
+                } else {
+                    fragment.startActivityForResult(intent, REQUEST_CAPTURE);
+                }
             }
         } else {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
-            activity.startActivityForResult(intent, REQUEST_CAPTURE);
+            if (fragment == null) {
+                activity.startActivityForResult(intent, REQUEST_CAPTURE);
+            } else {
+                fragment.startActivityForResult(intent, REQUEST_CAPTURE);
+            }
         }
 
     }
@@ -271,18 +284,18 @@ public class PhotoUtil {
         }
         Uri uri = null;
         switch (requestCode) {
-            case PhotoUtil.REQUEST_CAPTURE:
-                uri = Uri.fromFile(PhotoUtil.tempFile);
+            case cn.lee.cplibrary.util.takephotos.PhotoUtil.REQUEST_CAPTURE:
+                uri = Uri.fromFile(tempFile);
                 break;
-            case PhotoUtil.REQUEST_PICK:  //调用系统相册返回
+            case cn.lee.cplibrary.util.takephotos.PhotoUtil.REQUEST_PICK:  //调用系统相册返回
                 if (data != null) {
                     uri = data.getData();
                 }
                 break;
         }
         if (uri != null) {
-            String filePath = PhotoUtil.getRealFilePathFromUri(context, uri);//图片的路径
-            String fileName = ImageUtils.getFileName(context,filePath, imgName + ".jpg");
+            String filePath = cn.lee.cplibrary.util.takephotos.PhotoUtil.getRealFilePathFromUri(context, uri);//图片的路径
+            String fileName = ImageUtils.getFileName(context, filePath, imgName + ".jpg");
             file = new File(fileName);
         }
         return file;
