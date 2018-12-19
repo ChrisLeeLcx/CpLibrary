@@ -60,4 +60,10 @@
         android:paddingRight="0dp"
         app:cp_rsb_indicator_height="17dp"
         app:cp_rsb_indicator_width="20dp" />
+
+    <Button
+        android:id="@+id/btn_call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拨打电话：18551815425" />
 </LinearLayout>

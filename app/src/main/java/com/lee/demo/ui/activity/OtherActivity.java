@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ScreenUtil;
+import cn.lee.cplibrary.util.SystemUtil;
 import cn.lee.cplibrary.widget.rangeseekbar.OnRangeChangedListener;
 import cn.lee.cplibrary.widget.rangeseekbar.RangeSeekBar;
 import cn.lee.cplibrary.widget.rangeseekbar.SeekBar;
@@ -53,6 +54,12 @@ public class OtherActivity extends SwipeBackActivity {
     public void initView() {
         initRatingBar();
         initSeekBar();
+        findViewById(R.id.btn_call).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemUtil.callPhone(OtherActivity.this,"18551815425");
+            }
+        });
     }
 
     @Override

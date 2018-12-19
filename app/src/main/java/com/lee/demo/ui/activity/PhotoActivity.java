@@ -33,7 +33,7 @@ public class PhotoActivity extends AppCompatActivity {
         findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhotoUtil.showPicChooseDialog(PhotoActivity.this);
+                PhotoUtil.showPicChooseDialog(PhotoActivity.this,null);
             }
         });
         textView = (TextView) findViewById(R.id.textView);
