@@ -108,7 +108,6 @@ public class OtherActivity extends SwipeBackActivity {
 
             @Override
             public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
-                //停止滑动
                 LogUtil.i("","","onStopTrackingTouch");
             }
         });

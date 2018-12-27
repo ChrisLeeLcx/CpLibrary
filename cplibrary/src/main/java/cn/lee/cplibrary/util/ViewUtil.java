@@ -171,18 +171,21 @@ public class ViewUtil {
             }
         }
     }
+
     /**
      * 设置View是否可见
+     *
      * @param v
      */
     public static void setVisibility(boolean isVisible, View... v) {
         View[] views = v;
         for (View view : views) {
             if (view != null) {
-                view.setVisibility(isVisible?View.VISIBLE:View.GONE);
+                view.setVisibility(isVisible ? View.VISIBLE : View.GONE);
             }
         }
     }
+
     /**
      * 设置EditText是否可以编辑
      *
@@ -228,6 +231,7 @@ public class ViewUtil {
                     .getInstance());
         }
     }
+
     /**
      * 设置view数组的点击监听
      */
@@ -239,13 +243,15 @@ public class ViewUtil {
             }
         }
     }
+
     public static void setDrawableRight(Activity activity, @DrawableRes int id, TextView view, int pad_dp) {
         Drawable drawable = activity.getResources().getDrawable(id);
-        setDrawableRight(activity ,drawable,view,pad_dp);
+        setDrawableRight(activity, drawable, view, pad_dp);
     }
+
     public static void setDrawableRight(Activity activity, Drawable drawable, TextView view, int pad_dp) {
         // 这一步必须要做,否则不会显示.
-        if (drawable!=null) {
+        if (drawable != null) {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         }
         view.setCompoundDrawables(null, null, drawable, null);
@@ -255,7 +261,7 @@ public class ViewUtil {
     public static void setDrawableLeft(Activity activity, Drawable drawable, TextView view, int pad_dp) {
         // 这一步必须要做,否则不会显示.
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        view.setCompoundDrawables(drawable, null,null , null);
+        view.setCompoundDrawables(drawable, null, null, null);
         view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
     }
 
@@ -264,12 +270,13 @@ public class ViewUtil {
      */
     public static void setDrawableTop(Activity activity, @DrawableRes int id, TextView view, int pad_dp) {
         Drawable drawable = activity.getResources().getDrawable(id);
-        setDrawableTop(activity ,drawable,view,pad_dp);
+        setDrawableTop(activity, drawable, view, pad_dp);
     }
+
     /**
      * @param pad_dp:单位是dp
      */
-    public static void setDrawableTop(Activity activity,Drawable drawable, TextView view, int pad_dp) {
+    public static void setDrawableTop(Activity activity, Drawable drawable, TextView view, int pad_dp) {
         // 这一步必须要做,否则不会显示.
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         view.setCompoundDrawables(null, drawable, null, null);
@@ -383,6 +390,15 @@ public class ViewUtil {
         textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG); //设置中划线并加清晰
 //        textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
     }
+
+    /**
+     * 给TextView设置下划线
+     */
+    public static void setTextLineUnderline(TextView textView) {
+        textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+    }
+
     /**
      * android EditText设置光标到内容最后
      */
