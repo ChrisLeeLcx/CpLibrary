@@ -72,7 +72,7 @@ public class BottomRoundDialogAdapter<T extends BaseDialogBean> extends Recycler
                 }
             }
         });
-        holder.tvName.setTextSize(ScreenUtil.sp2px(context, dialog.getTxtSize()));
+        holder.tvName.setTextSize(ScreenUtil.sp(context, dialog.getTxtSize()));
         holder.tvName.setTextColor(dialog.getTxtColor());
         int h = dialog.getItemHeight();
         if (h != LinearLayout.LayoutParams.WRAP_CONTENT && h != LinearLayout.LayoutParams.MATCH_PARENT) {

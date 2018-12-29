@@ -31,7 +31,7 @@ public class SideBar extends View {
     private int backgroundColor_normal = Color.TRANSPARENT;//正常背景颜色
     private int textColor_choosed = Color.parseColor("#FF5858");    //文字颜色：选中的
     private int textColor_normal = Color.parseColor("#4446F5");    //文字颜色：正常的#4446F5
-    private int textSize = ScreenUtil.sp2px(getContext(), 10);//文字大小10sp
+    private int textSize = ScreenUtil.sp(getContext(), 10);//文字大小10sp
     private int padding = ScreenUtil.dp2px(getContext(), 5);//文字的内边距大小px
     public static final String PYS_HEADER = "热";//如果列表有头部，则PYS_HEADER是该头部的拼音索引
     private String[] arrLetters = new String[]{PYS_HEADER, "*", "A", "B", "C", "D", "E", "F",

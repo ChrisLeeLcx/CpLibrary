@@ -187,7 +187,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
         } else {
             tvCancel.setVisibility(View.GONE);
         }
-        tvCancel.setTextSize(ScreenUtil.sp2px(context, cancelSize));
+        tvCancel.setTextSize(ScreenUtil.sp(context, cancelSize));
         tvCancel.setTextColor(cancelTxtColor);
         if (isChangeBg) {
             tvCancel.setBackgroundColor(cancelBgColor);
@@ -208,7 +208,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
             tvTitle.setVisibility(View.GONE);
         }
         tvTitle.setText(title);
-        tvTitle.setTextSize(ScreenUtil.sp2px(context, titleSize));
+        tvTitle.setTextSize(ScreenUtil.sp(context, titleSize));
         tvTitle.setTextColor(titleColor);
         if (isChangeBg) {
             tvTitle.setBackgroundColor(titleBgColor);
@@ -234,7 +234,7 @@ public class CpBottomDialog<T extends BaseDialogBean> {
                 isShowTitle,//是否显示标题栏
                 isChangeBg;//是否改变取消按钮、item、标题的背景颜色（只有isChageBg = true时 设置其相应背景色才会改变）
         private int rvHeight = LinearLayout.LayoutParams.WRAP_CONTENT, itemHeight = 40;   //recyclerView的高，单位dp，和布局文件中一致即可;一个Item的高、
-        private int txtSize = 7;   //文字大小，单位sp，效果是不居中的size的一半
+        private int txtSize = 14;   //文字大小，单位sp，效果是不居中的size的一半
         private int txtColor = Color.parseColor("#333333"); //recyclerView中文字颜色
         private int bgColor = Color.parseColor("#ffffff");   //item背景颜色
         //取消按钮单独设置---如果不设置 默认和item的参数一致

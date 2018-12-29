@@ -60,7 +60,7 @@ public class BottomDialogAdapter<T extends BaseDialogBean> extends RecyclerView.
                 }
             }
         });
-        holder.tvName.setTextSize(ScreenUtil.sp2px(context, dialog.getTxtSize()));
+        holder.tvName.setTextSize(ScreenUtil.sp(context, dialog.getTxtSize()));
         holder.tvName.setTextColor(dialog.getTxtColor());
         if (dialog.isChangeBg()) {
             holder.tvName.setBackgroundColor(dialog.getBgColor());

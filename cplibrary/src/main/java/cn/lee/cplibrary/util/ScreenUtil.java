@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -102,13 +103,15 @@ public class ScreenUtil {
         return (int) (pxValue / fontScale + 0.5f);
     }
 
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-//        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-//                spValue, context.getResources().getDisplayMetrics());
+//    public static int sp2px(Context context, float spValue) {
+//        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+//        return (int) (spValue * fontScale + 0.5f);
+////        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+////                spValue, context.getResources().getDisplayMetrics());
+//    }
+    public static int sp(Context context,float spValue) {
+        return  (int)spValue;
     }
-
     /**
      * 获取view以整个页面为参照,距离页面最上端的距离.
      */

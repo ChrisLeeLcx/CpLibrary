@@ -86,7 +86,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .settBgColor(getResources().getColor(R.color.colorAccent))
                         .settTitle("请选择时间")
                         .settTxtColor(getResources().getColor(R.color.font_14))
-                        .settTxtSize(8)
+                        .settTxtSize(16)
                         .setShowLabel(true)
                         .build().
                         showDate(new DatePickerUtils.DateCallBack() {
@@ -131,7 +131,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 break;
             case R.id.btn_1btn:
                 CpComDialog.Builder.builder(getSelfActivity())
-                        .setTitle("我是标题哦！").build().show1BtnDialog(
+                        .setTitle("我是标题哦！").setContent("啦啦啦啦").build().show1BtnDialog(
                         new CpComDialog.Dialog1BtnCallBack() {
                             @Override
                             public void sure() {
@@ -142,7 +142,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
             case R.id.btn_2btn:
                 CpComDialog.Builder.builder(getSelfActivity()).
                         setTitle("提示").setContent("清空历史记录吗?").setTxtCancel("忽略").setSure("更新")
-                        .setTitleSize(10).setContentSize(8).setBtnSize(10)
+                        .setTitleSize(20).setContentSize(16).setBtnSize(20)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setCancel(false)
@@ -165,18 +165,18 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 CpBottomDialog.Builder.builder(getSelfActivity(), list)
                         .setBgColor(getResources().getColor(R.color.colorAccent))
                         .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
+                        .setTxtSize(10).setTxtColor(getResources().getColor(R.color.colorPrimary))
                         .setShowCancel(true)//设置cancel按钮
                         .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
-                        .setCancelSize(8)
+                        .setCancelSize(10)
                         .setCancelHeight(50)
                         .setShowTitle(true)//设置标题
                         .setTitle("我是普通的标题！")
                         .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
                         .setTitleHeight(50)
-                        .setTitleSize(7)
+                        .setTitleSize(14)
                         .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
                         .build().showDialog(new CpBottomDialog.DialogCertificateCallBack() {
                     @Override
@@ -207,7 +207,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setShowTitle(true).setTitle("我是好看的标题！")
                         .setTitleColor(getResources().getColor(R.color.colorPrimary))
                         .setTitleHeight(30)
-                        .setTitleSize(5)
+                        .setTitleSize(10)
                         .build().showDialog(new CpBottomRoundDialog.DialogCertificateCallBack() {
                     @Override
                     public void sure(BottomRoundDialogAdapter adapter, View rootView, int position) {

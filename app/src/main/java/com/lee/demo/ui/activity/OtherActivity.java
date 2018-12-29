@@ -155,7 +155,7 @@ public class OtherActivity extends SwipeBackActivity {
         seekBar.setIndicatorTextDecimalFormat(formatPattern);//"0"设置为整数,"0.00"：保留两位小数
         seekBar.setRangeInterval(rangeInterval);//设置一次滑动的间距
         seekBar.setSeekBarMode(RangeSeekBar.SEEKBAR_MODE_RANGE);//设置双向滑动模式
-        seekBar.setTickMarkTextSize(ScreenUtil.sp2px(activity, 12));//刻度的字体大小
+        seekBar.setTickMarkTextSize(ScreenUtil.sp(activity, 12));//刻度的字体大小
         seekBar.setProgressColor(activity.getResources().getColor(R.color.blue));//进度条的颜色
         seekBar.setProgressDefaultColor(Color.parseColor("#DCDDDD"));//进度条默认颜色
         seekBar.setProgressHeight(ScreenUtil.dp2px(activity, 5));//进度条高度

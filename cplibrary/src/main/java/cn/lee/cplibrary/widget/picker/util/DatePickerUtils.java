@@ -178,14 +178,14 @@ public class DatePickerUtils {
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(tTitle);
             tvTitle.setTextColor(tTxtColor);
-            tvTitle.setTextSize(ScreenUtil.sp2px(context, tTxtSize));
+            tvTitle.setTextSize(ScreenUtil.sp(context, tTxtSize));
         } else {
             tvTitle.setVisibility(View.GONE);
         }
         tvLeftBtn.setTextColor(tTxtColor);
         tvRightBtn.setTextColor(tTxtColor);
-        tvLeftBtn.setTextSize(ScreenUtil.sp2px(context, tTxtSize));
-        tvRightBtn.setTextSize(ScreenUtil.sp2px(context, tTxtSize));
+        tvLeftBtn.setTextSize(ScreenUtil.sp(context, tTxtSize));
+        tvRightBtn.setTextSize(ScreenUtil.sp(context, tTxtSize));
     }
 
     /**
@@ -365,7 +365,7 @@ public class DatePickerUtils {
         private Context context;
         private int tBgColor = Color.parseColor("#1086D1");//时间选择框标题栏背景色
         private int tTxtColor = Color.parseColor("#FFFFFF");//标题栏：文字颜色（确定、取消按钮、标题）
-        private int tTxtSize = 7;//标题栏：文字大小（确定、取消按钮、标题） 单位sp
+        private int tTxtSize = 14;//标题栏：文字大小（确定、取消按钮、标题） 单位sp
         private String tTitle;//标题栏：标题文字
         private boolean isShowLabel = true;//时间控件是否显示label 年月日等
 
