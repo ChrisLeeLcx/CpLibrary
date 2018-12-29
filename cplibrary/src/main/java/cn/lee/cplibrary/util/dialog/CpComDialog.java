@@ -326,8 +326,8 @@ public class CpComDialog {
         private int btnColor = Color.parseColor("#067CEC")//按钮颜色
                 , titleColor = Color.parseColor("#000000")//标题颜色
                 , contentColor = Color.parseColor("#010202");//内容颜色
-        private int titleSize = 16,//标题文字大小 单位sp
-                contentSize = 12, btnSize = 16;//内容 按钮 文字大小、
+        private int titleSize = 18,//标题文字大小 单位sp
+                contentSize = 14, btnSize = 18;//内容 按钮 文字大小、
         private boolean isCancel = true;//是否可以取消,默认可以
         private int width = 245, height = LinearLayout.LayoutParams.WRAP_CONTENT;//对话框的宽、除去按钮后的高 单位dp
 
