@@ -92,10 +92,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
         // 4 处理公共逻辑
         dealCommon();
-
-
-
-
     }
 
 
