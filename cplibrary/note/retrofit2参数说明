@@ -26,7 +26,7 @@ import retrofit2.http.Url;
 import rx.Observable;
 
 /**
- * function:http://duanyytop.github.io/2016/08/06/Retrofit%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/
+ * function: http://duanyytop.github.io/2016/08/06/Retrofit%E7%94%A8%E6%B3%95%E8%AF%A6%E8%A7%A3/
  * Retrofit是Square公司开发的一款针对Android网络请求的框架，Retrofit2底层基于OkHttp实现的
  * 本类讲解Retrofit的各种参数格式用法
  * Created by ChrisLee on 2018/5/9.
@@ -197,6 +197,6 @@ public interface DemoServer {
 
     //---- @Url参数：为某个请求设置完整的URL:解决某一个请求不是以base_url开头，--------------------------------------------------------
 
-    @POST("my/queryinformation")
+    @POST 
     Observable<HybDriverBean> queryinformation(@Url String path, @Header("Authorization") String Authorization);
 }
