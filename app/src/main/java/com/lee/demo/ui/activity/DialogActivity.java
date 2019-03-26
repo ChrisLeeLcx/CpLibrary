@@ -13,11 +13,11 @@ import java.util.List;
 
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
+import cn.lee.cplibrary.util.dialog.CpBaseDialog;
+import cn.lee.cplibrary.util.dialog.CpBaseDialogAdapter;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
-import cn.lee.cplibrary.util.dialog.bottom.BaseDialogBean;
-import cn.lee.cplibrary.util.dialog.bottom.BottomDialogAdapter;
+import cn.lee.cplibrary.util.dialog.BaseDialogBean;
 import cn.lee.cplibrary.util.dialog.bottom.CpBottomDialog;
-import cn.lee.cplibrary.util.dialog.bottomround.BottomRoundDialogAdapter;
 import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
 import cn.lee.cplibrary.widget.picker.util.CityPickerUtil;
 import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
@@ -164,23 +164,23 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 list.add(new MyDialogBean("第2个", "2"));
                 CpBottomDialog.Builder.builder(getSelfActivity(), list)
                         .setBgColor(getResources().getColor(R.color.colorAccent))
+                        .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
+                        .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
+                        .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
                         .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setTxtSize(10).setTxtColor(getResources().getColor(R.color.colorPrimary))
                         .setShowCancel(true)//设置cancel按钮
-                        .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
                         .setCancelSize(10)
                         .setCancelHeight(50)
                         .setShowTitle(true)//设置标题
                         .setTitle("我是普通的标题！")
-                        .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
                         .setTitleHeight(50)
                         .setTitleSize(14)
-                        .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
-                        .build().showDialog(new CpBottomDialog.DialogCertificateCallBack() {
+                        .build().showDialog(new CpBaseDialog.CpDialogBottomListCallBack() {
                     @Override
-                    public void sure(BottomDialogAdapter adapter, View rootView, int position) {
+                    public void sure(CpBaseDialogAdapter adapter, View rootView, int position) {
                         ToastUtil.showToast(getSelfActivity(), list.get(position).getName() + "-" + list.get(position).getId());
 
                     }
@@ -198,19 +198,20 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 list1.add(new MyDialogBean("三国演义", "3"));
                 list1.add(new MyDialogBean("水浒传", "4"));
                 CpBottomRoundDialog.Builder.builder(getSelfActivity(), list1)
-//                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-//                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
+                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
                         .setShowCancel(true)
-//                        .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
-//                        .setCancelSize(8)
-//                        .setCancelHeight(50)
+                        .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
+                        .setCancelSize(8)
+                        .setCancelHeight(50)
                         .setShowTitle(true).setTitle("我是好看的标题！")
                         .setTitleColor(getResources().getColor(R.color.colorPrimary))
                         .setTitleHeight(30)
                         .setTitleSize(10)
-                        .build().showDialog(new CpBottomRoundDialog.DialogCertificateCallBack() {
+                        .build().showDialog(new CpBaseDialog.CpDialogBottomListCallBack() {
+
                     @Override
-                    public void sure(BottomRoundDialogAdapter adapter, View rootView, int position) {
+                    public void sure(CpBaseDialogAdapter adapter, View rootView, int position) {
                         ToastUtil.showToast(getSelfActivity(), list1.get(position).getName() + "-" + list1.get(position).getId());
                     }
 

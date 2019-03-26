@@ -11,6 +11,7 @@ import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 import com.lee.demo.base.SwipeBackActivity;
 
+import cn.lee.cplibrary.util.EditTextUtil;
 import cn.lee.cplibrary.widget.edittext.DecimalInputFilter;
 import cn.lee.cplibrary.widget.edittext.IdcardValidator;
 import cn.lee.cplibrary.util.LogUtil;
@@ -114,8 +115,8 @@ public class EditTextActivity extends SwipeBackActivity {
     }
 
     private void initPsdInputView() {
-        SystemUtil.setEtFocusChangeSystemFit(getSelfActivity(), etSetPsd,etSetPsd1);
-        ViewUtil.setEditTextEditState(false,etSetPsd1);//设置不可线性密码框 不可编辑，则不能弹出系统键盘
+        EditTextUtil.setEtFocusChangeSystemFit(getSelfActivity(), etSetPsd,etSetPsd1);
+        EditTextUtil.setEditTextEditState(false,etSetPsd1);//设置不可线性密码框 不可编辑，则不能弹出系统键盘
         etSetPsd.setComparePassword(new PayPsdInputView.onPasswordListener() {
             @Override
             public void onDifference(String oldPsd, String newPsd) {//两次输入不同

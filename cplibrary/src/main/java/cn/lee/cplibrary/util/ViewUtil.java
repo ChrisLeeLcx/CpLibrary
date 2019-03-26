@@ -2,6 +2,7 @@ package cn.lee.cplibrary.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -187,52 +188,6 @@ public class ViewUtil {
     }
 
     /**
-     * 设置EditText是否可以编辑
-     *
-     * @param isEdit：true：可以编辑，否则不可以编辑
-     * @param et
-     */
-    public static void setEditTextEditState(boolean isEdit, EditText... et) {
-        EditText[] eTexts = et;
-        if (isEdit) {
-            for (EditText editText : eTexts) {
-                if (editText != null) {
-                    editText.setFocusableInTouchMode(true);
-                    editText.setFocusable(true);
-                    editText.requestFocus();
-                }
-            }
-        } else {
-            for (EditText editText : eTexts) {
-                if (editText != null) {
-                    editText.setFocusable(false);
-                    editText.setFocusableInTouchMode(false);
-                }
-            }
-        }
-    }
-
-
-    /**
-     * 设置EditText当inputType="passWord"的时候，密码是否可见
-     *
-     * @param isShow：true：密码可见，false，密码不可见
-     * @param et
-     */
-    public static void setEditTextPassShow(boolean isShow, EditText et) {
-        if (et == null) {
-            return;
-        }
-        if (isShow) {
-            et.setTransformationMethod(HideReturnsTransformationMethod
-                    .getInstance());
-        } else {
-            et.setTransformationMethod(PasswordTransformationMethod
-                    .getInstance());
-        }
-    }
-
-    /**
      * 设置view数组的点击监听
      */
     public static void setOnClickListener(@Nullable View.OnClickListener l, View... v) {
@@ -242,45 +197,6 @@ public class ViewUtil {
                 view.setOnClickListener(l);
             }
         }
-    }
-
-    public static void setDrawableRight(Activity activity, @DrawableRes int id, TextView view, int pad_dp) {
-        Drawable drawable = activity.getResources().getDrawable(id);
-        setDrawableRight(activity, drawable, view, pad_dp);
-    }
-
-    public static void setDrawableRight(Activity activity, Drawable drawable, TextView view, int pad_dp) {
-        // 这一步必须要做,否则不会显示.
-        if (drawable != null) {
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        }
-        view.setCompoundDrawables(null, null, drawable, null);
-        view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
-    }
-
-    public static void setDrawableLeft(Activity activity, Drawable drawable, TextView view, int pad_dp) {
-        // 这一步必须要做,否则不会显示.
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        view.setCompoundDrawables(drawable, null, null, null);
-        view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
-    }
-
-    /**
-     * @param pad_dp:单位是dp
-     */
-    public static void setDrawableTop(Activity activity, @DrawableRes int id, TextView view, int pad_dp) {
-        Drawable drawable = activity.getResources().getDrawable(id);
-        setDrawableTop(activity, drawable, view, pad_dp);
-    }
-
-    /**
-     * @param pad_dp:单位是dp
-     */
-    public static void setDrawableTop(Activity activity, Drawable drawable, TextView view, int pad_dp) {
-        // 这一步必须要做,否则不会显示.
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        view.setCompoundDrawables(null, drawable, null, null);
-        view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
     }
 
     /**
@@ -397,13 +313,6 @@ public class ViewUtil {
     public static void setTextLineUnderline(TextView textView) {
         textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-    }
-
-    /**
-     * android EditText设置光标到内容最后
-     */
-    public static void setEditTextCursorLast(EditText et) {
-        et.setSelection(et.getText().toString().length());
     }
 
 }
