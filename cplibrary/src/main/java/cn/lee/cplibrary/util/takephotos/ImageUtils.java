@@ -3,6 +3,7 @@ package cn.lee.cplibrary.util.takephotos;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 
@@ -93,6 +94,34 @@ public class ImageUtils {
 
         return file;
     }
+    public static File compressImage(Bitmap image, String imgName,String outPath,Bitmap.CompressFormat format ) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(format, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
+
+        while (baos.toByteArray().length / 1024 > quality) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            baos.reset();//重置baos即清空baos
+            options -= 10;//每次都减少10
+            image.compress(format, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+        }
+        new File(outPath).mkdirs();
+        File file = new File(outPath + File.separator +imgName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            try {
+                fos.write(baos.toByteArray());
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return file;
+    }
 
     /**
      * 获取照片角度
@@ -157,6 +186,16 @@ public class ImageUtils {
         File file = ImageUtils.compressImage(c,bitmap,imgName);  //按质量压缩图片
         return file.getAbsolutePath();
     }
+    public static String getFileName(String filePath, String imgName,String outPath,Bitmap.CompressFormat format ) {
+        Bitmap bitmap = ImageUtils.compressImageFromFile(filePath, desWidth);// 按尺寸压缩图片
+        int degree = readPictureDegree(filePath);
+        if (degree != 0) {//旋转照片角度，防止头像横着显示
+            bitmap = rotateBitmap(bitmap, degree);
+        }
+        int size = bitmap.getByteCount();
+        File file = ImageUtils.compressImage(bitmap,imgName,outPath,format);  //按质量压缩图片
+        return file.getAbsolutePath();
+    }
 
     public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -173,5 +212,22 @@ public class ImageUtils {
         }
 
         return result;
+    }
+    /**
+     * 拼接图片
+     *
+     * @param firstBitmap
+     * @param secondBitmap
+     * @return
+     */
+    public static Bitmap mergeBitmap(Bitmap firstBitmap, Bitmap secondBitmap) {
+        int width = firstBitmap.getWidth();
+        int height = firstBitmap.getHeight() + secondBitmap.getHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width,
+                height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawBitmap(firstBitmap, new Matrix(), null);
+        canvas.drawBitmap(secondBitmap, 0, firstBitmap.getHeight(), null);
+        return bitmap;
     }
 }
