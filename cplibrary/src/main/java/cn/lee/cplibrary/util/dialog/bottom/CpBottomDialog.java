@@ -23,6 +23,7 @@ import cn.lee.cplibrary.util.dialog.CpBaseDialogAdapter;
 
 public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
     private boolean  isChangeBg;//是否可以改变背景
+    private boolean  isTopRound;//顶部是否有圆角
     private int  bgColor;
     private int  cancelBgColor;
     private int  titleBgColor;
@@ -50,6 +51,13 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
         return isChangeBg;
     }
 
+    public boolean isTopRound() {
+        return isTopRound;
+    }
+
+    public void setTopRound(boolean topRound) {
+        isTopRound = topRound;
+    }
 
     public void setBgColor(int bgColor) {
         this.bgColor = bgColor;
@@ -82,11 +90,15 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
         TextView tvTitle = view.findViewById(R.id.tv_title);
         if (isChangeBg) {
             tvTitle.setBackgroundColor(titleBgColor);
+        } else if(isTopRound){
+            tvTitle.setBackground (context.getResources().getDrawable(R.drawable.cp_photo_bgt10_selector));
         }
+
     }
 
     public static class Builder<K extends BaseDialogBean> extends  CpBaseDialog.Builder<K>{
         private boolean    isChangeBg;//是否改变取消按钮、item、标题的背景颜色（只有isChageBg = true时 设置其相应背景色才会改变）
+        private boolean    isTopRound;//顶部是否有圆角，在isChangeBg为false的时候起作用
         private int bgColor = Color.parseColor("#ffffff");   //item背景颜色
         private int cancelBgColor = -999;   //取消按钮背景颜色
         private int    titleBgColor = -999;  //Title背景颜色
@@ -107,6 +119,7 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
         public CpBottomDialog build(){
             CpBottomDialog myDialog = (CpBottomDialog) super.build();
             myDialog.setChangeBg(isChangeBg);
+            myDialog.setTopRound(isTopRound);
             myDialog.setBgColor(bgColor);
             cancelBgColor = cancelBgColor == -999 ? bgColor : cancelBgColor;
             myDialog.setCancelBgColor(cancelBgColor);
@@ -117,6 +130,13 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
             isChangeBg = changeBg;
             return this;
         }
+
+
+        public Builder setTopRound(boolean topRound) {
+            isTopRound = topRound;
+            return this;
+        }
+
         public Builder setBgColor(int bgColor) { // 位置:同setChangeBg
             this.bgColor = bgColor;
             return this;

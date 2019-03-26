@@ -3,8 +3,8 @@
     android:id="@+id/ll_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/cp_white"
     android:orientation="vertical">
+    <!--android:background="@color/cp_white"-->
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"

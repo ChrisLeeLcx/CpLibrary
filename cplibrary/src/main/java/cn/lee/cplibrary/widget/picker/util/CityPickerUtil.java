@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,8 @@ import cn.lee.cplibrary.widget.picker.widget.WheelView;
 
 public class CityPickerUtil {
     private List<String> provincesAll = new ArrayList<>();//所有省份
+    private String [] provinceShow; //需要显示的省份,若 provinceShow为null，或者size=0，provincesAll的内容就是所有省份,否则provincesAll内容为provinceShow
+    private String  defalutP="北京市",defalutC="北京市",defalutD="东城区"; //默认显示的省市区
     private Map<String, List<String>> citiesAll = new HashMap<>();//所有市，key:省名字，value：市
     private Map<String, Map<String, List<String>>> districtsAll = new HashMap<>();//所有区：key1省；key2市：values2：区
     private Thread thread;
@@ -55,7 +58,18 @@ public class CityPickerUtil {
     private static int vsibleItemNum = 6;
     private static boolean isCyclic = false;
 
+    public String[] getProvinceShow() {
+        return provinceShow;
+    }
 
+    public void setProvinceShow(String[] provinceShow) {
+        this.provinceShow = provinceShow;
+    }
+    public void setDefaultArea(String defalutP,String defalutC,String defalutD ) {
+        this.defalutP = defalutP;
+        this.defalutC = defalutC;
+        this.defalutD = defalutD;
+    }
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -118,13 +132,30 @@ public class CityPickerUtil {
         final WheelView cityView = view.findViewById(R.id.new_month);
         final WheelView districtView = view.findViewById(R.id.new_day);
         initArea(context, provinceView, provincesAll);
+
         initArea(context, cityView, citiesAll.get(provincesAll.get(0)));
         final Map<String, List<String>> stringListMap = districtsAll.get(provincesAll.get(0));
         initArea(context, districtView, stringListMap.get(citiesAll.get(provincesAll.get(0)).get(0)));
-        // 设置地区 从0开始
-        provinceView.setCurrentItem(0);
-        cityView.setCurrentItem(0);
-        districtView.setCurrentItem(0);
+
+        try {// 设置 默认显示 省市区
+            int indexOfP = provincesAll.indexOf(defalutP)<0 ? 0:provincesAll.indexOf(defalutP);
+            provinceView.setCurrentItem(indexOfP);
+            int poiC = citiesAll.get(defalutP).indexOf(defalutC);
+            int indexOfC = poiC<0 ? 0:poiC;
+            updateCity(context, cityView, citiesAll.get(defalutP) ,indexOfC);
+
+            int poiD = districtsAll.get(defalutP).get(defalutC).indexOf(defalutD);
+            int indexOfD = poiD<0 ? 0:poiD;
+            updateCity(context, districtView, districtsAll.get(defalutP).get(defalutC),indexOfD);
+        }catch ( Exception e){
+            e.printStackTrace();
+            String pp = provincesAll.get(provinceView.getCurrentItem());
+            String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
+            updateCity(context, cityView, citiesAll.get(pp));
+            updateCity(context, districtView, districtsAll.get(pp).get(cc));
+        }
+
+        //显示Title
         TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setVisibility(View.VISIBLE);
         tvTitle.setText("选择地址");
@@ -150,14 +181,19 @@ public class CityPickerUtil {
         provinceView.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {//刷新市、区
-                String pp = provincesAll.get(provinceView.getCurrentItem());
-                String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
+                try {
+                    String pp = provincesAll.get(provinceView.getCurrentItem());
+                    String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
 //                indexP = newValue;
 //                Map<String, List<String>> mapDD = districtsAll.get(provincesAll.get(indexP));
 //                updateCity(context, cityView, citiesAll.get(provincesAll.get(indexP)));
 //                updateCity(context, districtView, mapDD.get(citiesAll.get(provincesAll.get(indexP)).get(indexC)));
-                updateCity(context, cityView, citiesAll.get(pp));
-                updateCity(context, districtView, districtsAll.get(pp).get(cc));
+                    updateCity(context, cityView, citiesAll.get(pp));
+                    updateCity(context, districtView, districtsAll.get(pp).get(cc));
+                } catch (IndexOutOfBoundsException e){
+                    e.printStackTrace();
+                }
+
             }
         });
         cityView.addChangingListener(new OnWheelChangedListener() {
@@ -193,7 +229,14 @@ public class CityPickerUtil {
         initArea(context, cView, list);
         cView.setCurrentItem(0);
     }
-
+    private void updateCity(Context context,
+                            WheelView cView, List<String> list,int poi) {
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        initArea(context, cView, list);
+        cView.setCurrentItem(poi);
+    }
     public interface CityPickerCallBack {
         public void sure(String province, String city, String district);
 
@@ -242,12 +285,36 @@ public class CityPickerUtil {
         }
         return detail;
     }
-
+//
+//    private void initJsonData(Context context) {//解析数据
+//        String JsonData = new GetJsonDataUtil().getJson(context, "province.json");//获取assets目录下的json文件数据
+//        ArrayList<ProvinceBean> beans = parseData(JsonData);//用Gson 转成实体
+//        for (int i = 0; i < beans.size(); i++) {//遍历省份（第1级）
+//            String pName = beans.get(i).getName();
+//            List<ProvinceBean.CityBean> pCity = beans.get(i).getCity();
+//            provincesAll.add(pName);//All省
+//            List<String> listCitys = new ArrayList<>();//市
+//            Map<String, List<String>> mapD = new HashMap<>();//市：区
+//            for (int j = 0; j < pCity.size(); j++) {//遍历市级（第2级）
+//                listCitys.add(pCity.get(j).getName());
+//                List<String> area = pCity.get(j).getArea();
+//                mapD.put(pCity.get(j).getName(), area);
+//            }
+//
+//            citiesAll.put(pName, listCitys);//All市
+//            districtsAll.put(pName, mapD);//All区
+//        }
+//        mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
+//
+//    }
     private void initJsonData(Context context) {//解析数据
         String JsonData = new GetJsonDataUtil().getJson(context, "province.json");//获取assets目录下的json文件数据
         ArrayList<ProvinceBean> beans = parseData(JsonData);//用Gson 转成实体
         for (int i = 0; i < beans.size(); i++) {//遍历省份（第1级）
             String pName = beans.get(i).getName();
+             if(!hasProvince(pName)){
+                 continue;
+             }
             List<ProvinceBean.CityBean> pCity = beans.get(i).getCity();
             provincesAll.add(pName);//All省
             List<String> listCitys = new ArrayList<>();//市
@@ -257,12 +324,21 @@ public class CityPickerUtil {
                 List<String> area = pCity.get(j).getArea();
                 mapD.put(pCity.get(j).getName(), area);
             }
-
             citiesAll.put(pName, listCitys);//All市
             districtsAll.put(pName, mapD);//All区
         }
         mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
 
+    }
+
+    private boolean hasProvince(String pName) {
+        if(provinceShow==null || Arrays.asList(provinceShow).size()==0){ //默认显示所有
+            return  true;
+        }
+        if(Arrays.asList(provinceShow).contains(pName)){
+            return true;
+        }
+        return false;
     }
 
     /**

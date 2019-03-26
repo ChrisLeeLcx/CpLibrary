@@ -32,6 +32,18 @@ public class BottomDialogAdapter<T extends BaseDialogBean> extends CpBaseDialogA
        super.onBindViewHolder(holder,position);
         if (dialog.isChangeBg()) {//支持item更换背景
             holder.tvName.setBackgroundColor(dialog.getBgColor());
+        }else if(dialog.isTopRound()){ //顶部是圆角
+            if (position == 0) {
+                if (dialog.isShowTitle()) {
+                    holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_selector));
+                } else {
+                    holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgt10_selector));
+                }
+            }  else {
+                holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_selector));
+            }
         }
+
+
     }
 }
