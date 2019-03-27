@@ -26,6 +26,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
             isShowTitle;//是否显示标题栏
     protected List<T> list;//数据源
     protected int rvHeight, itemHeight;
+    protected int lineMarginLR=0;
     protected int txtSize;
     protected int txtColor;
     protected int cancelSize, cancelTxtColor, cancelHeight;
@@ -123,6 +124,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
         }
         LinearLayout.LayoutParams paramsT = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleHeight);
         tvTitle.setLayoutParams(paramsT);
+
     }
 
     public void setList(List<T> list) {
@@ -199,6 +201,17 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
         this.title = title;
     }
 
+    public int getRvHeight() {
+        return rvHeight;
+    }
+
+    public void setLineMarginLR(int lineMarginLR) {
+        this.lineMarginLR = lineMarginLR;
+    }
+
+    public int getLineMarginLR() {
+        return lineMarginLR;
+    }
 
     public  static class Builder<K extends BaseDialogBean> {
         protected Context context;
@@ -206,6 +219,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
         private boolean isShowCancel,//最后是否显示取消按钮
                 isShowTitle;//是否显示标题栏
         private int rvHeight = LinearLayout.LayoutParams.WRAP_CONTENT, itemHeight = 40;   //recyclerView的高，单位dp，和布局文件中一致即可;一个Item的高、
+        private int lineMarginLR = 0;   //Item中line据两边的距离 单位dp
         private int txtSize = 14;   //文字大小，单位sp，效果是不居中的size的一半
         private int txtColor = Color.parseColor("#333333"); //recyclerView中文字颜色
         //取消按钮单独设置---如果不设置 默认和item的参数一致
@@ -252,6 +266,10 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
             dialog.setTitleSize(titleSize);
             dialog.setTitleColor(titleColor);
             dialog.setTitleHeight(titleHeight);
+            //line
+            if(lineMarginLR>0){
+                dialog.setLineMarginLR(lineMarginLR);
+            }
             return dialog;
         }
 
@@ -324,6 +342,11 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
 
         public Builder setTitle(String title) {
             this.title = title;
+            return this;
+        }
+
+        public Builder setLineMarginLR(int lineMarginLR) {
+            this.lineMarginLR = lineMarginLR;
             return this;
         }
     }

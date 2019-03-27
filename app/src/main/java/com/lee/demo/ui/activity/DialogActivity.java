@@ -169,13 +169,20 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 list1.add(new MyDialogBean("第2个", "2"));
                 list1.add(new MyDialogBean("第3个", "3"));
                 list1.add(new MyDialogBean("第4个", "4"));
+                list1.add(new MyDialogBean("第4个", "4"));
+                list1.add(new MyDialogBean("第4个", "4"));
+                list1.add(new MyDialogBean("第4个", "4"));
+                list1.add(new MyDialogBean("第4个", "4"));
+                list1.add(new MyDialogBean("第4个", "4"));
                 CpBottomDialog.Builder.builder(getSelfActivity(), list1)
                         .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
                         .setBgColor(getResources().getColor(R.color.colorAccent))
                         .setCancelBgColor(getResources().getColor(R.color.colorPrimary))
                         .setTitleBgColor(getResources().getColor(R.color.colorPrimaryDark))
                         .setTopRound(true)
-//                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+//                        .setItemHeight(30)
+//                         .setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+//                         .setRvHeight(100)
 //                        .setTxtSize(10).setTxtColor(getResources().getColor(R.color.colorPrimary))
                         .setShowCancel(true)//设置cancel按钮
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
@@ -186,6 +193,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
 //                        .setTitleHeight(50)
 //                        .setTitleSize(14)
+                        .setLineMarginLR(0)
                         .build().showDialog(new CpBaseDialog.CpDialogBottomListCallBack() {
                     @Override
                     public void sure(CpBaseDialogAdapter adapter, View rootView, int position) {
@@ -203,6 +211,10 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 final List<MyDialogBean> list = new ArrayList<>();
                 list.add(new MyDialogBean("第1个", "1"));
                 list.add(new MyDialogBean("第2个", "2"));
+                list.add(new MyDialogBean("第2个", "2"));
+                list.add(new MyDialogBean("第2个", "2"));
+                list.add(new MyDialogBean("第2个", "2"));
+
                 CpBottomDialog.Builder.builder(getSelfActivity(), list)
                         .setChangeBg(false)//设置可以改变各自背景色（只有true时候 ，标题、取消按钮、item的设置的背景色才起作用）
                         .setBgColor(getResources().getColor(R.color.colorAccent))
@@ -211,11 +223,11 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setTopRound(false)
 //                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
 //                        .setTxtSize(10).setTxtColor(getResources().getColor(R.color.colorPrimary))
-                        .setShowCancel(false)//设置cancel按钮
+                        .setShowCancel(true)//设置cancel按钮
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
                         .setCancelSize(10)
                         .setCancelHeight(50)
-                        .setShowTitle(true)//设置标题
+                        .setShowTitle(false)//设置标题
                         .setTitle("我是普通的标题！")
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
 //                        .setTitleHeight(50)
@@ -239,19 +251,25 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 list2.add(new MyDialogBean("红楼梦", "2"));
                 list2.add(new MyDialogBean("三国演义", "3"));
                 list2.add(new MyDialogBean("水浒传", "4"));
+                list2.add(new MyDialogBean("水浒传", "4"));
+                list2.add(new MyDialogBean("水浒传", "4"));
+                list2.add(new MyDialogBean("水浒传", "4"));
+                list2.add(new MyDialogBean("水浒传", "4"));
                 CpBottomRoundDialog.Builder.builder(getSelfActivity(), list2)
-//                        .setItemHeight(30)
+                        .setItemHeight(30)
                         .setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
 //                        .setTxtSize(5)
                         .setTxtColor(getResources().getColor(R.color.colorPrimary))
-                        .setShowCancel(true)
+                        .setShowCancel(false)
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
+//                        .setRvHeight(100)
 //                        .setCancelSize(8)
 //                        .setCancelHeight(50)
                         .setShowTitle(false).setTitle("我是好看的标题！")
                         .setTitleColor(getResources().getColor(R.color.colorPrimary))
 //                        .setTitleHeight(30)
 //                        .setTitleSize(10)
+                        .setLineMarginLR(0)
                         .build().showDialog(new CpBaseDialog.CpDialogBottomListCallBack() {
 
                     @Override
