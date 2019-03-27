@@ -17,6 +17,8 @@ import android.graphics.drawable.shapes.ArcShape;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
+import android.widget.TextView;
 
 import cn.lee.cplibrary.R;
 
@@ -158,5 +160,44 @@ public class DrawableUtil {
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    public static void setDrawableRight(Activity activity, @DrawableRes int id, TextView view, int pad_dp) {
+        Drawable drawable = activity.getResources().getDrawable(id);
+        setDrawableRight(activity, drawable, view, pad_dp);
+    }
+
+    public static void setDrawableRight(Activity activity, Drawable drawable, TextView view, int pad_dp) {
+        // 这一步必须要做,否则不会显示.
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        }
+        view.setCompoundDrawables(null, null, drawable, null);
+        view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
+    }
+
+    public static void setDrawableLeft(Activity activity, Drawable drawable, TextView view, int pad_dp) {
+        // 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        view.setCompoundDrawables(drawable, null, null, null);
+        view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
+    }
+
+    /**
+     * @param pad_dp:单位是dp
+     */
+    public static void setDrawableTop(Activity activity, @DrawableRes int id, TextView view, int pad_dp) {
+        Drawable drawable = activity.getResources().getDrawable(id);
+        setDrawableTop(activity, drawable, view, pad_dp);
+    }
+
+    /**
+     * @param pad_dp:单位是dp
+     */
+    public static void setDrawableTop(Activity activity, Drawable drawable, TextView view, int pad_dp) {
+        // 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        view.setCompoundDrawables(null, drawable, null, null);
+        view.setCompoundDrawablePadding(ScreenUtil.dp2px(activity, pad_dp));
     }
 }

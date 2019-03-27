@@ -34,24 +34,7 @@ public class SystemUtil {
                     .getWindowToken(), 0);
         }
     }
-    /**
-     * 防止EditText输入时，软键盘将下面布局顶上去
-     * @param activity activity上下文
-     * @param et 对应EditText
-     */
-    public static void setEtFocusChangeSystemFit(final Activity activity, EditText...et) {
-        for (int i=0;i<et.length;i++){
-            et[i].setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(hasFocus){
-                        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                    }
-                }
-            });
-        }
 
-    }
     /**
      * 跳转到设置中心->项目应用信息界面（可以设置应用通知管理、应用权限、清楚缓存等）
      * @param activity

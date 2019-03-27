@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.lee.demo.R;
 
+import cn.lee.cplibrary.util.DrawableUtil;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.ViewUtil;
 import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
@@ -23,7 +24,7 @@ public class PopupWindowUtil {
     private CommonPopupWindow pWindow;
 
     public CommonPopupWindow showPWindow(final Activity activity, View anchor, final TextView tv_click, CommonPopupWindow.ViewInterface listener) {
-        ViewUtil.setDrawableRight(activity, R.drawable.buylist_chose_over, tv_click, 1);
+        DrawableUtil.setDrawableRight(activity, R.drawable.buylist_chose_over, tv_click, 1);
         if (pWindow == null) {
             pWindow = new CommonPopupWindow.Builder(activity)
                     .setView(R.layout.pwindow)
@@ -34,7 +35,7 @@ public class PopupWindowUtil {
             pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-                    ViewUtil.setDrawableRight(activity, R.drawable.buylist_chose_more, tv_click, 1);
+                    DrawableUtil.setDrawableRight(activity, R.drawable.buylist_chose_more, tv_click, 1);
                 }
             });
             View contentView = pWindow.getContentView();

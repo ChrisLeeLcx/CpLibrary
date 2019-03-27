@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util.dialog.bottom;
+package cn.lee.cplibrary.util.dialog;
 
 /**
  *
