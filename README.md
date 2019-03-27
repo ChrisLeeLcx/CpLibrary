@@ -16,16 +16,15 @@
  
 
 二、项目依赖库版本号
-    # 当前targetSdkVersion sdk
-    TARGET_SDK_VERSION=27
-    # 构建工具的版本，其中包括了打包工具aapt、dx等,如API20对应的build-tool的版本就是20.0.0
-    BUILDTOOLS_VERSION=28.0.1
-    # 最小支持sdk
-    MIN_SDK_VERSION=16
-    # 支持包的版本-通常support:appcompat-v7、recyclerview、design需要与targetSdkVersion、compileSdkVersion版本一致 27.3.1
-    SUPPORT_LIB_VERSION=27.1.1
-    # constraint-layout
-    CONSTRAINT_LAYOUT_VERSION=1.1.2
+    当前targetSdkVersion sdk  
+    TARGET_SDK_VERSION=27  
+     构建工具的版本，其中包括了打包工具aapt、dx等,如API20对应的build-tool的版本就是20.0.0  
+    BUILDTOOLS_VERSION=28.0.1  
+      最小支持sdk   
+    MIN_SDK_VERSION=16  
+     支持包的版本-通常support:appcompat-v7、recyclerview、design需要与targetSdkVersion、compileSdkVersion版本一致 27.3.1  
+    SUPPORT_LIB_VERSION=27.1.1  
+   constraint-layout ：  CONSTRAINT_LAYOUT_VERSION=1.1.2
 
      cplibrary的build.gradle中依赖库
          compile 'com.google.android:flexbox:0.2.3'
