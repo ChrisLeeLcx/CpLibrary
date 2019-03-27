@@ -42,7 +42,8 @@
 4、增加EditTextUtil工具类，优化了ViewUtil  
 
 ## 版本 1.0.4  
-1、修复1.0.3版本中 dialog圆角适配问题
+1、修复1.0.3版本中 dialog圆角适配问题  
+
 ![进度条和loading](screenshot/进度条loading.gif)
 ![dialog](screenshot/dialog.gif)	
 
