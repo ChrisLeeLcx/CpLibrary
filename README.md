@@ -1,7 +1,7 @@
 # CpLibrary
 ## Android 通用工具类 版本1.0.0  
 一、项目依赖方式  
-、、、
+ 
  	project的build.gradle中添加
          allprojects {
             repositories {
@@ -13,7 +13,7 @@
             dependencies {
                 implementation 'com.github.ChrisLeeLcx:CpLibrary:1.0.0'
 	}
-、、、
+ 
 
 二、项目依赖库版本号
     # 当前targetSdkVersion sdk
