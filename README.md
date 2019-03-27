@@ -1,6 +1,7 @@
 # CpLibrary
-Android 通用工具类 版本1.0.0
-一、项目依赖方式
+## Android 通用工具类 版本1.0.0  
+一、项目依赖方式  
+、、、
  	project的build.gradle中添加
          allprojects {
             repositories {
@@ -12,6 +13,7 @@ Android 通用工具类 版本1.0.0
             dependencies {
                 implementation 'com.github.ChrisLeeLcx:CpLibrary:1.0.0'
 	}
+、、、
 
 二、项目依赖库版本号
     # 当前targetSdkVersion sdk
@@ -39,7 +41,7 @@ Android 通用工具类 版本1.0.0
 
 ![品牌列表](screenshot/品牌列表.gif)
 
-# 版本 1.0.3  
+## 版本 1.0.3  
 1、优化了底部列表dialog代码 ，增加了底部普通顶部圆角的dialog 样式  
 2、增加城市选择器设置显示哪几个省份，初始化显示省市区的功能  
 3、ImageUtils增加合并图片功能，图片设置.png后缀的功能  
