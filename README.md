@@ -39,7 +39,13 @@
 1、优化了底部列表dialog代码 ，增加了底部普通顶部圆角的dialog 样式  
 2、增加城市选择器设置显示哪几个省份，初始化显示省市区的功能  
 3、ImageUtils增加合并图片功能，图片设置.png后缀的功能  
-4、增加EditTextUtil工具类，优化了ViewUtil    
+4、增加EditTextUtil工具类，优化了ViewUtil  
+
+## 版本 1.0.4  
+1、修复1.0.3版本中 dialog圆角适配问题    
+
+
+## 图例展示  
 ![进度条和loading](screenshot/进度条loading.gif)
 ![dialog](screenshot/dialog.gif)	
 
