@@ -139,8 +139,10 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 });
                 break;
             case R.id.btn_1btn:
+                String title1 = "清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗";
+//                String title1 = "我是标题哦！";
                 CpComDialog.Builder.builder(getSelfActivity())
-                        .setTitle("我是标题哦！").setContent("啦啦啦啦").build().show1BtnDialog(
+                        .setTitle("我是标题哦！").setContent(title1).build().show1BtnDialog(
                         new CpComDialog.Dialog1BtnCallBack() {
                             @Override
                             public void sure() {
@@ -149,11 +151,14 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         });
                 break;
             case R.id.btn_2btn:
+                String title = "清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗";
+//                String title = "清空历史记录 ";
                 CpComDialog.Builder.builder(getSelfActivity()).
-                        setTitle("提示").setContent("清空历史记录吗?").setTxtCancel("忽略").setSure("更新")
+                        setTitle("提示").setContent(title).setTxtCancel("忽略").setSure("更新")
                         .setTitleSize(20).setContentSize(16).setBtnSize(20)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                        .setPadding(24,10,24,10)
                         .setCancel(false)
                         .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
                     @Override

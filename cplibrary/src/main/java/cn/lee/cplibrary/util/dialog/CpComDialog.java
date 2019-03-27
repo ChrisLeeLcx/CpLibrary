@@ -38,7 +38,7 @@ public class CpComDialog {
     private int titleSize, contentSize, btnSize;
     private boolean isCancel;
     private int width, height;//对话框的宽、除去按钮后的高
-
+    private int left=20,top=20,right=20,bottom=20; //对话框标题内容部分的上下左右边距
     private CpComDialog(Context context) {
         this.context = context;
     }
@@ -254,6 +254,7 @@ public class CpComDialog {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(w, h);
             llTop.setLayoutParams(params);
         }
+        llTop.setPadding(ScreenUtil.dp2px(context,left),ScreenUtil.dp2px(context,top),ScreenUtil.dp2px(context,right),ScreenUtil.dp2px(context,bottom));
     }
 
     public interface Dialog2BtnCallBack {
@@ -320,6 +321,15 @@ public class CpComDialog {
         this.height = height;
     }
 
+    public void setPadding(int left, int top, int right, int bottom) {
+        this.left = left;
+        this.top = top;
+        this.right = right;
+        this.bottom = bottom;
+    }
+
+
+
     public static class Builder {
         private Context context;
         private String title, content, txtCancel="取消", sure="确定";//标题、内容、取消按钮、确定按钮的文案
@@ -330,7 +340,7 @@ public class CpComDialog {
                 contentSize = 14, btnSize = 18;//内容 按钮 文字大小、
         private boolean isCancel = true;//是否可以取消,默认可以
         private int width = 245, height = LinearLayout.LayoutParams.WRAP_CONTENT;//对话框的宽、除去按钮后的高 单位dp
-
+        private int left=20,top=20,right=20,bottom=20; //对话框标题内容部分的上下左右边距
         private Builder(Context context) {
             this.context = context;
         }
@@ -354,6 +364,7 @@ public class CpComDialog {
             util.setCancel(isCancel);
             util.setWidth(width);
             util.setHeight(height);
+            util.setPadding(left,top,right,bottom);
             return util;
         }
 
@@ -427,6 +438,17 @@ public class CpComDialog {
          */
         public Builder setHeight(int height) {
             this.height = height;
+            return this;
+        }
+
+        /**
+         * 对话框标题内容部分的上下左右边距 单位dp
+         */
+        public Builder setPadding(int left, int top, int right, int bottom) {
+            this.left = left;
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
             return this;
         }
     }
