@@ -74,6 +74,10 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         cityPickerUtil.setDefaultArea("江苏省","镇江市","丹徒区");  //默认显示的省份
 //        cityPickerUtil.setDefaultArea("江苏省","镇江市","");  //默认显示的省份
 //        cityPickerUtil.setDefaultArea("江苏省","","");  //默认显示的省份
+        cityPickerUtil.settTitle("选择区域");
+        cityPickerUtil.settBgColor(getResources().getColor(R.color.colorPrimaryDark));
+        cityPickerUtil.settTxtColor(getResources().getColor(R.color.colorAccent));
+        cityPickerUtil.settTxtSize(14);
     }
 
     @Override
