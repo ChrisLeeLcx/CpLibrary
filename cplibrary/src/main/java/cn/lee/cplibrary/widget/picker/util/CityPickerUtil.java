@@ -3,6 +3,7 @@ package cn.lee.cplibrary.widget.picker.util;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.widget.picker.adapter.TextualWheelAdapter;
@@ -57,20 +60,12 @@ public class CityPickerUtil {
     private CityPickerCallBack callBack = null;
     private static int vsibleItemNum = 6;
     private static boolean isCyclic = false;
+    //标题栏外观设置
+    private int tBgColor = Color.parseColor("#1086D1");//时间选择框标题栏背景色
+    private int tTxtColor = Color.parseColor("#FFFFFF");//标题栏：文字颜色（确定、取消按钮、标题）
+    private String tTitle="选择地址";
+    private int tTxtSize=14; //单位 sp ，
 
-    public String[] getProvinceShow() {
-        return provinceShow;
-    }
-
-    public void setProvinceShow(String[] provinceShow) {
-        this.provinceShow = provinceShow;
-    }
-
-    public void setDefaultArea(String defalutP, String defalutC, String defalutD) {
-        this.defalutP = defalutP;
-        this.defalutC = defalutC;
-        this.defalutD = defalutD;
-    }
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -156,11 +151,7 @@ public class CityPickerUtil {
             updateCity(context, cityView, citiesAll.get(pp));
             updateCity(context, districtView, districtsAll.get(pp).get(cc));
         }
-
-        //显示Title
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setVisibility(View.VISIBLE);
-        tvTitle.setText("选择地址");
+        setView(view);
         // 设置监听
         view.findViewById(R.id.set).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +205,34 @@ public class CityPickerUtil {
             }
         });
     }
-
+    /**
+     * 设置对话框外观
+     */
+    private void setView(View layout) {
+        View titleBar = layout.findViewById(R.id.rl_title);
+        TextView tvTitle = layout.findViewById(R.id.tv_title);
+        TextView tvLeftBtn = layout.findViewById(R.id.cancel);
+        TextView tvRightBtn = layout.findViewById(R.id.set);
+        setView(titleBar, tvTitle, tvLeftBtn, tvRightBtn);
+    }
+    /**
+     * 设置对话框外观
+     */
+    private void setView(View titleBar, TextView tvTitle, TextView tvLeftBtn, TextView tvRightBtn) {
+        titleBar.setBackgroundColor(tBgColor);
+        if (!ObjectUtils.isEmpty(tTitle)) {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(tTitle);
+            tvTitle.setTextColor(tTxtColor);
+            tvTitle.setTextSize(tTxtSize);
+        } else {
+            tvTitle.setVisibility(View.GONE);
+        }
+        tvLeftBtn.setTextColor(tTxtColor);
+        tvRightBtn.setTextColor(tTxtColor);
+        tvLeftBtn.setTextSize(tTxtSize);
+        tvRightBtn.setTextSize(tTxtSize);
+    }
     /**
      * 初始化省、市、区
      */
@@ -356,6 +374,36 @@ public class CityPickerUtil {
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
+    }
+
+    public String[] getProvinceShow() {
+        return provinceShow;
+    }
+
+    public void setProvinceShow(String[] provinceShow) {
+        this.provinceShow = provinceShow;
+    }
+
+    public void setDefaultArea(String defalutP, String defalutC, String defalutD) {
+        this.defalutP = defalutP;
+        this.defalutC = defalutC;
+        this.defalutD = defalutD;
+    }
+
+    public void settBgColor(int tBgColor) {
+        this.tBgColor = tBgColor;
+    }
+
+    public void settTxtColor(int tTxtColor) {
+        this.tTxtColor = tTxtColor;
+    }
+
+    public void settTitle(String tTitle) {
+        this.tTitle = tTitle;
+    }
+
+    public void settTxtSize(int tTxtSize) {
+        this.tTxtSize = tTxtSize;
     }
 }
 
