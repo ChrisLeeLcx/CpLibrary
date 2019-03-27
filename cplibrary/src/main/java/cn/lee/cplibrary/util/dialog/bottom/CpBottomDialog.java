@@ -2,8 +2,9 @@ package cn.lee.cplibrary.util.dialog.bottom;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,12 +22,12 @@ import cn.lee.cplibrary.util.dialog.CpBaseDialogAdapter;
  * 多了是否可以改变背景的选项
  */
 
-public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
-    private boolean  isChangeBg;//是否可以改变背景
-    private boolean  isTopRound;//顶部是否有圆角
-    private int  bgColor;
-    private int  cancelBgColor;
-    private int  titleBgColor;
+public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T> {
+    private boolean isChangeBg;//是否可以改变背景
+    private boolean isTopRound;//顶部是否有圆角
+    private int bgColor;
+    private int cancelBgColor;
+    private int titleBgColor;
 
 
     private CpBottomDialog(Context context) {
@@ -35,7 +36,7 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
 
     @Override
     protected CpBaseDialogAdapter getAdapter() {
-        return  new BottomDialogAdapter(context, list, this);
+        return new BottomDialogAdapter(context, list, this);
     }
 
     @Override
@@ -70,6 +71,7 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
     public void setCancelBgColor(int cancelBgColor) {
         this.cancelBgColor = cancelBgColor;
     }
+
     public void setTitleBgColor(int titleBgColor) {
         this.titleBgColor = titleBgColor;
     }
@@ -90,18 +92,25 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
         TextView tvTitle = view.findViewById(R.id.tv_title);
         if (isChangeBg) {
             tvTitle.setBackgroundColor(titleBgColor);
-        } else if(isTopRound){
-            tvTitle.setBackground (context.getResources().getDrawable(R.drawable.cp_photo_bgt10_selector));
+        } else if (isTopRound) {
+            tvTitle.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgt10_selector));
+        }
+        //RecyclerView的背景设置:---针对顶部是圆角情况 并且无标题情况
+        RecyclerView rv = view.findViewById(R.id.recyclerView);
+        if (rvHeight != LinearLayout.LayoutParams.WRAP_CONTENT && isTopRound && !isShowTitle) { //高度固定  、顶部圆角、无标题
+            rv.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgt10_normal));
+        } else { //高度自适应
+            rv.setBackground(null);
         }
 
     }
 
-    public static class Builder<K extends BaseDialogBean> extends  CpBaseDialog.Builder<K>{
-        private boolean    isChangeBg;//是否改变取消按钮、item、标题的背景颜色（只有isChageBg = true时 设置其相应背景色才会改变）
-        private boolean    isTopRound;//顶部是否有圆角，在isChangeBg为false的时候起作用
+    public static class Builder<K extends BaseDialogBean> extends CpBaseDialog.Builder<K> {
+        private boolean isChangeBg;//是否改变取消按钮、item、标题的背景颜色（只有isChageBg = true时 设置其相应背景色才会改变）
+        private boolean isTopRound;//顶部是否有圆角，在isChangeBg为false的时候起作用
         private int bgColor = Color.parseColor("#ffffff");   //item背景颜色
         private int cancelBgColor = -999;   //取消按钮背景颜色
-        private int    titleBgColor = -999;  //Title背景颜色
+        private int titleBgColor = -999;  //Title背景颜色
 
         @Override
         protected CpBaseDialog getDialog(Context context) {
@@ -111,12 +120,13 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
         private Builder(Context context, List<K> list) {
             super(context, list);
         }
+
         public static <K extends BaseDialogBean> Builder builder(Context context, List<K> list) {
             return new Builder(context, list);
         }
 
         @Override
-        public CpBottomDialog build(){
+        public CpBottomDialog build() {
             CpBottomDialog myDialog = (CpBottomDialog) super.build();
             myDialog.setChangeBg(isChangeBg);
             myDialog.setTopRound(isTopRound);
@@ -124,8 +134,9 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
             cancelBgColor = cancelBgColor == -999 ? bgColor : cancelBgColor;
             myDialog.setCancelBgColor(cancelBgColor);
             myDialog.setTitleBgColor(titleBgColor);
-            return  myDialog;
+            return myDialog;
         }
+
         public Builder setChangeBg(boolean changeBg) {//位置 必须在父类其他设置方法的前面设置
             isChangeBg = changeBg;
             return this;
@@ -141,10 +152,12 @@ public class CpBottomDialog<T extends BaseDialogBean> extends CpBaseDialog<T>{
             this.bgColor = bgColor;
             return this;
         }
+
         public Builder setCancelBgColor(int cancelBgColor) {// 位置:同setChangeBg
             this.cancelBgColor = cancelBgColor;
             return this;
         }
+
         public Builder setTitleBgColor(int titleBgColor) {// 位置:同setChangeBg
             this.titleBgColor = titleBgColor;
             return this;
