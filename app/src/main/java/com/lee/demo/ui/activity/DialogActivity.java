@@ -240,16 +240,18 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 list2.add(new MyDialogBean("三国演义", "3"));
                 list2.add(new MyDialogBean("水浒传", "4"));
                 CpBottomRoundDialog.Builder.builder(getSelfActivity(), list2)
-                        .setItemHeight(30).setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-                        .setTxtSize(5).setTxtColor(getResources().getColor(R.color.colorPrimary))
+//                        .setItemHeight(30)
+                        .setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+//                        .setTxtSize(5)
+                        .setTxtColor(getResources().getColor(R.color.colorPrimary))
                         .setShowCancel(true)
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
-                        .setCancelSize(8)
-                        .setCancelHeight(50)
+//                        .setCancelSize(8)
+//                        .setCancelHeight(50)
                         .setShowTitle(false).setTitle("我是好看的标题！")
                         .setTitleColor(getResources().getColor(R.color.colorPrimary))
-                        .setTitleHeight(30)
-                        .setTitleSize(10)
+//                        .setTitleHeight(30)
+//                        .setTitleSize(10)
                         .build().showDialog(new CpBaseDialog.CpDialogBottomListCallBack() {
 
                     @Override
