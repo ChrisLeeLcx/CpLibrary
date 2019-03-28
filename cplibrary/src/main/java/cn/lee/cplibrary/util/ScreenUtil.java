@@ -93,7 +93,7 @@ public class ScreenUtil {
 //                dpVal, context.getResources().getDisplayMetrics());
     }
 
-    public static int px2dip(Context context, float pxValue) {
+    public static int px2dp(Context context, float pxValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
@@ -103,12 +103,12 @@ public class ScreenUtil {
         return (int) (pxValue / fontScale + 0.5f);
     }
 
-//    public static int sp2px(Context context, float spValue) {
-//        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-//        return (int) (spValue * fontScale + 0.5f);
-////        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-////                spValue, context.getResources().getDisplayMetrics());
-//    }
+    public static int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+//        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+//                spValue, context.getResources().getDisplayMetrics());
+    }
     public static int sp(Context context,float spValue) {
         return  (int)spValue;
     }

@@ -201,4 +201,16 @@
             <enum name="bottomLine" value="1" />
         </attr>
     </declare-styleable>
+
+
+    <!--************** SideBar**************-->
+    <declare-styleable name="cp_SideBar">
+        <attr name="cp_bgColorPress" format="reference|color" />  <!--手按下的背景颜色-->
+        <attr name="cp_bgColorNormal" format="reference|color" /> <!-- 正常背景颜色-->
+        <attr name="cp_txtColorChoose" format="reference|color" /> <!-- 选中索引文字颜色-->
+        <attr name="cp_txtColorNormal" format="reference|color" /> <!-- 正常索引文字颜色-->
+        <attr name="cp_txtBgColorChoose" format="reference|color" /> <!--  选中索引文字圆形背景颜色-->
+        <attr name="cp_txtSize" format="dimension" /> <!-- 索引文字大小 默认10sp-->
+        <attr name="cp_padding" format="dimension" /> <!-- 索引文字的内边距大小px-->
+    </declare-styleable>
 </resources>

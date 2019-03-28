@@ -41,13 +41,37 @@
             </FrameLayout>
 
 
-            <cn.lee.cplibrary.widget.sidebar.SideBar
-                android:id="@+id/sidebar_view"
+            <RelativeLayout
                 android:layout_width="35dp"
                 android:layout_height="400dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:visibility="visible" />
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="4dp"
+                 >
+                <cn.lee.cplibrary.widget.sidebar.SideBar
+                    android:id="@+id/sidebar_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    app:cp_bgColorPress="@color/font_7D"
+                    app:cp_bgColorNormal="@color/transparent"
+                    app:cp_txtColorChoose="@color/white"
+                    app:cp_txtColorNormal="#2D2D2D"
+                    app:cp_txtBgColorChoose="#30C45B"
+                    app:cp_txtSize="10sp"
+                    app:cp_padding="2dp"
+                    />
+            </RelativeLayout>
+
+            <!--app:cp_bgColorPress="@color/font_7D"-->
+            <!--app:cp_bgColorNormal="@color/transparent"-->
+            <!--app:cp_txtColorChoose="@color/white"-->
+            <!--app:cp_txtColorNormal="#2D2D2D"-->
+            <!--app:cp_txtBgColorChoose="#30C45B"-->
+            <!--app:cp_txtSize="10sp"-->
+            <!--app:cp_padding="3dp"-->
+
+
         </RelativeLayout>
         <!--右边抽屉-->
         <LinearLayout
