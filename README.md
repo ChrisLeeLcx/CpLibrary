@@ -51,6 +51,10 @@
 1、1个和2个按钮的通用对话框增加padding设置功能
 
 
+## 版本 1.0.4.3    
+1、增加布局文件设置 SideBar 样式的属性  
+
+
 
 ## 图例展示  
 ![进度条和loading](screenshot/进度条loading.gif)
