@@ -300,6 +300,29 @@ public class PhotoUtil {
         }
         return file;
     }
+
+    public static float getDesWidth() {
+        return ImageUtils.getDesWidth();
+    }
+    /**
+     * 设置压缩后宽高
+     * @param desWidth
+     */
+    public static void setDesWidth(float desWidth) {
+        ImageUtils.setDesWidth(desWidth);
+    }
+
+    /**
+     * 设置质量
+     * @param quality
+     */
+    public static void setQuality(int quality) {
+        ImageUtils.setQuality(quality);
+    }
+
+    public static int getQuality() {
+        return ImageUtils.getQuality();
+    }
 }
 
 

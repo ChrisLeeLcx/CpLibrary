@@ -230,4 +230,29 @@ public class ImageUtils {
         canvas.drawBitmap(secondBitmap, 0, firstBitmap.getHeight(), null);
         return bitmap;
     }
+
+
+    public static float getDesWidth() {
+        return desWidth;
+    }
+
+    /**
+     * 设置压缩后宽高
+     * @param desWidth
+     */
+    public static void setDesWidth(float desWidth) {
+        ImageUtils.desWidth = desWidth;
+    }
+
+    public static int getQuality() {
+        return quality;
+    }
+
+    /**
+     * 设置质量
+     * @param quality
+     */
+    public static void setQuality(int quality) {
+        ImageUtils.quality = quality;
+    }
 }

@@ -70,4 +70,9 @@ public class ActivityHelper {
         }
     }
 
+    public LinkedList<Activity> getMActivityList() {
+        return mActivityList;
+    }
+
+
 }

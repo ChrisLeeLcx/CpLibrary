@@ -257,19 +257,20 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
             case R.id.btn_bottom_round:
                 final List<MyDialogBean> list2 = new ArrayList<>();
                 list2.add(new MyDialogBean("西游记", "1"));
-                list2.add(new MyDialogBean("红楼梦", "2"));
-                list2.add(new MyDialogBean("三国演义", "3"));
-                list2.add(new MyDialogBean("水浒传", "4"));
-                list2.add(new MyDialogBean("水浒传", "4"));
-                list2.add(new MyDialogBean("水浒传", "4"));
-                list2.add(new MyDialogBean("水浒传", "4"));
-                list2.add(new MyDialogBean("水浒传", "4"));
+//                list2.add(new MyDialogBean("红楼梦", "2"));
+//                list2.add(new MyDialogBean("三国演义", "3"));
+//                list2.add(new MyDialogBean("水浒传", "4"));
+//                list2.add(new MyDialogBean("水浒传", "4"));
+//                list2.add(new MyDialogBean("水浒传", "4"));
+//                list2.add(new MyDialogBean("水浒传", "4"));
+//                list2.add(new MyDialogBean("水浒传", "4"));
                 CpBottomRoundDialog.Builder.builder(getSelfActivity(), list2)
                         .setItemHeight(30)
-                        .setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
+                        .setRvHeight(30)
+//                        .setRvHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
 //                        .setTxtSize(5)
                         .setTxtColor(getResources().getColor(R.color.colorPrimary))
-                        .setShowCancel(false)
+                        .setShowCancel(true)
                         .setCancelTxtColor(getResources().getColor(R.color.colorAccent))
 //                        .setRvHeight(100)
 //                        .setCancelSize(8)

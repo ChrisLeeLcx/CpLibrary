@@ -17,6 +17,7 @@ import java.io.File;
 
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.SharedPreferencesUtils;
+import cn.lee.cplibrary.util.takephotos.ImageUtils;
 import cn.lee.cplibrary.util.takephotos.PhotoUtil;
 import cn.lee.cplibrary.util.timer.TimeUtils;
 
@@ -41,6 +42,9 @@ public class PhotoActivity extends AppCompatActivity {
         textView.setText( SharedPreferencesUtils.getShareString(this,"user"));
 
         LogUtil.i("",this,"1111111111111111111111111");
+        PhotoUtil.setQuality(400);
+        PhotoUtil.setDesWidth(1200f);
+        LogUtil.i("","PhotoUtil="+ ImageUtils.getQuality()+",,"+ImageUtils.getDesWidth());
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -48,6 +52,8 @@ public class PhotoActivity extends AppCompatActivity {
         File file = PhotoUtil.getImageFile(this, requestCode, resultCode, data, String.valueOf(TimeUtils.getCurTimeMillis()));
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
         imageView.setImageBitmap(bitmap);
+        LogUtil.i("","PhotoUtil00000000----="+ ImageUtils.getQuality()+",,"+ImageUtils.getDesWidth());
+
     }
 
 }
