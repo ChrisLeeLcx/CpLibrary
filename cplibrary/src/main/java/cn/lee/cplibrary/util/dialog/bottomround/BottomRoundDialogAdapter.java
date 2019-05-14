@@ -33,9 +33,17 @@ public class BottomRoundDialogAdapter<T extends BaseDialogBean> extends CpBaseDi
         }else{ //高度自适应
             if (position == 0) {
                 if (dialog.isShowTitle()) {
-                    holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_selector));
+                    if(getItemCount()==1){
+                        holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgb10_selector));
+                    }else{
+                        holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_selector));
+                    }
                 } else {
-                    holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgt10_selector));
+                    if(getItemCount()==1){
+                        holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bg10_selector));
+                    }else{
+                        holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgt10_selector));
+                    }
                 }
             } else if (position == totalList.size() - 1) {
                 holder.tvName.setBackground(context.getResources().getDrawable(R.drawable.cp_photo_bgb10_selector));
