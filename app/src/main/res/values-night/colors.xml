@@ -8,7 +8,7 @@
     <color name="translucency">#66000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="bg_main">#F7F7F7</color>
+    <color name="bg_main">#FF2B2B2B</color>
     <color name="bg_dcd">#dcdddd</color>
     <color name="bg_f4">#F4F4F4</color>
     <color name="bg_fa">#FAFAFA</color>
@@ -19,5 +19,5 @@
     <color name="font_7D">#7D7D7D</color>
     <color name="font_b1">#b1b1b1</color>
     <color name="blue">#6489F7</color>
-    <color name="rv_item_main">#000</color>
+    <color name="rv_item_main">#fff</color>
 </resources>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lee.demo.R;
+import com.lee.demo.base.BaseApplication;
 import com.lee.demo.base.BaseWebViewActivity;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
+    private Button btn_switch;
     private List<ActivityBean> totalList = new ArrayList<>();
 
     @Override
@@ -30,6 +32,26 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         initData();
         initRecyclerView();
+        final BaseApplication application = (BaseApplication) getApplication();
+        btn_switch =findViewById(R.id.btn_switch);
+        btn_switch.setText(application.isDayMode()?"切换夜间模式":"切换日间模式");
+        btn_switch .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                application.switchDayNightMode();
+                btn_switch.setText(application.isDayMode()?"切换夜间模式":"切换日间模式");
+                recreate();
+            }
+        });
+        findViewById(R.id.btn_webView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BaseWebViewActivity.class);
+                intent.putExtra(BaseWebViewActivity.KEY_URL,"https://ebikeyw.fangxiangjia.com");
+                startActivity(intent);
+
+            }
+        });
     }
 
     private void initData() {
