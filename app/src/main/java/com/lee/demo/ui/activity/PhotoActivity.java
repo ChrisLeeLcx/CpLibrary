@@ -50,10 +50,13 @@ public class PhotoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         File file = PhotoUtil.getImageFile(this, requestCode, resultCode, data, String.valueOf(TimeUtils.getCurTimeMillis()));
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        imageView.setImageBitmap(bitmap);
-        LogUtil.i("","PhotoUtil00000000----="+ ImageUtils.getQuality()+",,"+ImageUtils.getDesWidth());
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageView.setImageBitmap(bitmap);
+            LogUtil.i("","PhotoUtil00000000----="+ ImageUtils.getQuality()+",,"+ImageUtils.getDesWidth());
+        }catch (NullPointerException e){
 
+        }
     }
 
 }

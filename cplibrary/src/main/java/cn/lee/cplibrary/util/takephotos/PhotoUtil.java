@@ -210,7 +210,7 @@ public class PhotoUtil {
                 return;
             } else {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Uri imgUri = FileProvider.getUriForFile(activity, AppUtils.getAppId(activity) + ".provider", tempFile);
+                Uri imgUri = FileProvider.getUriForFile(activity,  AppUtils.getAppId(activity)  + ".provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
                 if (fragment == null) {
                     activity.startActivityForResult(intent, REQUEST_CAPTURE);

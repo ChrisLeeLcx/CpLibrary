@@ -31,7 +31,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
     protected int txtColor;
     protected int cancelSize, cancelTxtColor, cancelHeight;
     protected int titleSize, titleColor, titleHeight;
-    protected String title;
+    protected String title,cancelTxt;
     public interface CpDialogBottomListCallBack {
         void sure(CpBaseDialogAdapter adapter, View rootView, int position);
         void cancel();
@@ -96,6 +96,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
         } else {
             tvCancel.setVisibility(View.GONE);
         }
+        tvCancel.setText(cancelTxt);
         tvCancel.setTextSize(ScreenUtil.sp(context, cancelSize));
         tvCancel.setTextColor(cancelTxtColor);
 
@@ -133,6 +134,10 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
 
     public void setShowCancel(boolean showCancel) {
         isShowCancel = showCancel;
+    }
+
+    public void setCancelTxt(String cancelTxt) {
+        this.cancelTxt = cancelTxt;
     }
 
     public void setShowTitle(boolean showTitle) {
@@ -226,6 +231,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
         private int cancelSize = -999,   //取消按钮文字大小
                 cancelTxtColor = -999, //取消按钮文字颜色
                 cancelHeight = -999; //取消按钮高
+        private String cancelTxt="取消";//标题内容
         //单独设置Title---如果不设置 默认和item的参数一致
         private int titleSize = -999,   //Title文字大小
                 titleColor = -999, //Title文字颜色
@@ -255,6 +261,7 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
             cancelSize = cancelSize == -999 ? txtSize : cancelSize;
             cancelTxtColor = cancelTxtColor == -999 ? txtColor : cancelTxtColor;
             cancelHeight = cancelHeight == -999 ? itemHeight : cancelHeight;
+            dialog.setCancelTxt(cancelTxt);
             dialog.setCancelSize(cancelSize);
             dialog.setCancelTxtColor(cancelTxtColor);
             dialog.setCancelHeight(cancelHeight);
@@ -347,6 +354,11 @@ public abstract class CpBaseDialog <T extends BaseDialogBean>{
 
         public Builder setLineMarginLR(int lineMarginLR) {
             this.lineMarginLR = lineMarginLR;
+            return this;
+        }
+
+        public Builder setCancelTxt(String cancelTxt) {
+            this.cancelTxt = cancelTxt;
             return this;
         }
     }

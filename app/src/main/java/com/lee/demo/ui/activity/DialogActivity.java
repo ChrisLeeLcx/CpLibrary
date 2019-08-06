@@ -199,6 +199,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setCancelHeight(50)
                         .setShowTitle(true)//设置标题
                         .setTitle("我是普通的标题！")
+                        .setCancelTxt("再看看")
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
 //                        .setTitleHeight(50)
 //                        .setTitleSize(14)
@@ -238,6 +239,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setCancelHeight(50)
                         .setShowTitle(false)//设置标题
                         .setTitle("我是普通的标题！")
+                        .setCancelTxt("再看看")
                         .setTitleColor(getResources().getColor(R.color.colorAccent))
 //                        .setTitleHeight(50)
 //                        .setTitleSize(14)
@@ -279,6 +281,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setTitleColor(getResources().getColor(R.color.colorPrimary))
 //                        .setTitleHeight(30)
 //                        .setTitleSize(10)
+                        .setCancelTxt("再看看")
                         .setLineMarginLR(0)
                         .build().showDialog(new CpBaseDialog.CpDialogBottomListCallBack() {
 

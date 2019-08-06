@@ -74,4 +74,28 @@ public class SystemUtil {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNo));
         activity.startActivity(intent);
     }
+
+    /**
+     * 跳转到系统功能界面
+     **/
+    public static void jumpSetting(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转到Wifi
+     **/
+    public static void jumpWifi(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转到移动网络设置界面
+     **/
+    public static void jumpMobileNet(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+        activity.startActivity(intent);
+    }
 }
