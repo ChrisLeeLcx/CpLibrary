@@ -1,17 +1,11 @@
 package cn.lee.cplibrary.widget.picker.util;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,15 +15,17 @@ import java.util.Map;
 
 import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
-import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.widget.picker.adapter.TextualWheelAdapter;
-import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
+import cn.lee.cplibrary.widget.picker.bean.BaseCityBean;
+import cn.lee.cplibrary.widget.picker.bean.BaseDistrictBean;
+import cn.lee.cplibrary.widget.picker.bean.BaseProvinceBean;
 import cn.lee.cplibrary.widget.picker.widget.OnWheelChangedListener;
 import cn.lee.cplibrary.widget.picker.widget.WheelView;
 
 /**
- *  默认地址选择器 使用的数据是本地assets里的province.json数据
+ * 地址选择器 使用的数据需要调用者传入
  * 使用方式：
  * 1、初始化对象：CityPickerUtil cityPickerUtil = new CityPickerUtil(activity);
  * 2、调用showProvince方法 cityPickerUtil.showProvince(new CityPickerUtil.CityPickerCallBack() {
@@ -45,78 +41,42 @@ import cn.lee.cplibrary.widget.picker.widget.WheelView;
  * @time: 2018/11/3
  */
 
-public class CityPickerUtil {
+public class CityPickerLoadDataUtil {
     private List<String> provincesAll = new ArrayList<>();//所有省份
     private String[] provinceShow; //需要显示的省份,若 provinceShow为null，或者size=0，provincesAll的内容就是所有省份,否则provincesAll内容为provinceShow
     private String defalutP = "北京市", defalutC = "北京市", defalutD = "东城区"; //默认显示的省市区
     private Map<String, List<String>> citiesAll = new HashMap<>();//所有市，key:省名字，value：市
     private Map<String, Map<String, List<String>>> districtsAll = new HashMap<>();//所有区：key1省；key2市：values2：区
-    private Thread thread;
-    private static final int MSG_LOAD_DATA = 0x0001;//开始解析数据
-    private static final int MSG_LOAD_SUCCESS = 0x0002;//解析数据成功
-    private static final int MSG_LOAD_FAILED = 0x0003;//解析数据失败
-    private boolean isLoaded = false;//数据是否加载完毕
     private Context context;
     private CityPickerCallBack callBack = null;
     private static int vsibleItemNum = 6;
     private static boolean isCyclic = false;
+    private boolean isLoaded = false;//数据转化完毕
     //标题栏外观设置
     private int tBgColor = Color.parseColor("#1086D1");//时间选择框标题栏背景色
     private int tTxtColor = Color.parseColor("#FFFFFF");//标题栏：文字颜色（确定、取消按钮、标题）
     private String tTitle="选择地址";
     private int tTxtSize=14; //单位 sp ，
-
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_LOAD_DATA://开始解析数据
-                    if (thread == null) {//如果已创建就不再重新创建子线程了
-                        thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initJsonData(context); // 子线程中解析省市区数据
-                            }
-                        });
-                        thread.start();
-                    }
-                    break;
-
-                case MSG_LOAD_SUCCESS://解析数据成功
-                    showProvinceDialog(context, callBack);
-                    isLoaded = true;
-                    break;
-
-                case MSG_LOAD_FAILED://解析数据失败
-                    LogUtil.i("", CityPickerUtil.this, "解析数据失败");
-                    destroyHandler();
-                    thread = null;
-                    break;
-            }
-        }
-    };
-
-    public CityPickerUtil(Context context) {
+    public CityPickerLoadDataUtil(Context context) {
         this.context = context;
     }
-
     /**
      * 显示省市区
      */
-    public void showProvince(final CityPickerCallBack callBack) {
-        if (isLoaded) {
+    public    void showDialog(List<BaseProvinceBean> beans, final CityPickerCallBack callBack) {
+        if(beans==null || beans.size()<=0){
+            throw new IllegalArgumentException("参数违规");
+        }
+        if(!isLoaded){
+            initJsonData(beans,context);
+        }
+        this.callBack = callBack;
+        if(provincesAll.size()>0){
             showProvinceDialog(context, callBack);
-        } else {
-            mHandler.sendEmptyMessage(MSG_LOAD_DATA);
-            this.callBack = callBack;
+        }else {
+            ToastUtil.showToast(context,"没有城市数据");
         }
     }
-
-
-//    int indexP = 0;
-//    int indexC = 0;
-
     /**
      * 显示省市区
      */
@@ -159,7 +119,7 @@ public class CityPickerUtil {
                 String pp = provincesAll.get(provinceView.getCurrentItem());
                 String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
                 String dd = districtsAll.get(pp).get(cc).get(districtView.getCurrentItem());
-                callBack.sure(pp, cc, dd);
+                callBack.sure(pp, cc, dd,provinceView.getCurrentItem() ,cityView.getCurrentItem(),districtView.getCurrentItem());
                 dialog.cancel();
             }
         });
@@ -177,10 +137,6 @@ public class CityPickerUtil {
                 try {
                     String pp = provincesAll.get(provinceView.getCurrentItem());
                     String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
-//                indexP = newValue;
-//                Map<String, List<String>> mapDD = districtsAll.get(provincesAll.get(indexP));
-//                updateCity(context, cityView, citiesAll.get(provincesAll.get(indexP)));
-//                updateCity(context, districtView, mapDD.get(citiesAll.get(provincesAll.get(indexP)).get(indexC)));
                     updateCity(context, cityView, citiesAll.get(pp));
                     updateCity(context, districtView, districtsAll.get(pp).get(cc));
                 } catch (IndexOutOfBoundsException e) {
@@ -195,9 +151,6 @@ public class CityPickerUtil {
                 try {
                     String pp = provincesAll.get(provinceView.getCurrentItem());
                     String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
-//                indexC = newValue;
-//                Map<String, List<String>> mapDD = districtsAll.get(provincesAll.get(indexP));
-//                updateCity(context, districtView, mapDD.get(citiesAll.get(provincesAll.get(indexP)).get(indexC)));
                     updateCity(context, districtView, districtsAll.get(pp).get(cc));
                 } catch (IndexOutOfBoundsException e) {
                     e.printStackTrace();
@@ -263,100 +216,55 @@ public class CityPickerUtil {
     }
 
     public interface CityPickerCallBack {
-        public void sure(String province, String city, String district);
+        /**
+         * @param province 省名字
+         * @param city 市 名字
+         * @param district 区 名字
+         * @param pPosition 省 位置
+         * @param cPosition 市 位置
+         * @param dPosition 区 位置
+         */
+        public void sure(String province, String city, String district,int pPosition,int cPosition,int dPosition);
 
         public void cancel();
     }
 
 
     /**
-     * 解析省市区
-     *
-     * @param result
-     * @return
+     * 将所给数据转化成所需要模板
+     * @param context
      */
-    public ArrayList<ProvinceBean> parseData(String result) {//Gson 解析
-
-        ArrayList<ProvinceBean> detail = new ArrayList<>();
-        try {
-            JSONArray arrayP = new JSONArray(result);
-            for (int i = 0; i < arrayP.length(); i++) {
-                JSONObject objP = arrayP.getJSONObject(i);
-                ProvinceBean provinceBean = new ProvinceBean();
-                provinceBean.setName(objP.getString("name"));//province
-                JSONArray arrayCity = objP.getJSONArray("city");//city
-                List<ProvinceBean.CityBean> city = new ArrayList<>();
-                for (int j = 0; j < arrayCity.length(); j++) {
-                    JSONObject objC = arrayCity.getJSONObject(j);
-                    ProvinceBean.CityBean cityBean = new ProvinceBean.CityBean();
-                    cityBean.setName(objC.getString("name"));
-                    JSONArray area = objC.getJSONArray("area");
-                    List<String> areasD = new ArrayList<>();
-                    for (int k = 0; k < area.length(); k++) {
-                        areasD.add(area.getString(k));
-                    }
-                    cityBean.setArea(areasD);
-                    city.add(cityBean);
-                }
-                provinceBean.setCity(city);
-                detail.add(provinceBean);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            mHandler.sendEmptyMessage(MSG_LOAD_FAILED);
-            LogUtil.i("", this, e.getMessage());
-
-        }
-        return detail;
-    }
-
-    //
-//    private void initJsonData(Context context) {//解析数据
-//        String JsonData = new GetJsonDataUtil().getJson(context, "province.json");//获取assets目录下的json文件数据
-//        ArrayList<ProvinceBean> beans = parseData(JsonData);//用Gson 转成实体
-//        for (int i = 0; i < beans.size(); i++) {//遍历省份（第1级）
-//            String pName = beans.get(i).getName();
-//            List<ProvinceBean.CityBean> pCity = beans.get(i).getCity();
-//            provincesAll.add(pName);//All省
-//            List<String> listCitys = new ArrayList<>();//市
-//            Map<String, List<String>> mapD = new HashMap<>();//市：区
-//            for (int j = 0; j < pCity.size(); j++) {//遍历市级（第2级）
-//                listCitys.add(pCity.get(j).getName());
-//                List<String> area = pCity.get(j).getArea();
-//                mapD.put(pCity.get(j).getName(), area);
-//            }
-//
-//            citiesAll.put(pName, listCitys);//All市
-//            districtsAll.put(pName, mapD);//All区
-//        }
-//        mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
-//
-//    }
-    private void initJsonData(Context context) {//解析数据
-        String JsonData = new GetJsonDataUtil().getJson(context, "province.json");//获取assets目录下的json文件数据
-        ArrayList<ProvinceBean> beans = parseData(JsonData);//用Gson 转成实体
+    private void initJsonData(List<BaseProvinceBean> beans ,Context context) {//解析数据
         for (int i = 0; i < beans.size(); i++) {//遍历省份（第1级）
             String pName = beans.get(i).getName();
             if (!hasProvince(pName)) {
                 continue;
             }
-            List<ProvinceBean.CityBean> pCity = beans.get(i).getCity();
+            List<BaseCityBean> pCity = beans.get(i).getCitys();
             provincesAll.add(pName);//All省
             List<String> listCitys = new ArrayList<>();//市
             Map<String, List<String>> mapD = new HashMap<>();//市：区
             for (int j = 0; j < pCity.size(); j++) {//遍历市级（第2级）
                 listCitys.add(pCity.get(j).getName());
-                List<String> area = pCity.get(j).getArea();
-                mapD.put(pCity.get(j).getName(), area);
+                //遍历区级（第3级）
+                List<BaseDistrictBean> districts = pCity.get(j).getDistricts();
+                if(districts!=null && districts.size()>0){
+                    List<String> area = new ArrayList<>();
+                    for(int k=0;k<districts.size();k++){
+                        area.add(districts.get(k).getName());
+                    }
+                    mapD.put(pCity.get(j).getName(), area);
+                }
             }
             citiesAll.put(pName, listCitys);//All市
             districtsAll.put(pName, mapD);//All区
         }
-        mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
-
+        isLoaded = true;
     }
 
+    /**
+     * @return true 显示该省份，false 不显示该省份
+     */
     private boolean hasProvince(String pName) {
         if (provinceShow == null || Arrays.asList(provinceShow).size() == 0) { //默认显示所有
             return true;
@@ -367,14 +275,7 @@ public class CityPickerUtil {
         return false;
     }
 
-    /**
-     * 请在Activity或者Fragment销毁的时候 调用此方法
-     */
-    public void destroyHandler() {
-        if (mHandler != null) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
-    }
+
 
     public String[] getProvinceShow() {
         return provinceShow;

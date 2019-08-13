@@ -24,6 +24,12 @@
         android:hint="请选择地址"
         android:paddingRight="4dp" />
     <TextView
+        android:id="@+id/tv_addr2"
+        android:layout_width="wrap_content"
+        style="@style/et_apply_licence"
+        android:hint="请选择地址2"
+        android:paddingRight="4dp" />
+    <TextView
         android:id="@+id/tv_sort"
         android:layout_width="200dp"
         android:layout_height="30dp"

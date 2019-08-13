@@ -1,15 +1,27 @@
 package com.lee.demo.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lee.demo.R;
 import com.lee.demo.base.SwipeBackActivity;
+import com.lee.demo.model.MyBaseCityBean;
+import com.lee.demo.model.MyBaseDistrictBean;
+import com.lee.demo.model.MyBaseProvinceBean;
 import com.lee.demo.util.PopupWindowUtil;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
@@ -19,8 +31,14 @@ import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.dialog.BaseDialogBean;
 import cn.lee.cplibrary.util.dialog.bottom.CpBottomDialog;
 import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
+import cn.lee.cplibrary.widget.picker.bean.BaseCityBean;
+import cn.lee.cplibrary.widget.picker.bean.BaseDistrictBean;
+import cn.lee.cplibrary.widget.picker.bean.BaseProvinceBean;
+import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
+import cn.lee.cplibrary.widget.picker.util.CityPickerLoadDataUtil;
 import cn.lee.cplibrary.widget.picker.util.CityPickerUtil;
 import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
+import cn.lee.cplibrary.widget.picker.util.GetJsonDataUtil;
 import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
 
 /**
@@ -28,10 +46,11 @@ import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
  */
 public class DialogActivity extends SwipeBackActivity implements View.OnClickListener {
 
-    private TextView tvDate, tvAddr, tvTime;
+    private TextView tvDate, tvAddr, tvAddr2, tvTime;
     private CityPickerUtil cityPickerUtil;
     private TextView tvSort;
     private PopupWindowUtil popupWindowUtil;
+    private CityPickerLoadDataUtil cityPickerLoadDataUtil;
 
     @Override
     protected SwipeBackActivity getSelfActivity() {
@@ -58,11 +77,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvAddr = (TextView) findViewById(R.id.tv_addr);
+        tvAddr2 = (TextView) findViewById(R.id.tv_addr2);
         tvSort = (TextView) findViewById(R.id.tv_sort);
         tvSort.setOnClickListener(this);
         tvDate.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         tvAddr.setOnClickListener(this);
+        tvAddr2.setOnClickListener(this);
         findViewById(R.id.btn_1btn).setOnClickListener(this);
         findViewById(R.id.btn_2btn).setOnClickListener(this);
         findViewById(R.id.btn_top_round).setOnClickListener(this);
@@ -70,21 +91,32 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         findViewById(R.id.btn_bottom_round).setOnClickListener(this);
         popupWindowUtil = new PopupWindowUtil();
         cityPickerUtil = new CityPickerUtil(getSelfActivity());
-        cityPickerUtil.setProvinceShow(new String[] {"安徽省" ,"江苏省"} );//只显示这两个省，默认显示所有省份
-        cityPickerUtil.setDefaultArea("江苏省","镇江市","丹徒区");  //默认显示的省份
+        cityPickerUtil.setProvinceShow(new String[]{"安徽省", "江苏省"});//只显示这两个省，默认显示所有省份
+//        cityPickerUtil.setDefaultArea("江苏省","镇江市","丹徒区");  //默认显示的省份
 //        cityPickerUtil.setDefaultArea("江苏省","镇江市","");  //默认显示的省份
 //        cityPickerUtil.setDefaultArea("江苏省","","");  //默认显示的省份
         cityPickerUtil.settTitle("选择区域");
         cityPickerUtil.settBgColor(getResources().getColor(R.color.colorPrimaryDark));
         cityPickerUtil.settTxtColor(getResources().getColor(R.color.colorAccent));
         cityPickerUtil.settTxtSize(14);
+
+        //数据来源于外界
+        cityPickerLoadDataUtil = new CityPickerLoadDataUtil(getSelfActivity());
+        cityPickerLoadDataUtil.setProvinceShow(new String[]{"安徽省", "江苏省"});//只显示这两个省，默认显示所有省份
+//        cityPickerLoadDataUtil.setDefaultArea("江苏省","镇江市","丹徒区");  //默认显示的省份
+//        cityPickerLoadDataUtil.setDefaultArea("江苏省","镇江市","");  //默认显示的省份
+//        cityPickerLoadDataUtil.setDefaultArea("江苏省","","");  //默认显示的省份
+        cityPickerLoadDataUtil.settTitle("选择区域");
+        cityPickerLoadDataUtil.settBgColor(getResources().getColor(R.color.colorPrimaryDark));
+        cityPickerLoadDataUtil.settTxtColor(getResources().getColor(R.color.colorAccent));
+        cityPickerLoadDataUtil.settTxtSize(14);
+
     }
 
     @Override
     protected void initData() {
 
     }
-
 
 
     @Override
@@ -138,6 +170,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                     }
                 });
                 break;
+            case R.id.tv_addr2:
+                if (beans.size() > 0) {
+                    showCityPickDialog();
+                } else {
+                    mHandler.sendEmptyMessage(MSG_LOAD_DATA);
+                }
+                break;
             case R.id.btn_1btn:
                 String title1 = "清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗";
 //                String title1 = "我是标题哦！";
@@ -158,7 +197,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setTitleSize(20).setContentSize(16).setBtnSize(20)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
-                        .setPadding(24,10,24,10)
+                        .setPadding(24, 10, 24, 10)
                         .setCancel(false)
                         .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
                     @Override
@@ -301,7 +340,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                     @Override
                     public void getChildView(View view, int layoutResId) {
                         if (layoutResId == R.layout.pwindow) {
-                           LogUtil.i("","","我是布局activity_state_layout");
+                            LogUtil.i("", "", "我是布局activity_state_layout");
                         }
                     }
                 });
@@ -332,5 +371,119 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         public void setId(String id) {
             this.id = id;
         }
+    }
+
+    //---------------------解析城市数据--------------------
+
+    private static final int MSG_LOAD_DATA = 0x0001;//开始解析数据
+    private static final int MSG_LOAD_SUCCESS = 0x0002;//解析数据成功
+    private static final int MSG_LOAD_FAILED = 0x0003;//解析数据失败
+    private Thread thread;
+    private List<BaseProvinceBean> beans = new ArrayList<>();
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_LOAD_DATA://开始解析数据
+                    if (thread == null) {//如果已创建就不再重新创建子线程了
+                        thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String JsonData = new GetJsonDataUtil().getJson(getSelfActivity(), "province.json");//获取assets目录下的json文件数据
+                                ArrayList<ProvinceBean> list = parseData(JsonData);//用Gson 转成实体
+                                for (int i = 0; i < list.size(); i++) {
+                                    MyBaseProvinceBean pBean = new MyBaseProvinceBean(i+"",list.get(i).getName());
+                                    List<ProvinceBean.CityBean> city = list.get(i).getCity();
+                                    List<BaseCityBean> citys = new ArrayList();
+                                    for (int i1 = 0; i1 < city.size(); i1++) {
+                                        MyBaseCityBean cityBean = new MyBaseCityBean(i1+"",city.get(i1).getName());
+                                        List<MyBaseDistrictBean> districts = new ArrayList<>();
+                                        List<String> area = city.get(i1).getArea();
+                                        for (int i2 = 0; i2 < area.size(); i2++) {
+                                            districts.add(new MyBaseDistrictBean(i2 + "", area.get(i2)));
+                                        }
+                                        cityBean.setDistricts(districts);
+                                        citys.add(cityBean);
+                                    }
+                                    pBean.setCitys(citys);
+                                    beans.add(pBean);
+                                }
+                                mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
+
+                            }
+                        });
+                        thread.start();
+                    }
+                    break;
+
+                case MSG_LOAD_SUCCESS://解析数据成功
+                    showCityPickDialog();
+                    break;
+
+                case MSG_LOAD_FAILED://解析数据失败
+                    thread = null;
+                    break;
+            }
+        }
+    };
+
+    private void showCityPickDialog() {
+        cityPickerLoadDataUtil.showDialog(beans, new CityPickerLoadDataUtil.CityPickerCallBack() {
+
+            @Override
+            public void sure(String province, String city, String district, int pPosition, int cPosition, int dPosition) {
+                MyBaseProvinceBean pBean = (MyBaseProvinceBean) beans.get(pPosition);
+                MyBaseCityBean cBean = (MyBaseCityBean) pBean.getCitys().get(cPosition);
+                List<MyBaseDistrictBean> districts = cBean.getDistricts();
+                tvAddr2.setText(province + city + district + "---" + pBean.getId()+"-"+cBean.getId()+"-"+districts.get(dPosition).getId());
+            }
+            @Override
+            public void cancel() {
+
+            }
+        });
+    }
+
+
+    /**
+     * 解析省市区
+     *
+     * @param result
+     * @return
+     */
+    public ArrayList<ProvinceBean> parseData(String result) {//Gson 解析
+
+        ArrayList<ProvinceBean> detail = new ArrayList<>();
+        try {
+            JSONArray arrayP = new JSONArray(result);
+            for (int i = 0; i < arrayP.length(); i++) {
+                JSONObject objP = arrayP.getJSONObject(i);
+                ProvinceBean provinceBean = new ProvinceBean();
+                provinceBean.setName(objP.getString("name"));//province
+                JSONArray arrayCity = objP.getJSONArray("city");//city
+                List<ProvinceBean.CityBean> city = new ArrayList<>();
+                for (int j = 0; j < arrayCity.length(); j++) {
+                    JSONObject objC = arrayCity.getJSONObject(j);
+                    ProvinceBean.CityBean cityBean = new ProvinceBean.CityBean();
+                    cityBean.setName(objC.getString("name"));
+                    JSONArray area = objC.getJSONArray("area");
+                    List<String> areasD = new ArrayList<>();
+                    for (int k = 0; k < area.length(); k++) {
+                        areasD.add(area.getString(k));
+                    }
+                    cityBean.setArea(areasD);
+                    city.add(cityBean);
+                }
+                provinceBean.setCity(city);
+                detail.add(provinceBean);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mHandler.sendEmptyMessage(MSG_LOAD_FAILED);
+            LogUtil.i("", this, e.getMessage());
+
+        }
+        return detail;
     }
 }
