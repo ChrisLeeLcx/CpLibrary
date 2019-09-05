@@ -2,6 +2,7 @@ package cn.lee.cplibrary.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
@@ -149,9 +150,6 @@ public class ScreenUtil {
     }
 
     /**
-     *
-     */
-    /**
      * 顺时针旋转
      *
      * @param view：旋转的控件
@@ -181,4 +179,24 @@ public class ScreenUtil {
         view.setY((height - width) / 2);
         view.setX((width - height) / 2);
     }
+    /**
+     * 设置Activity竖屏
+     */
+    public static void setActivityPortrait(Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 变为竖屏显示
+    }
+
+    /**
+     * 设置Activity横屏
+     */
+    public static void setActivityLandscape(Activity activity) {
+        if (activity.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {// 无法进行画面的旋转
+            return;
+        } else {
+            if (activity.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) { // 如果为竖屏显示
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // 变为横屏显示
+            }
+        }
+    }
+
 }
