@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -199,6 +200,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setPadding(24, 10, 24, 10)
                         .setCancel(false)
+                        .setGravity(Gravity.RIGHT)
                         .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
                     @Override
                     public void sure() {

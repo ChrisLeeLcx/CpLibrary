@@ -39,6 +39,7 @@ public class CpComDialog {
     private boolean isCancel;
     private int width, height;//对话框的宽、除去按钮后的高
     private int left=20,top=20,right=20,bottom=20; //对话框标题内容部分的上下左右边距
+    private int gravity=Gravity.CENTER;
     private CpComDialog(Context context) {
         this.context = context;
     }
@@ -223,6 +224,7 @@ public class CpComDialog {
             tvTitle.setText(title);
             tvTitle.setTextColor(titleColor);
             tvTitle.setTextSize(ScreenUtil.sp(context, titleSize));
+            tvTitle.setGravity(gravity);
         }
         if (TextUtils.isEmpty(content)) {
             tvContent.setVisibility(View.GONE);
@@ -231,6 +233,7 @@ public class CpComDialog {
             tvContent.setText(content);
             tvContent.setTextColor(contentColor);
             tvContent.setTextSize(ScreenUtil.sp(context, contentSize));
+            tvContent.setGravity(gravity);
         }
         if (!TextUtils.isEmpty(txtCancel)) {
             btnCancel.setText(txtCancel);
@@ -328,7 +331,9 @@ public class CpComDialog {
         this.bottom = bottom;
     }
 
-
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
+    }
 
     public static class Builder {
         private Context context;
@@ -341,6 +346,7 @@ public class CpComDialog {
         private boolean isCancel = true;//是否可以取消,默认可以
         private int width = 245, height = LinearLayout.LayoutParams.WRAP_CONTENT;//对话框的宽、除去按钮后的高 单位dp
         private int left=20,top=20,right=20,bottom=20; //对话框标题内容部分的上下左右边距
+        private int gravity=Gravity.CENTER;
         private Builder(Context context) {
             this.context = context;
         }
@@ -365,6 +371,7 @@ public class CpComDialog {
             util.setWidth(width);
             util.setHeight(height);
             util.setPadding(left,top,right,bottom);
+            util.setGravity(gravity);
             return util;
         }
 
@@ -449,6 +456,11 @@ public class CpComDialog {
             this.top = top;
             this.right = right;
             this.bottom = bottom;
+            return this;
+        }
+
+        public Builder setGravity(int gravity) {
+            this.gravity = gravity;
             return this;
         }
     }
