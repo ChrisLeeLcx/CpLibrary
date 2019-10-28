@@ -31,6 +31,8 @@ public class PhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
         PhotoUtil.init(this, savedInstanceState);
         imageView = (ImageView) findViewById(R.id.imageView);
+
+
         findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +46,7 @@ public class PhotoActivity extends AppCompatActivity {
         LogUtil.i("",this,"1111111111111111111111111");
         PhotoUtil.setQuality(400);
         PhotoUtil.setDesWidth(1200f);
+        PhotoUtil.setOnlyUseSystemCamera(true);
         LogUtil.i("","PhotoUtil="+ ImageUtils.getQuality()+",,"+ImageUtils.getDesWidth());
     }
     @Override

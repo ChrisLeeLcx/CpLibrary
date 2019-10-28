@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import java.io.File;
+import java.util.List;
 
 import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.ToastUtil;
@@ -33,6 +36,8 @@ import cn.lee.cplibrary.util.permissionutil.PermissionUtils;
  * 获取拍照或者相册中的图片
  */
 public class PhotoUtil {
+    public static boolean onlyUseSystemCamera = true;//调用相机拍照时候：是否只使用系统相机
+
     public static File tempFile;
     //请求相机
     public static final int REQUEST_CAPTURE = 200;
@@ -129,8 +134,8 @@ public class PhotoUtil {
     /**
      * 打开上传图片的Dialog 必须重写onActivityResult
      *
-     * @param activity
-     * @param fragment 不为null表示在Fragment中上传图片 ，是null表示在Activity中上传图片
+     * @param activity 一定不能为空
+     * @param fragment 不为null表示在Fragment中上传图片且activity是fragment挂载的Activity ，是null表示在Activity中上传图片
      * @return
      */
     public static Dialog showPicChooseDialog(final Activity activity, final Fragment fragment) {
@@ -198,39 +203,6 @@ public class PhotoUtil {
 
 
     /**
-     * Activity在onCreate方法中必须已经调用了方法PhotoUtil.init(this,savedInstanceState);
-     * 跳转到照相机页
-     */
-    public static void gotoCarema(Activity activity, Fragment fragment) {
-        if (Build.VERSION.SDK_INT >= 23) {//FileProvider只能用于高版本的app中
-            int checkCallPhonePermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
-            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, 222);
-                ToastUtil.showToast(activity, "请允许软件开启相机");
-                return;
-            } else {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Uri imgUri = FileProvider.getUriForFile(activity,  AppUtils.getAppId(activity)  + ".provider", tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-                if (fragment == null) {
-                    activity.startActivityForResult(intent, REQUEST_CAPTURE);
-                } else {
-                    fragment.startActivityForResult(intent, REQUEST_CAPTURE);
-                }
-            }
-        } else {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
-            if (fragment == null) {
-                activity.startActivityForResult(intent, REQUEST_CAPTURE);
-            } else {
-                fragment.startActivityForResult(intent, REQUEST_CAPTURE);
-            }
-        }
-
-    }
-
-    /**
      * 根据Uri返回文件绝对路径
      * 兼容了file:///开头的 和 content://开头的情况
      *
@@ -274,6 +246,42 @@ public class PhotoUtil {
     }
 
     /**
+     * Activity在onCreate方法中必须已经调用了方法PhotoUtil.init(this,savedInstanceState);
+     * 跳转到照相机页
+     */
+    public static void gotoCarema(Activity activity, Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= 23) {//FileProvider只能用于高版本的app中
+            int checkCallPhonePermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
+            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, 222);
+                ToastUtil.showToast(activity, "请允许软件开启相机");
+                return;
+            } else {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                onlyUseSysCamera(intent, activity);//设置只使用系统相机
+                Uri imgUri = FileProvider.getUriForFile(activity, AppUtils.getAppId(activity) + ".provider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+                if (fragment == null) {
+                    activity.startActivityForResult(intent, REQUEST_CAPTURE);
+                } else {
+                    fragment.startActivityForResult(intent, REQUEST_CAPTURE);
+                }
+            }
+        } else {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            onlyUseSysCamera(intent, activity);//设置只使用系统相机
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
+            if (fragment == null) {
+                activity.startActivityForResult(intent, REQUEST_CAPTURE);
+            } else {
+                fragment.startActivityForResult(intent, REQUEST_CAPTURE);
+            }
+        }
+
+    }
+
+
+    /**
      * @param imgName 文件名( 格式是.jpg,是在本方法中追加的)
      * @return
      */
@@ -301,11 +309,74 @@ public class PhotoUtil {
         return file;
     }
 
+
+    // 对使用系统拍照的处理
+    public static String getCameraPhoneAppInfos(Context context) {
+        try {
+            String strCamera = "";
+            List<PackageInfo> packages = context.getPackageManager()
+                    .getInstalledPackages(0);
+            for (int i = 0; i < packages.size(); i++) {
+                try {
+                    PackageInfo packageInfo = packages.get(i);
+                    String strLabel = packageInfo.applicationInfo.loadLabel(
+                            context.getPackageManager()).toString();
+                    // 一般手机系统中拍照软件的名字 可能尚未找全 需要持续添加适配
+                    if ("相机,照相机,照相,拍照,摄像,Camera,camera".contains(strLabel)) {
+                        strCamera = packageInfo.packageName;
+                        if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (strCamera != null) {
+                return strCamera;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 打开相机时，如果满足以下2个条件，则只打开系统相机
+     * （1） onlyUseSystemCamera=true，
+     * （2）获取手机系统相机包名成功
+     * 只打开系统相机做法：将包名设置给打开相机的Intent
+     * @param intent 打开相机的 Intent
+     */
+    public static void onlyUseSysCamera(Intent intent, Context activity) {
+        if (!isOnlyUseSystemCamera()) {
+            return;
+        }
+        try { //尽可能调用系统相机
+            String cameraPackageName = getCameraPhoneAppInfos(activity);
+            if (cameraPackageName == null) {
+                cameraPackageName = "com.android.camera";
+            }
+            final Intent intent_camera = activity.getPackageManager()
+                    .getLaunchIntentForPackage(cameraPackageName);
+
+            if (intent_camera != null) {
+                intent.setPackage(cameraPackageName);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static float getDesWidth() {
         return ImageUtils.getDesWidth();
     }
+
     /**
      * 设置压缩后宽高
+     *
      * @param desWidth
      */
     public static void setDesWidth(float desWidth) {
@@ -314,6 +385,7 @@ public class PhotoUtil {
 
     /**
      * 设置质量
+     *
      * @param quality
      */
     public static void setQuality(int quality) {
@@ -322,6 +394,15 @@ public class PhotoUtil {
 
     public static int getQuality() {
         return ImageUtils.getQuality();
+    }
+
+
+    public static boolean isOnlyUseSystemCamera() {
+        return onlyUseSystemCamera;
+    }
+
+    public static void setOnlyUseSystemCamera(boolean onlyUseSystemCamera) {
+        PhotoUtil.onlyUseSystemCamera = onlyUseSystemCamera;
     }
 }
 
