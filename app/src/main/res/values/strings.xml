@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CpLibrary</string>
+    <string name="exam_num"><Data><![CDATA[共<font color="#D0021B">%1$s</font>/%2$s题]]></Data></string>
+
 </resources>
