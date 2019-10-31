@@ -2,6 +2,7 @@ package com.lee.demo.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
@@ -197,6 +198,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         setTitle("提示").setContent(title).setTxtCancel("忽略").setSure("更新")
                         .setTitleSize(20).setContentSize(16).setBtnSize(20)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
+                        .setBtnCancelColor( getResources().getColor(R.color.font_8d))
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setPadding(24, 10, 24, 10)
                         .setCancel(false)

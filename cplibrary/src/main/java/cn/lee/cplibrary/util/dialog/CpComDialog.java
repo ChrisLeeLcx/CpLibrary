@@ -34,7 +34,7 @@ public class CpComDialog {
     private Context context;
     //配置 1个按钮、2个按钮对话框外观参数
     private String title, content, txtCancel, sure;
-    private int btnColor, titleColor, contentColor;
+    private int btnColor,btnCancelColor, titleColor, contentColor;
     private int titleSize, contentSize, btnSize;
     private boolean isCancel;
     private int width, height;//对话框的宽、除去按钮后的高
@@ -237,7 +237,7 @@ public class CpComDialog {
         }
         if (!TextUtils.isEmpty(txtCancel)) {
             btnCancel.setText(txtCancel);
-            btnCancel.setTextColor(btnColor);
+            btnCancel.setTextColor(btnCancelColor);
             btnCancel.setTextSize(ScreenUtil.sp(context, btnSize));
         }
         if (!TextUtils.isEmpty(sure)) {
@@ -292,6 +292,10 @@ public class CpComDialog {
         this.btnColor = btnColor;
     }
 
+    public void setBtnCancelColor(int btnCancelColor) {
+        this.btnCancelColor = btnCancelColor;
+    }
+
     public void setTitleColor(@ColorInt int titleColor) {
         this.titleColor = titleColor;
     }
@@ -338,7 +342,8 @@ public class CpComDialog {
     public static class Builder {
         private Context context;
         private String title, content, txtCancel="取消", sure="确定";//标题、内容、取消按钮、确定按钮的文案
-        private int btnColor = Color.parseColor("#067CEC")//按钮颜色
+        private  int btnColor = Color.parseColor("#067CEC")//确定按钮颜色：
+                , btnCancelColor = Color.parseColor("#067CEC")//取消按钮颜色：
                 , titleColor = Color.parseColor("#000000")//标题颜色
                 , contentColor = Color.parseColor("#010202");//内容颜色
         private int titleSize = 18,//标题文字大小 单位sp
@@ -362,6 +367,7 @@ public class CpComDialog {
             util.setTxtCancel(txtCancel);
             util.setSure(sure);
             util.setBtnColor(btnColor);
+            util.setBtnCancelColor(btnCancelColor);
             util.setTitleColor(titleColor);
             util.setContentColor(contentColor);
             util.setTitleSize(titleSize);
@@ -397,6 +403,11 @@ public class CpComDialog {
 
         public Builder setBtnColor(@ColorInt  int btnColor) {
             this.btnColor = btnColor;
+            return this;
+        }
+
+        public Builder setBtnCancelColor(@ColorInt  int btnCancelColor) {
+            this.btnCancelColor = btnCancelColor;
             return this;
         }
 

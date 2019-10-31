@@ -73,12 +73,12 @@ public class ExamActivity extends BaseActivity implements FlipperLayout.OnSlideP
 
     @Override
     public String getPagerTitle() {
-        return "正在考试";
+        return "";
     }
 
     @Override
     public String getPagerRight() {
-        return "交卷";
+        return "";
     }
 
     @Override
@@ -110,8 +110,8 @@ public class ExamActivity extends BaseActivity implements FlipperLayout.OnSlideP
         //计算总时长
         timesAll = Integer.valueOf(bean.getEnd_time_span()) - getCurTimeSeconds();//用户可答题总时长：考试结束时间 - 当前系统时间
         if (timesAll <= 0) {
-            CpComDialog.Builder.builder(getSelfActivity()).
-                    setTitle("温馨提示").setContent("非常抱歉，考试时间已过期，您不能参加本场考试！").setSure("退出考试")
+            CpComDialog.Builder.builder(getSelfActivity())
+                    .setTitle("温馨提示").setContent("非常抱歉，考试时间已过期，您不能参加本场考试！").setSure("退出考试")
                     .setCancel(false)
                     .build().show1BtnDialog(new CpComDialog.Dialog1BtnCallBack() {
                 @Override
