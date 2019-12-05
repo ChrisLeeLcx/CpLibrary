@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("懒加载ViewPager", OrderActivity.class));
         totalList.add(new ActivityBean("其他", OtherActivity.class));
         totalList.add(new ActivityBean("考试答题", ExamActivity.class));
+        totalList.add(new ActivityBean("各种截图", ShotActivity.class));
     }
 
     private void initRecyclerView() {
