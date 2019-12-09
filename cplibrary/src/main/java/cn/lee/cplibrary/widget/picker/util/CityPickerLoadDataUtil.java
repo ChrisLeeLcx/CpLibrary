@@ -42,7 +42,7 @@ import cn.lee.cplibrary.widget.picker.widget.WheelView;
  */
 
 public class CityPickerLoadDataUtil {
-    private List<String> provincesAll = new ArrayList<>();//所有省份
+    private List<String> provincesAll = new ArrayList<>();//所有显示的省份
     private String[] provinceShow; //需要显示的省份,若 provinceShow为null，或者size=0，provincesAll的内容就是所有省份,否则provincesAll内容为provinceShow
     private String defalutP = "北京市", defalutC = "北京市", defalutD = "东城区"; //默认显示的省市区
     private Map<String, List<String>> citiesAll = new HashMap<>();//所有市，key:省名字，value：市
@@ -220,7 +220,7 @@ public class CityPickerLoadDataUtil {
          * @param province 省名字
          * @param city 市 名字
          * @param district 区 名字
-         * @param pPosition 省 位置
+         * @param pPosition 省 位置（在目前所有显示省中的位置，从0开始）
          * @param cPosition 市 位置
          * @param dPosition 区 位置
          */

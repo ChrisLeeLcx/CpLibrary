@@ -39,6 +39,7 @@ public class BitmapUtils {
      * @param imgDefault 默认占位图片
      */
     private static DrawableRequestBuilder<String> getDefaultDrawableBuilder(Context context, String url, int imgDefault) {
+        LogUtil.i("",BitmapUtils.class,"url="+url);
         DrawableRequestBuilder<String> builder = Glide.with(context)
                 .load(url)
                 //防止设置placeholder导致第一次不显示网络图片,只显示默认图片的问题

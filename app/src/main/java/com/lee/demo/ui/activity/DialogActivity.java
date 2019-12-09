@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,7 +129,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 DatePickerUtils.Builder.builder(getSelfActivity())
                         .settBgColor(getResources().getColor(R.color.colorAccent))
                         .settTitle("请选择时间")
-                        .settTxtColor(getResources().getColor(R.color.font_14))
+                        .settTxtColor(getResources().getColor(R.color.black))
                         .settTxtSize(16)
                         .setShowLabel(true)
                         .build().
@@ -432,11 +433,20 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     };
 
     private void showCityPickDialog() {
+        List<String> listShow = Arrays.asList(cityPickerLoadDataUtil.getProvinceShow());//显示的省份
+          final List<BaseProvinceBean> beansShow = new ArrayList<>();//目前显示的省份
+        for (int i = 0; i < beans.size(); i++) {
+            BaseProvinceBean bean = beans.get(i);
+            if(listShow.contains(bean.getName())){
+                beansShow.add(bean);
+            }
+        }
         cityPickerLoadDataUtil.showDialog(beans, new CityPickerLoadDataUtil.CityPickerCallBack() {
 
             @Override
             public void sure(String province, String city, String district, int pPosition, int cPosition, int dPosition) {
-                MyBaseProvinceBean pBean = (MyBaseProvinceBean) beans.get(pPosition);
+
+                MyBaseProvinceBean pBean = (MyBaseProvinceBean) beansShow.get(pPosition);
                 MyBaseCityBean cBean = (MyBaseCityBean) pBean.getCitys().get(cPosition);
                 List<MyBaseDistrictBean> districts = cBean.getDistricts();
                 tvAddr2.setText(province + city + district + "---" + pBean.getId()+"-"+cBean.getId()+"-"+districts.get(dPosition).getId());

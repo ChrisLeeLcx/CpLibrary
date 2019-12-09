@@ -20,4 +20,8 @@
     <color name="font_b1">#b1b1b1</color>
     <color name="blue">#6489F7</color>
     <color name="rv_item_main">#000</color>
+
+
+    <!--cp_province_line_border-->
+    <color name="cp_province_line_border">#FF4081</color>
 </resources>

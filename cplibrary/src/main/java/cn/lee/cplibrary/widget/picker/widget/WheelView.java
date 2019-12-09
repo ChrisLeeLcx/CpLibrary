@@ -22,6 +22,7 @@ package cn.lee.cplibrary.widget.picker.widget;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -620,8 +621,10 @@ public class WheelView extends View {
 		if (viewAdapter != null && viewAdapter.getItemsCount() > 0) {
 			updateView();
 
-			drawItems(canvas);
-			drawCenterRect(canvas);
+			drawCenterRect(canvas);//lee
+			drawItems(canvas);//lee
+//			drawItems(canvas);
+//			drawCenterRect(canvas);
 		}
 
 		if (drawShadows) {
@@ -684,6 +687,10 @@ public class WheelView extends View {
 		canvas.drawLine(0, center - offset, getWidth(), center - offset, paint);
 		// 绘制下边直线
 		canvas.drawLine(0, center + offset, getWidth(), center + offset, paint);
+
+		// 绘制当前选中的背景--lee
+		paint.setColor(getResources().getColor(R.color.cp_wheel_view_bg_select));
+		canvas.drawRect(0,center - offset+1,getWidth(),center + offset,paint);//-lee
 	}
 
 

@@ -27,7 +27,8 @@ public class ImageZoomActivity extends SwipeBackActivity {
     private RecyclerView recyclerView;
     private View container;
     private List<String> list = new ArrayList<>();
-    public static final String url = "https://static.firefoxchina.cn/img/201711/7_5a0ba48885d170.png";
+    public static final String url = "http://112.132.249.88:8111/api/get_image?path=uploads/internet/2019/12/05/01/340500/0/2019120520002117/190.jpg";
+//    public static final String url = "https://static.firefoxchina.cn/img/201711/7_5a0ba48885d170.png";
 
 
     private void initRecyclerView() {
