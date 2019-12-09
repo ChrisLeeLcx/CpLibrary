@@ -132,6 +132,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .settTxtColor(getResources().getColor(R.color.black))
                         .settTxtSize(16)
                         .setShowLabel(true)
+                        .setCyclic(false)
+                        .setVsibleItemNum(3)
                         .build().
                         showDate(new DatePickerUtils.DateCallBack() {
                             @Override
@@ -146,7 +148,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         });
                 break;
             case R.id.tv_time:
-                DatePickerUtils.Builder.builder(getSelfActivity()).build()
+                DatePickerUtils.Builder.builder(getSelfActivity())
+                        .setVsibleItemNum(6).build()
                         .showDateAndTime(new DatePickerUtils.DateAndTimeCallBack() {
                             @Override
                             public void sure(int year, int month, int day, int hour, int min) {

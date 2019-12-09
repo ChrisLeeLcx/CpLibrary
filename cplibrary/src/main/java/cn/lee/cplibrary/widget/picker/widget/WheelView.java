@@ -53,8 +53,10 @@ public class WheelView extends View {
 	 *
 	 *  */
 	// TODO 设置透明度
-	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
-			0xcfffffff, 0x0fffffff };
+	private int[] SHADOWS_COLORS = new int[] { 0x0fffffff,
+			0x0fffffff, 0x0fffffff };
+//	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
+//			0xcfffffff, 0x0fffffff };
 //	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
 //			0xcfffffff, 0x3fffffff };
 	/** Top and bottom items offset (to hide that) */

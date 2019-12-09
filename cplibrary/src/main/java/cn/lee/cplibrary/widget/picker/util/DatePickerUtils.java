@@ -31,8 +31,8 @@ import cn.lee.cplibrary.widget.picker.widget.WheelView;
 public class DatePickerUtils {
 
     private static WheelView year, month, day, mins, hour;
-    private static int vsibleItemNum = 6;
-    private static boolean isCyclic = true;
+    private  int vsibleItemNum = 6;
+    private  boolean isCyclic;
 
     //ui设置
     private Context context;
@@ -361,6 +361,15 @@ public class DatePickerUtils {
         isShowLabel = showLabel;
     }
 
+    public void setVsibleItemNum(int vsibleItemNum) {
+        this.vsibleItemNum = vsibleItemNum;
+    }
+
+    public void setCyclic(boolean cyclic) {
+        isCyclic = cyclic;
+    }
+
+
     public static class Builder {
         private Context context;
         private int tBgColor = Color.parseColor("#1086D1");//时间选择框标题栏背景色
@@ -368,6 +377,8 @@ public class DatePickerUtils {
         private int tTxtSize = 14;//标题栏：文字大小（确定、取消按钮、标题） 单位sp
         private String tTitle;//标题栏：标题文字
         private boolean isShowLabel = true;//时间控件是否显示label 年月日等
+        private  boolean isCyclic = true;//数据是否循环显示
+        private  int vsibleItemNum = 6;
 
         private Builder(Context context) {
             this.context = context;
@@ -384,6 +395,8 @@ public class DatePickerUtils {
             util.settTxtSize(tTxtSize);
             util.settTitle(tTitle);
             util.setShowLabel(isShowLabel);
+            util.setCyclic(isCyclic);
+            util.setVsibleItemNum(vsibleItemNum);
             return util;
         }
         public Builder settBgColor(int tBgColor) {
@@ -411,6 +424,23 @@ public class DatePickerUtils {
 
         public Builder setShowLabel(boolean showLabel) {
             isShowLabel = showLabel;
+            return this;
+        }
+
+        /**
+         * @param cyclic 设置数据是否循环显示
+         */
+        public Builder setCyclic(boolean cyclic) {
+            isCyclic = cyclic;
+            return this;
+        }
+
+        /**
+         * @param vsibleItemNum 设置显示的可见日期数目
+         * @return
+         */
+        public Builder setVsibleItemNum(int vsibleItemNum) {
+            this.vsibleItemNum = vsibleItemNum;
             return this;
         }
     }
