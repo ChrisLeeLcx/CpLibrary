@@ -31,7 +31,7 @@ import cn.lee.cplibrary.widget.picker.widget.WheelView;
 public class DatePickerUtils {
 
     private static WheelView year, month, day, mins, hour;
-    private  int vsibleItemNum = 6;
+    private  int visibleItemNum = 5;
     private  boolean isCyclic;
 
     //ui设置
@@ -81,9 +81,9 @@ public class DatePickerUtils {
         month.setCurrentItem(curMonth - 1);
         day.setCurrentItem(curDate - 1);
 
-        year.setVisibleItems(vsibleItemNum);
-        month.setVisibleItems(vsibleItemNum);
-        day.setVisibleItems(vsibleItemNum);
+        year.setVisibleItems(visibleItemNum);
+        month.setVisibleItems(visibleItemNum);
+        day.setVisibleItems(visibleItemNum);
         // 设置监听
         view.findViewById(R.id.set).setOnClickListener(new OnClickListener() {
             @Override
@@ -143,11 +143,11 @@ public class DatePickerUtils {
         hour.setCurrentItem(curHour);
         mins.setCurrentItem(curMin);
 
-        year.setVisibleItems(vsibleItemNum);
-        month.setVisibleItems(vsibleItemNum);
-        day.setVisibleItems(vsibleItemNum);
-        hour.setVisibleItems(vsibleItemNum);
-        mins.setVisibleItems(vsibleItemNum);
+        year.setVisibleItems(visibleItemNum);
+        month.setVisibleItems(visibleItemNum);
+        day.setVisibleItems(visibleItemNum);
+        hour.setVisibleItems(visibleItemNum);
+        mins.setVisibleItems(visibleItemNum);
         // 设置监听
         TextView ok = (TextView) view.findViewById(R.id.set);
         TextView cancel = (TextView) view.findViewById(R.id.cancel);
@@ -361,8 +361,8 @@ public class DatePickerUtils {
         isShowLabel = showLabel;
     }
 
-    public void setVsibleItemNum(int vsibleItemNum) {
-        this.vsibleItemNum = vsibleItemNum;
+    public void setVisibleItemNum(int visibleItemNum) {
+        this.visibleItemNum = visibleItemNum;
     }
 
     public void setCyclic(boolean cyclic) {
@@ -378,7 +378,7 @@ public class DatePickerUtils {
         private String tTitle;//标题栏：标题文字
         private boolean isShowLabel = true;//时间控件是否显示label 年月日等
         private  boolean isCyclic = true;//数据是否循环显示
-        private  int vsibleItemNum = 6;
+        private  int visibleItemNum = 5;
 
         private Builder(Context context) {
             this.context = context;
@@ -396,7 +396,7 @@ public class DatePickerUtils {
             util.settTitle(tTitle);
             util.setShowLabel(isShowLabel);
             util.setCyclic(isCyclic);
-            util.setVsibleItemNum(vsibleItemNum);
+            util.setVisibleItemNum(visibleItemNum);
             return util;
         }
         public Builder settBgColor(int tBgColor) {
@@ -436,11 +436,11 @@ public class DatePickerUtils {
         }
 
         /**
-         * @param vsibleItemNum 设置显示的可见日期数目
+         * @param visibleItemNum 设置显示的可见日期数目
          * @return
          */
-        public Builder setVsibleItemNum(int vsibleItemNum) {
-            this.vsibleItemNum = vsibleItemNum;
+        public Builder setVisibleItemNum(int visibleItemNum) {
+            this.visibleItemNum = visibleItemNum;
             return this;
         }
     }

@@ -53,12 +53,14 @@ public class WheelView extends View {
 	 *
 	 *  */
 	// TODO 设置透明度
-	private int[] SHADOWS_COLORS = new int[] { 0x0fffffff,
-			0x0fffffff, 0x0fffffff };
+//	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
+//			  0x0fffffff };
+//	private int[] SHADOWS_COLORS = new int[] { 0x0fffffff,
+//			0x0fffffff, 0x0fffffff };
 //	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
 //			0xcfffffff, 0x0fffffff };
-//	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
-//			0xcfffffff, 0x3fffffff };
+	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
+			0xcfffffff, 0x3fffffff };
 	/** Top and bottom items offset (to hide that) */
 	private static final int ITEM_OFFSET_PERCENT = 0;
 
@@ -642,7 +644,10 @@ public class WheelView extends View {
 		/*/ Modified by wulianghuan 2014-11-25
 		int height = (int)(1.5 * getItemHeight());
 		//*/
-		int height = (int)(3 * getItemHeight());
+//		int height = (int)(3 * getItemHeight());
+
+		int height = (visibleItems%2==0)? (int)( (visibleItems/2) * getItemHeight()-getItemHeight()/2)
+				:(int)( (visibleItems/2) * getItemHeight());
 		//*/
 		topShadow.setBounds(0, 0, getWidth(), height);
 		topShadow.draw(canvas);

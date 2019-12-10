@@ -1,8 +1,6 @@
 package com.lee.demo.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
@@ -22,9 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
@@ -35,7 +31,6 @@ import cn.lee.cplibrary.util.dialog.BaseDialogBean;
 import cn.lee.cplibrary.util.dialog.bottom.CpBottomDialog;
 import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
 import cn.lee.cplibrary.widget.picker.bean.BaseCityBean;
-import cn.lee.cplibrary.widget.picker.bean.BaseDistrictBean;
 import cn.lee.cplibrary.widget.picker.bean.BaseProvinceBean;
 import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
 import cn.lee.cplibrary.widget.picker.util.CityPickerLoadDataUtil;
@@ -102,6 +97,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         cityPickerUtil.settBgColor(getResources().getColor(R.color.colorPrimaryDark));
         cityPickerUtil.settTxtColor(getResources().getColor(R.color.colorAccent));
         cityPickerUtil.settTxtSize(14);
+        cityPickerUtil.setCyclic(false);
+        cityPickerUtil.setVisibleItemNum(9);
 
         //数据来源于外界
         cityPickerLoadDataUtil = new CityPickerLoadDataUtil(getSelfActivity());
@@ -113,6 +110,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         cityPickerLoadDataUtil.settBgColor(getResources().getColor(R.color.colorPrimaryDark));
         cityPickerLoadDataUtil.settTxtColor(getResources().getColor(R.color.colorAccent));
         cityPickerLoadDataUtil.settTxtSize(14);
+        cityPickerLoadDataUtil.setCyclic(false);
+        cityPickerLoadDataUtil.setVisibleItemNum(6);
 
     }
 
@@ -133,7 +132,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         .settTxtSize(16)
                         .setShowLabel(true)
                         .setCyclic(false)
-                        .setVsibleItemNum(3)
+                        .setVisibleItemNum(3)
                         .build().
                         showDate(new DatePickerUtils.DateCallBack() {
                             @Override
@@ -149,7 +148,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 break;
             case R.id.tv_time:
                 DatePickerUtils.Builder.builder(getSelfActivity())
-                        .setVsibleItemNum(6).build()
+                        .setVisibleItemNum(9).build()
                         .showDateAndTime(new DatePickerUtils.DateAndTimeCallBack() {
                             @Override
                             public void sure(int year, int month, int day, int hour, int min) {

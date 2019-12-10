@@ -49,8 +49,8 @@ public class CityPickerLoadDataUtil {
     private Map<String, Map<String, List<String>>> districtsAll = new HashMap<>();//所有区：key1省；key2市：values2：区
     private Context context;
     private CityPickerCallBack callBack = null;
-    private static int vsibleItemNum = 6;
-    private static boolean isCyclic = false;
+    private  int visibleItemNum = 5;
+    private  boolean isCyclic = false;
     private boolean isLoaded = false;//数据转化完毕
     //标题栏外观设置
     private int tBgColor = Color.parseColor("#1086D1");//时间选择框标题栏背景色
@@ -194,7 +194,7 @@ public class CityPickerLoadDataUtil {
                 context, list);
         wheelView.setViewAdapter(adapter);
         wheelView.setCyclic(isCyclic);
-        wheelView.setVisibleItems(vsibleItemNum);
+        wheelView.setVisibleItems(visibleItemNum);
     }
 
     private void updateCity(Context context,
@@ -305,6 +305,14 @@ public class CityPickerLoadDataUtil {
 
     public void settTxtSize(int tTxtSize) {
         this.tTxtSize = tTxtSize;
+    }
+
+    public void setVisibleItemNum(int visibleItemNum) {
+        this.visibleItemNum = visibleItemNum;
+    }
+
+    public void setCyclic(boolean cyclic) {
+        isCyclic = cyclic;
     }
 }
 
