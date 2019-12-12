@@ -8,6 +8,12 @@
     android:background="@color/bg_f4"
    >
     <TextView
+        android:id="@+id/tv_gregorian_lunar"
+        android:layout_width="match_parent"
+        style="@style/et_apply_licence"
+        android:hint="请选公历农历"
+        android:paddingRight="4dp" />
+    <TextView
         android:id="@+id/tv_date"
         style="@style/et_apply_licence"
         android:hint="请选择日期"

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="cp_NumberPickerView">
+        <!--set number of item displayed, default is 3-->
+        <attr name="cp_npv_ShownCount" format="reference|integer" />
+        <!--set if show divider, default is true-->
+        <attr name="cp_npv_ShowDivider" format="reference|boolean" />
+        <attr name="cp_npv_ShowTextBgSelected" format="reference|boolean" />
+        <attr name="cp_npv_DividerColor" format="reference|color" />
+        <attr name="cp_npv_TextBgColorSelected" format="reference|color" />
+        <attr name="cp_npv_DividerMarginLeft" format="reference|dimension" />
+        <attr name="cp_npv_DividerMarginRight" format="reference|dimension" />
+        <attr name="cp_npv_DividerHeight" format="reference|dimension" />
+        <attr name="cp_npv_TextColorNormal" format="reference|color" />
+        <attr name="cp_npv_TextColorSelected" format="reference|color" />
+        <attr name="cp_npv_TextColorHint" format="reference|color" />
+        <attr name="cp_npv_TextSizeNormal" format="reference|dimension" />
+        <attr name="cp_npv_TextSizeSelected" format="reference|dimension" />
+        <attr name="cp_npv_TextSizeHint" format="reference|dimension" />
+        <attr name="cp_npv_TextArray" format="reference" />
+        <attr name="cp_npv_MinValue" format="reference|integer" />
+        <attr name="cp_npv_MaxValue" format="reference|integer" />
+        <attr name="cp_npv_WrapSelectorWheel" format="reference|boolean" />
+        <attr name="cp_npv_RespondChangeOnDetached" format="reference|boolean" />
+        <attr name="cp_npv_HintText" format="reference|string" />
+        <attr name="cp_npv_EmptyItemHint" format="reference|string" />
+        <attr name="cp_npv_MarginStartOfHint" format="reference|dimension" />
+        <attr name="cp_npv_MarginEndOfHint" format="reference|dimension" />
+        <attr name="cp_npv_ItemPaddingHorizontal" format="reference|dimension" />
+        <attr name="cp_npv_ItemPaddingVertical" format="reference|dimension" />
+        <attr name="cp_npv_RespondChangeInMainThread" format="reference|boolean" />
+        <attr name="cp_npv_TextEllipsize" format="reference|string" />
+
+        <!--just used to measure maxWidth for wrap_content without hint,
+            the string array will never be displayed.
+            you can set this attr if you want to keep the wraped numberpickerview
+            width unchanged when alter the content list-->
+        <attr name="cp_npv_AlternativeTextArrayWithMeasureHint" format="reference" />
+        <attr name="cp_npv_AlternativeTextArrayWithoutMeasureHint" format="reference" />
+        <!--the max length of hint content-->
+        <attr name="cp_npv_AlternativeHint" format="reference|string" />
+    </declare-styleable>
+
+</resources>

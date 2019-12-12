@@ -33,6 +33,9 @@ import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
 import cn.lee.cplibrary.widget.picker.bean.BaseCityBean;
 import cn.lee.cplibrary.widget.picker.bean.BaseProvinceBean;
 import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
+import cn.lee.cplibrary.widget.picker.gl.ChineseCalendar;
+import cn.lee.cplibrary.widget.picker.gl.GLCPikerUtil;
+import cn.lee.cplibrary.widget.picker.widget.GregorianLunarCalendarView;
 import cn.lee.cplibrary.widget.picker.util.CityPickerLoadDataUtil;
 import cn.lee.cplibrary.widget.picker.util.CityPickerUtil;
 import cn.lee.cplibrary.widget.picker.util.DatePickerUtils;
@@ -44,7 +47,7 @@ import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
  */
 public class DialogActivity extends SwipeBackActivity implements View.OnClickListener {
 
-    private TextView tvDate, tvAddr, tvAddr2, tvTime;
+    private TextView tvDate, tvAddr, tvAddr2, tvTime, tvGregorianLunar;
     private CityPickerUtil cityPickerUtil;
     private TextView tvSort;
     private PopupWindowUtil popupWindowUtil;
@@ -72,11 +75,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
 
     @Override
     public void initView() {
+        tvGregorianLunar = (TextView) findViewById(R.id.tv_gregorian_lunar);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvAddr = (TextView) findViewById(R.id.tv_addr);
         tvAddr2 = (TextView) findViewById(R.id.tv_addr2);
         tvSort = (TextView) findViewById(R.id.tv_sort);
+        tvGregorianLunar.setOnClickListener(this);
         tvSort.setOnClickListener(this);
         tvDate.setOnClickListener(this);
         tvTime.setOnClickListener(this);
@@ -124,6 +129,37 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
+            case R.id.tv_gregorian_lunar:
+                GLCPikerUtil.Builder.builder(getSelfActivity())
+                        .setCyclic(false)
+//                        .setyHint("年")
+//                        .setmHint("月")
+//                        .setdHint("日")
+//                        .sethHint("时")
+//                        .setmScrollAnim(true)
+                        .setmNormalTextColor(0XFF373737)
+//                        .setmNormalTextColor(0xffae1a1e)
+                        .setmThemeColorG(0xff373737)
+//                        .setmThemeColorL(0xff373737)
+                        .setShowDivider(false)
+                        .setShowTextBgSelected(true)
+//                        .setVisibleItemNum(7)
+                        .setBgColorSelected(0xFFF5F5F9)
+                        .build().showGLCDialog(new GLCPikerUtil.GLCCallBack() {
+                    @Override
+                    public void sure(GregorianLunarCalendarView.CalendarData calendarData, View layout) {
+                        ChineseCalendar calendar = (ChineseCalendar) calendarData.getCalendar();
+                        toast("阳历："+calendar.getPickedFormat(true)+",阴历："+calendar.getPickedFormat(false));
+                        TextView textView = layout.findViewById(R.id.tv_title);
+                        tvGregorianLunar.setText( textView.getText().toString());
+                    }
+
+                    @Override
+                    public void cancel() {
+
+                    }
+                });
+                break;
             case R.id.tv_date:
                 DatePickerUtils.Builder.builder(getSelfActivity())
                         .settBgColor(getResources().getColor(R.color.colorAccent))

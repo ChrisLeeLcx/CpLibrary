@@ -57,10 +57,10 @@ public class WheelView extends View {
 //			  0x0fffffff };
 //	private int[] SHADOWS_COLORS = new int[] { 0x0fffffff,
 //			0x0fffffff, 0x0fffffff };
-//	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
-//			0xcfffffff, 0x0fffffff };
 	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
-			0xcfffffff, 0x3fffffff };
+			0xcfffffff, 0x0fffffff };
+//	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
+//			0xcfffffff, 0x3fffffff };
 	/** Top and bottom items offset (to hide that) */
 	private static final int ITEM_OFFSET_PERCENT = 0;
 
@@ -352,7 +352,7 @@ public class WheelView extends View {
 	 * 
 	 * @return the current value
 	 */
-	public int getCurrentItem() {
+	public int  getCurrentItem() {
 		return currentItem;
 	}
 

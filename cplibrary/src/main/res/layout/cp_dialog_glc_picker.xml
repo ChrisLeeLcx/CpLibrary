@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cp_transparent"
+    android:orientation="vertical"
+    android:theme="@style/cp_MyDialogTheme">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cp_glc_c2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="公历：2019年11月28日 时辰未知"
+            android:textColor="#373737"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DCDDDD" />
+
+        <RadioGroup
+            android:id="@+id/group"
+            android:layout_width="240dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="7dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+
+            <RadioButton
+                android:id="@+id/rb_gregorian"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/cp_glc_gregorian_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="公历"
+                android:textColor="@color/cp_glc_selector_title"
+                android:textSize="14sp" />
+
+
+            <RadioButton
+                android:id="@+id/rb_lunar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/cp_glc_lunar_selector"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="农历"
+                android:textColor="@color/cp_glc_selector_title"
+                android:textSize="14sp" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+            <cn.lee.cplibrary.widget.picker.widget.GregorianLunarCalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                app:cp_glcv_GregorianThemeColor="@color/cp_colorGregorian"
+                app:cp_glcv_LunarThemeColor="@color/cp_colorLunar"
+                app:cp_glcv_NormalTextColor="#FF777777"
+                app:cp_glcv_ScrollAnimation="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#DCDDDD" />
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:text="取消"
+                    android:textColor="#B5B5B5"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/set"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/cp_glc_rbc2"
+                android:text="确定"
+                android:textColor="#fff"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

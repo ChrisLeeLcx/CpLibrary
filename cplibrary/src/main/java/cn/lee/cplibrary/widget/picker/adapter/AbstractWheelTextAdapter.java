@@ -16,6 +16,7 @@
 package cn.lee.cplibrary.widget.picker.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,7 +38,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     
     /** Default text color */
     public static final int DEFAULT_TEXT_COLOR = 0xFF585858;
-    
+
     /** Default text color */
     public static final int LABEL_COLOR = 0xFF700070;
     

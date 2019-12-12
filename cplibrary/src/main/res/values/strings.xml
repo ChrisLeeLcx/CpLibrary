@@ -8,4 +8,19 @@
     <string name="cp_loading_tip">加载中...</string>
     <string name="cp_retry_tip">轻触屏幕重试</string>
     <string name="cp_no_login_tip">你还没有登录</string>
+
+    <!--阴历+日历-->
+    <string-array name="cp_npv_lunar_year_without_measure_hint">
+        <item>二零一六</item>
+    </string-array>
+    <string-array name="cp_npv_lunar_month_without_measure_hint">
+        <item>十一</item>
+    </string-array>
+    <string-array name="cp_npv_lunar_day_with_measure_hint">
+        <item>初一</item>
+    </string-array>
+    <string name="cp_year">年</string>
+    <string name="cp_month">月</string>
+    <string name="cp_day">日</string>
+    <string name="cp_hour">时</string>
 </resources>

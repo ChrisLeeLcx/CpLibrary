@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-     <color name="cp_white">#ffffff</color>
+    <color name="cp_white">#ffffff</color>
     <color name="cp_bg_main">#fffffe</color>
     <color name="cp_gray_remin">#999999</color>
     <color name="cp_font6c">#6C6C6C</color>
@@ -27,5 +27,10 @@
     <!--=============WheelView,日期选择控件==========-->
     <color name="cp_province_line_border">#D0D0D0</color>
     <color name="cp_wheel_view_bg_select">#F5F5F9</color>
+    <!--glc_picker 的颜色值-->
+    <color name="cp_glc_main">#AE1A1E</color>
+    <color name="cp_colorGregorian">#ff3388ff</color>
+    <color name="cp_colorLunar">#ffee5544</color>
+    <color name="cp_glc_select_bg_color">#F5F5F9</color>
 
 </resources>
