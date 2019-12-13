@@ -28,8 +28,8 @@
     <color name="cp_province_line_border">#D0D0D0</color>
     <color name="cp_wheel_view_bg_select">#F5F5F9</color>
     <!--glc_picker 的颜色值-->
-    <color name="cp_glc_main">#AE1A1E</color>
-    <color name="cp_colorGregorian">#ff3388ff</color>
+    <color name="cp_glc_main">#AE1A1E</color>     <!--覆盖这个值可以改变日历主题色-->
+    <color name="cp_colorGregorian">#FFAE1A1E</color>
     <color name="cp_colorLunar">#ffee5544</color>
     <color name="cp_glc_select_bg_color">#F5F5F9</color>
 

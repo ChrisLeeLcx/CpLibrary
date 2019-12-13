@@ -1,6 +1,7 @@
 package com.lee.demo.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
@@ -132,19 +133,20 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
             case R.id.tv_gregorian_lunar:
                 GLCPikerUtil.Builder.builder(getSelfActivity())
                         .setCyclic(false)
+//                        .setTitleTxtColor(Color.parseColor("#B5B5B5"))
 //                        .setyHint("年")
 //                        .setmHint("月")
 //                        .setdHint("日")
 //                        .sethHint("时")
 //                        .setmScrollAnim(true)
-                        .setmNormalTextColor(0XFF373737)
+//                        .setmNormalTextColor(0XFF373737)
 //                        .setmNormalTextColor(0xffae1a1e)
-                        .setmThemeColorG(0xff373737)
+//                        .setmThemeColorG(0xff373737)
 //                        .setmThemeColorL(0xff373737)
                         .setShowDivider(false)
                         .setShowTextBgSelected(true)
 //                        .setVisibleItemNum(7)
-                        .setBgColorSelected(0xFFF5F5F9)
+//                        .setBgColorSelected(0xFFF5F5F9)
                         .build().showGLCDialog(new GLCPikerUtil.GLCCallBack() {
                     @Override
                     public void sure(GregorianLunarCalendarView.CalendarData calendarData, View layout) {

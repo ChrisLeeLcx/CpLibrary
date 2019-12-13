@@ -38,7 +38,6 @@ public class GLCPikerUtil {
     private Context context;
     private int tTxtColor, btnCancelColor, btnSureColor;
     private int tTxtSize; //单位 sp ，默认值是17sp
-    private boolean isShowLabel;
 
 
     private GLCPikerUtil(Context context) {
@@ -178,9 +177,6 @@ public class GLCPikerUtil {
         this.tTxtSize = tTxtSize;
     }
 
-    private void setShowLabel(boolean showLabel) {
-        isShowLabel = showLabel;
-    }
 
     public void setVisibleItemNum(int visibleItemNum) {
         this.visibleItemNum = visibleItemNum;
@@ -240,7 +236,6 @@ public class GLCPikerUtil {
         private int btnCancelColor = Color.parseColor("#B5B5B5");//取消按钮颜色
         private int btnSureColor = Color.parseColor("#FFFFFF");//确定按钮颜色
         private int tTxtSize = 17;//标题栏：文字大小（确定、取消按钮、标题） 单位sp
-        private boolean isShowLabel = true;//时间控件是否显示label 年月日等
         private boolean isCyclic = true;//数据是否循环显示
         private boolean showTextBgSelected = false;//是否显示选中的文字的背景
         private boolean showDivider = true;//是否显示分割线
@@ -267,7 +262,6 @@ public class GLCPikerUtil {
             util.setBtnSureColor(btnSureColor);
             util.setBtnCancelColor(btnCancelColor);
             util.settTxtSize(tTxtSize);
-            util.setShowLabel(isShowLabel);
             util.setCyclic(isCyclic);
             util.setVisibleItemNum(visibleItemNum);
             util.setyHint(yHint);
@@ -285,7 +279,7 @@ public class GLCPikerUtil {
         }
 
 
-        public Builder settTxtColor(int tTxtColor) {
+        public Builder setTitleTxtColor(int tTxtColor) {
             this.tTxtColor = tTxtColor;
             return this;
         }
@@ -298,10 +292,6 @@ public class GLCPikerUtil {
             return this;
         }
 
-        public Builder setShowLabel(boolean showLabel) {
-            isShowLabel = showLabel;
-            return this;
-        }
 
         /**
          * @param cyclic 设置数据是否循环显示

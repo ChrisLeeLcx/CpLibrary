@@ -23,4 +23,5 @@
     <!--cp_province_line_border-->
     <!--<color name="cp_province_line_border">#F5F5F9</color>-->
     <!--<color name="cp_wheel_view_bg_select">#F5F5F9</color>-->
+    <!--<color name="cp_glc_main">#FF4081</color>-->
 </resources>
