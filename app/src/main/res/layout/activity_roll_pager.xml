@@ -10,10 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="211dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/ic_launcher"
+        android:background="@color/cp_rect"
         app:cp_rollviewpager_hint_paddingBottom="8dp"
+        app:cp_rollviewpager_hint_outside="true"
         app:cp_rollviewpager_play_delay="3000" />
-
+    <!--android:background="@drawable/ic_launcher"-->
+    <!--app:cp_rollviewpager_hint_paddingBottom="8dp"-->
     <!--注意：
      flipInterval的大小是anim_marquee_in和anim_marquee_out的时间之和-->
     <cn.lee.cplibrary.widget.viewflipper.CLViewFlipper

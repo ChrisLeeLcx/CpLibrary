@@ -3,6 +3,7 @@ package cn.lee.cplibrary.widget.rollviewpager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
@@ -24,6 +25,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.widget.rollviewpager.adapter.LoopPagerAdapter;
 import cn.lee.cplibrary.widget.rollviewpager.hintview.ColorPointHintView;
 import cn.lee.cplibrary.widget.rollviewpager.hintview.HintView;
@@ -57,6 +60,7 @@ public class RollPagerView extends RelativeLayout implements ViewPager.OnPageCha
     private int paddingTop;
     private int paddingRight;
     private int paddingBottom;
+    private boolean outside;//hint之时标在View的外面还是里面，默认里面
 
     private View mHintView;
     private Timer timer;
@@ -133,6 +137,7 @@ public class RollPagerView extends RelativeLayout implements ViewPager.OnPageCha
         paddingRight = (int) type.getDimension(R.styleable.cp_RollViewPager_cp_rollviewpager_hint_paddingRight, 0);
         paddingTop = (int) type.getDimension(R.styleable.cp_RollViewPager_cp_rollviewpager_hint_paddingTop, 0);
         paddingBottom = (int) type.getDimension(R.styleable.cp_RollViewPager_cp_rollviewpager_hint_paddingBottom, RollViewPagerUtil.dip2px(getContext(),4));
+        outside =  type.getBoolean(R.styleable.cp_RollViewPager_cp_rollviewpager_hint_outside,  false);
 
         mViewPager = new ViewPager(getContext());
         mViewPager.setId(R.id.cp_viewpager_inner);
@@ -241,12 +246,28 @@ public class RollPagerView extends RelativeLayout implements ViewPager.OnPageCha
         loadHintView();
     }
 
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {//此处各个View绘制完毕，可以获取宽高等值
+        super.onWindowFocusChanged(hasWindowFocus);
+        if(outside){ //设置ViewPager的下面间距,用于指示点在外部的时候
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(0,0,0,mHintView.getHeight()+paddingBottom);
+            mViewPager.setLayoutParams(layoutParams);
+        }
+    }
+
+
     /**
      * 加载hintview的容器
      */
     private void loadHintView(){
         addView(mHintView);
-        mHintView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        if(outside){
+            mHintView.setPadding(paddingLeft, paddingTop, paddingRight, 0);
+        }else{
+            mHintView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        }
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         mHintView.setLayoutParams(lp);
@@ -256,6 +277,8 @@ public class RollPagerView extends RelativeLayout implements ViewPager.OnPageCha
         gd.setAlpha(alpha);
         mHintView.setBackgroundDrawable(gd);
         mHintViewDelegate.initView(mAdapter == null ? 0 : mAdapter.getCount(), gravity, (HintView) mHintView);
+
+
     }
 
 
