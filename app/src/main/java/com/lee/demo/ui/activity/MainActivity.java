@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "GetVerCodeActivity";
     private RecyclerView recyclerView;
     private Button btn_switch;
     private List<ActivityBean> totalList = new ArrayList<>();
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("其他", OtherActivity.class));
         totalList.add(new ActivityBean("考试答题", ExamActivity.class));
         totalList.add(new ActivityBean("各种截图", ShotActivity.class));
+        totalList.add(new ActivityBean("短信监听", GetVerCodeActivity.class));
     }
 
     private void initRecyclerView() {

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CpLibrary</string>
     <string name="exam_num"><Data><![CDATA[共<font color="#D0021B">%1$s</font>/%2$s题]]></Data></string>
+    <string name="msg_tip">说明：由于各大厂商对于Android系统重新定制了，所有只有部分机型可以 经测试魅族7.0、OPPO7.1.1、小米均获取不到短信，华为9.0可以查看除验证码以外的短信、TCL4.4.4、MANN刷机定制的ROM的系统7.1可以查看所有短信包括验证码</string>
 
 </resources>

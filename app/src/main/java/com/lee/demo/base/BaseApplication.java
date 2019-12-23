@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatDelegate;
 import com.lee.demo.constant.Config;
 
 import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.SharedPreferencesUtils;
 
 /**
@@ -16,7 +17,8 @@ import cn.lee.cplibrary.util.SharedPreferencesUtils;
 @SuppressLint("Registered")
 public class BaseApplication extends Application {
     private static BaseApplication context = null;
-
+    private String tel;//电话
+    private String prefixMsg;//短信开头
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,5 +67,31 @@ public class BaseApplication extends Application {
         boolean isDayMode = SharedPreferencesUtils.getShareBoolean(context,
                 "isDayMode", true);
        return isDayMode;
+    }
+
+    public String getTel() {
+        if (ObjectUtils.isEmpty(tel)) {
+            tel = SharedPreferencesUtils
+                    .getShareString(this, "tel");
+        }
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        SharedPreferencesUtils.putShareValue(this, "tel", tel);
+        this.tel = tel;
+    }
+
+    public String getPrefixMsg() {
+        if (ObjectUtils.isEmpty(prefixMsg)) {
+            prefixMsg = SharedPreferencesUtils
+                    .getShareString(this, "prefixMsg");
+        }
+        return prefixMsg;
+    }
+
+    public void setPrefixMsg(String prefixMsg) {
+        SharedPreferencesUtils.putShareValue(this, "prefixMsg", prefixMsg);
+        this.prefixMsg = prefixMsg;
     }
 }
