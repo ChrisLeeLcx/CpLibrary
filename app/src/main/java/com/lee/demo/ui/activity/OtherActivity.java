@@ -2,8 +2,11 @@ package com.lee.demo.ui.activity;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lee.demo.R;
@@ -12,9 +15,10 @@ import com.lee.demo.base.SwipeBackActivity;
 
 import java.text.DecimalFormat;
 
+import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.NotificationsUtils;
 import cn.lee.cplibrary.util.ScreenUtil;
-import cn.lee.cplibrary.util.SystemUtil;
 import cn.lee.cplibrary.widget.rangeseekbar.OnRangeChangedListener;
 import cn.lee.cplibrary.widget.rangeseekbar.RangeSeekBar;
 import cn.lee.cplibrary.widget.rangeseekbar.SeekBar;
@@ -29,6 +33,7 @@ public class OtherActivity extends SwipeBackActivity {
     private TextView tv_content, tvRightTxt;
     private Button btn;
     private RangeSeekBar seekBar;
+    private ImageView iv;
 
     @Override
     protected BaseActivity getSelfActivity() {
@@ -57,10 +62,13 @@ public class OtherActivity extends SwipeBackActivity {
         findViewById(R.id.btn_call).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemUtil.callPhone(OtherActivity.this,"18551815425");
+                AppUtils.callPhone(OtherActivity.this,"18551815425");
             }
         });
+        initNotice();
     }
+
+
 
     @Override
     protected void initData() {
@@ -68,6 +76,25 @@ public class OtherActivity extends SwipeBackActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean b = NotificationsUtils.isNotificationEnabled(getSelfActivity());
+        iv.setBackgroundResource(b ? R.drawable.p_notice_on : R.drawable.p_notice_off);
+    }
+    /**
+     * 系统通知
+     */
+    private void initNotice() {
+        iv = (ImageView) findViewById(R.id.iv);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationsUtils.toNotificationSetting(getSelfActivity());
+            }
+        });
+    }
 
     private void initRatingBar() {
         rating_bar = (MaterialRatingBar) findViewById(R.id.rating_bar);

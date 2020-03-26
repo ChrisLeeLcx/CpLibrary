@@ -45,7 +45,48 @@ public class DatePickerUtils {
     private DatePickerUtils(Context context) {
         this.context = context;
     }
+    /**
+     * 显示年月
+     */
+    public void showMonth(
+            final MonthCallBack callBack) {
+        Calendar c = Calendar.getInstance();
+        int curYear = c.get(Calendar.YEAR);
+        int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
+        int curDate = c.get(Calendar.DATE);
+        View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
+        final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
+        setView(view);
+        view.findViewById(R.id.new_day).setVisibility(View.GONE);
+        view.findViewById(R.id.new_hour).setVisibility(View.GONE);
+        view.findViewById(R.id.new_mins).setVisibility(View.GONE);
+        year = view.findViewById(R.id.new_year);
+        initYear(context);
+        month = view.findViewById(R.id.new_month);
+        initMonth(context);
+        // 设置当前时间
+        year.setCurrentItem(curYear - 1950);
+        month.setCurrentItem(curMonth - 1);
+        year.setVisibleItems(visibleItemNum);
+        month.setVisibleItems(visibleItemNum);
+        // 设置监听
+        view.findViewById(R.id.set).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.sure(year.getCurrentItem() + 1950,
+                        month.getCurrentItem() + 1);
+                dialog.cancel();
+            }
+        });
+        view.findViewById(R.id.cancel).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.cancel();
+                dialog.cancel();
+            }
+        });
 
+    }
     /**
      * 显示年月日
      */
@@ -310,7 +351,11 @@ public class DatePickerUtils {
 
         public void cancel();
     }
+    public interface MonthCallBack {
+        public void sure(int year, int month);
 
+        public void cancel();
+    }
     /**
      * @return :格式 例如 2018-02-09 05：30
      */
@@ -329,7 +374,14 @@ public class DatePickerUtils {
                 "%04d-%02d-%02d", year, month, day);
         return date;
     }
-
+    /**
+     * @return :格式 例如 2018-02
+     */
+    public static String format(int year, int month) {
+        String date = String.format(Locale.CHINA,
+                "%04d-%02d", year, month);
+        return date;
+    }
     /**
      * @return :格式 例如 2018.02.09
      */

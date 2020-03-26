@@ -48,7 +48,7 @@ import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
  */
 public class DialogActivity extends SwipeBackActivity implements View.OnClickListener {
 
-    private TextView tvDate, tvAddr, tvAddr2, tvTime, tvGregorianLunar;
+    private TextView tvDate, tvAddr, tvAddr2, tvTime, tvGregorianLunar, tvMonth;
     private CityPickerUtil cityPickerUtil;
     private TextView tvSort;
     private PopupWindowUtil popupWindowUtil;
@@ -77,6 +77,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     @Override
     public void initView() {
         tvGregorianLunar = (TextView) findViewById(R.id.tv_gregorian_lunar);
+        tvMonth = (TextView) findViewById(R.id.tv_month);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
         tvAddr = (TextView) findViewById(R.id.tv_addr);
@@ -85,6 +86,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         tvGregorianLunar.setOnClickListener(this);
         tvSort.setOnClickListener(this);
         tvDate.setOnClickListener(this);
+        tvMonth.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         tvAddr.setOnClickListener(this);
         tvAddr2.setOnClickListener(this);
@@ -151,9 +153,9 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                     @Override
                     public void sure(GregorianLunarCalendarView.CalendarData calendarData, View layout) {
                         ChineseCalendar calendar = (ChineseCalendar) calendarData.getCalendar();
-                        toast("阳历："+calendar.getPickedFormat(true)+",阴历："+calendar.getPickedFormat(false));
+                        toast("阳历：" + calendar.getPickedFormat(true) + ",阴历：" + calendar.getPickedFormat(false));
                         TextView textView = layout.findViewById(R.id.tv_title);
-                        tvGregorianLunar.setText( textView.getText().toString());
+                        tvGregorianLunar.setText(textView.getText().toString());
                     }
 
                     @Override
@@ -161,6 +163,22 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
 
                     }
                 });
+                break;
+            case R.id.tv_month:
+                DatePickerUtils.Builder.builder(getSelfActivity())
+                        .settTitle("请选择月份")
+                        .build().
+                        showMonth(new DatePickerUtils.MonthCallBack() {
+                            @Override
+                            public void sure(int year, int month) {
+                                tvMonth.setText(DatePickerUtils.format(year, month));
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
                 break;
             case R.id.tv_date:
                 DatePickerUtils.Builder.builder(getSelfActivity())
@@ -239,7 +257,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                         setTitle("提示").setContent(title).setTxtCancel("忽略").setSure("更新")
                         .setTitleSize(20).setContentSize(16).setBtnSize(20)
                         .setTitleColor(getResources().getColor(R.color.colorAccent)).setContentColor(getResources().getColor(R.color.colorPrimary)).setBtnColor(getResources().getColor(R.color.colorAccent))
-                        .setBtnCancelColor( getResources().getColor(R.color.font_8d))
+                        .setBtnCancelColor(getResources().getColor(R.color.font_8d))
                         .setWidth(300).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT)
                         .setPadding(24, 10, 24, 10)
                         .setCancel(false)
@@ -437,11 +455,11 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                                 String JsonData = new GetJsonDataUtil().getJson(getSelfActivity(), "province.json");//获取assets目录下的json文件数据
                                 ArrayList<ProvinceBean> list = parseData(JsonData);//用Gson 转成实体
                                 for (int i = 0; i < list.size(); i++) {
-                                    MyBaseProvinceBean pBean = new MyBaseProvinceBean(i+"",list.get(i).getName());
+                                    MyBaseProvinceBean pBean = new MyBaseProvinceBean(i + "", list.get(i).getName());
                                     List<ProvinceBean.CityBean> city = list.get(i).getCity();
                                     List<BaseCityBean> citys = new ArrayList();
                                     for (int i1 = 0; i1 < city.size(); i1++) {
-                                        MyBaseCityBean cityBean = new MyBaseCityBean(i1+"",city.get(i1).getName());
+                                        MyBaseCityBean cityBean = new MyBaseCityBean(i1 + "", city.get(i1).getName());
                                         List<MyBaseDistrictBean> districts = new ArrayList<>();
                                         List<String> area = city.get(i1).getArea();
                                         for (int i2 = 0; i2 < area.size(); i2++) {
@@ -474,10 +492,10 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
 
     private void showCityPickDialog() {
         List<String> listShow = Arrays.asList(cityPickerLoadDataUtil.getProvinceShow());//显示的省份
-          final List<BaseProvinceBean> beansShow = new ArrayList<>();//目前显示的省份
+        final List<BaseProvinceBean> beansShow = new ArrayList<>();//目前显示的省份
         for (int i = 0; i < beans.size(); i++) {
             BaseProvinceBean bean = beans.get(i);
-            if(listShow.contains(bean.getName())){
+            if (listShow.contains(bean.getName())) {
                 beansShow.add(bean);
             }
         }
@@ -489,8 +507,9 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 MyBaseProvinceBean pBean = (MyBaseProvinceBean) beansShow.get(pPosition);
                 MyBaseCityBean cBean = (MyBaseCityBean) pBean.getCitys().get(cPosition);
                 List<MyBaseDistrictBean> districts = cBean.getDistricts();
-                tvAddr2.setText(province + city + district + "---" + pBean.getId()+"-"+cBean.getId()+"-"+districts.get(dPosition).getId());
+                tvAddr2.setText(province + city + district + "---" + pBean.getId() + "-" + cBean.getId() + "-" + districts.get(dPosition).getId());
             }
+
             @Override
             public void cancel() {
 

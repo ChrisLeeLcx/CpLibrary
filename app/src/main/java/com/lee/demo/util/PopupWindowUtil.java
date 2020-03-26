@@ -10,7 +10,6 @@ import com.lee.demo.R;
 
 import cn.lee.cplibrary.util.DrawableUtil;
 import cn.lee.cplibrary.util.ToastUtil;
-import cn.lee.cplibrary.util.ViewUtil;
 import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
 
 

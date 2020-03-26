@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.util.net;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -30,6 +30,8 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.List;
+
+import cn.lee.cplibrary.util.ScreenUtil;
 
 /**
  * function:对一组或者一个View进行的某些操作：例如是否可以点击，设置背景，EditText是否可以编辑等

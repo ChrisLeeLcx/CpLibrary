@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
+import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
-import cn.lee.cplibrary.util.SystemUtil;
 import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
 
@@ -67,7 +67,7 @@ public class PermissionActivity extends AppCompatActivity implements PermissionP
                 for (int i = 0; i < deniedPermissions.size(); i++) {
                     if (!permissionUtil.shouldShowRequestPermissionRationale(this, 1, (String) deniedPermissions.get(i))) {
                         //说明用户拒绝了权限并且 设置 不再提示，则此时 引导用户至设置页手动授权
-                        SystemUtil.jumpAppSettingInfo(this);
+                        AppUtils.jumpAppSettingInfo(this);
                         break;
                     }
                 }

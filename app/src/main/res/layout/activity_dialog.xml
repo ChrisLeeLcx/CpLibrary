@@ -14,14 +14,19 @@
         android:hint="请选公历农历"
         android:paddingRight="4dp" />
     <TextView
+        android:id="@+id/tv_month"
+        style="@style/et_apply_licence"
+        android:hint="请选择日期（年月）"
+        android:paddingRight="4dp" />
+    <TextView
         android:id="@+id/tv_date"
         style="@style/et_apply_licence"
-        android:hint="请选择日期"
+        android:hint="请选择日期（年月日）"
         android:paddingRight="4dp" />
     <TextView
         android:id="@+id/tv_time"
         style="@style/et_apply_licence"
-        android:hint="请选择日期"
+        android:hint="请选择日期（年月日时分秒）"
         android:paddingRight="4dp" />
     <TextView
         android:id="@+id/tv_addr"

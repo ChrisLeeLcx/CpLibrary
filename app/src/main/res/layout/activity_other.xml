@@ -66,4 +66,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="拨打电话：18551815425" />
+    <ImageButton
+        android:id="@+id/iv"
+        android:layout_width="55dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/p_notice_off" android:layout_marginTop="20dp"
+
+        />
 </LinearLayout>

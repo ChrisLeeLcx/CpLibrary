@@ -1,19 +1,29 @@
 package cn.lee.cplibrary.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 
 /**
  * APP工具类
@@ -180,5 +190,80 @@ public class AppUtils {
      */
     public static String getAppId(Activity context) {
         return context.getApplication().getPackageName();
+    }
+    /**
+     * @fun： 关闭软键盘
+     * @author: ChrisLee at 2017-4-21 下午3:56:02
+     */
+    public static void closeKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView()
+                    .getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * 跳转到设置中心->项目应用信息界面（可以设置应用通知管理、应用权限、清楚缓存等）
+     * @param activity
+     */
+    public static void jumpAppSettingInfo(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", AppUtils.getAppId(activity), null);
+        intent.setData(uri);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 打电话
+     * @param activity
+     * @param phoneNo
+     */
+    public static void callPhone(final @NonNull Activity activity, String phoneNo ) {
+        if (ObjectUtils.isEmpty(phoneNo)) {
+            ToastUtil.showToast(activity, "您拨打的是空号");
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            CpComDialog.Builder.builder(activity).
+                    setTitle("提示").setContent("是否开启拨打电话权限").setTxtCancel("取消").setSure("开启")
+                    .setCancel(false)
+                    .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
+                @Override
+                public void sure() {
+                   jumpAppSettingInfo(activity);
+                }
+                @Override
+                public void cancel() {
+                }
+            });
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNo));
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转到系统功能界面
+     **/
+    public static void jumpSetting(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转到Wifi
+     **/
+    public static void jumpWifi(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转到移动网络设置界面
+     **/
+    public static void jumpMobileNet(Activity activity) {
+        Intent intent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+        activity.startActivity(intent);
     }
 }

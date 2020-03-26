@@ -11,13 +11,12 @@ import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 import com.lee.demo.base.SwipeBackActivity;
 
+import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.EditTextUtil;
-import cn.lee.cplibrary.widget.edittext.DecimalInputFilter;
-import cn.lee.cplibrary.widget.edittext.IdcardValidator;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
-import cn.lee.cplibrary.util.SystemUtil;
-import cn.lee.cplibrary.util.ViewUtil;
+import cn.lee.cplibrary.widget.edittext.DecimalInputFilter;
+import cn.lee.cplibrary.widget.edittext.IdcardValidator;
 import cn.lee.cplibrary.widget.edittext.PayPsdInputView;
 import cn.lee.cplibrary.widget.edittext.bankcard.BankCardTextWatcher;
 import cn.lee.cplibrary.widget.edittext.bankcard.BankInfoBean;
@@ -133,7 +132,7 @@ public class EditTextActivity extends SwipeBackActivity {
                 toast("完成：" + inputPsd);
                 LogUtil.i("", "", "密码：" + etSetPsd.getPasswordString());
                 etSetPsd.cleanPsd();//清空密码
-                SystemUtil.closeKeyboard(getSelfActivity());
+                AppUtils.closeKeyboard(getSelfActivity());
             }
         });
         etSetPsd1.setComparePassword(new PayPsdInputView.onPasswordListener() {

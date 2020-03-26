@@ -4,7 +4,9 @@
     package="cn.lee.cplibrary">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--添加震动权限-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <!--拍照需要的权限-->
     <uses-permission android:name="android.permission.INTERNET" />

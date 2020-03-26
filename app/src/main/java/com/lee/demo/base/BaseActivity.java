@@ -21,9 +21,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.lee.cplibrary.util.ActivityHelper;
+import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.SystemBarUtils;
-import cn.lee.cplibrary.util.SystemUtil;
 import cn.lee.cplibrary.util.ToastUtil;
 
 /**
@@ -118,7 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         finishCurrentActivityWhithAnim();
-                        SystemUtil.closeKeyboard(getSelfActivity());
+                        AppUtils.closeKeyboard(getSelfActivity());
                     }
                 });
             } else {

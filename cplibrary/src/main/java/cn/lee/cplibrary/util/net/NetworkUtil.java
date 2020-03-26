@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.util.net;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -27,4 +27,5 @@ public class NetworkUtil {
         }
         return true;
     }
+
 }
