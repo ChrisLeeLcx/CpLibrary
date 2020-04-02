@@ -31,8 +31,8 @@ import cn.lee.cplibrary.widget.picker.widget.WheelView;
 public class DatePickerUtils {
 
     private static WheelView year, month, day, mins, hour;
-    private  int visibleItemNum = 5;
-    private  boolean isCyclic;
+    private int visibleItemNum = 5;
+    private boolean isCyclic;
 
     //ui设置
     private Context context;
@@ -41,10 +41,13 @@ public class DatePickerUtils {
     private int tTxtSize; //单位 sp ，默认值是7，相当于布局中的14sp
     private String tTitle;
     private boolean isShowLabel;
+    private int curHour;//当前小时
+    private int curMin;//当前分钟
 
     private DatePickerUtils(Context context) {
         this.context = context;
     }
+
     /**
      * 显示年月
      */
@@ -87,6 +90,7 @@ public class DatePickerUtils {
         });
 
     }
+
     /**
      * 显示年月日
      */
@@ -198,6 +202,44 @@ public class DatePickerUtils {
                 callBack.sure(year.getCurrentItem() + 1950,
                         month.getCurrentItem() + 1, day.getCurrentItem() + 1,
                         hour.getCurrentItem(), mins.getCurrentItem());
+                dialog.cancel();
+            }
+        });
+        cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.cancel();
+                dialog.cancel();
+            }
+        });
+    }
+
+    /**
+     * 显示小时、分钟
+     */
+    public void showHourMin(final HourMinCallBack callBack) {
+        View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
+        final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
+        setView(view);
+        view.findViewById(R.id.new_year).setVisibility(View.GONE);
+        view.findViewById(R.id.new_month).setVisibility(View.GONE);
+        view.findViewById(R.id.new_day).setVisibility(View.GONE);
+        hour = view.findViewById(R.id.new_hour);
+        initHour(context);
+        mins = view.findViewById(R.id.new_mins);
+        initMins(context);
+        // 设置当前时间
+        hour.setCurrentItem(curHour);
+        mins.setCurrentItem(curMin);
+        hour.setVisibleItems(visibleItemNum);
+        mins.setVisibleItems(visibleItemNum);
+        // 设置监听
+        TextView ok = view.findViewById(R.id.set);
+        TextView cancel = view.findViewById(R.id.cancel);
+        ok.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.sure(hour.getCurrentItem(), mins.getCurrentItem());
                 dialog.cancel();
             }
         });
@@ -341,21 +383,29 @@ public class DatePickerUtils {
 
 
     public interface DateAndTimeCallBack {
-        public void sure(int year, int month, int day, int hour, int min);
+        void sure(int year, int month, int day, int hour, int min);
 
-        public void cancel();
+        void cancel();
     }
 
     public interface DateCallBack {
-        public void sure(int year, int month, int day);
+        void sure(int year, int month, int day);
 
-        public void cancel();
+        void cancel();
     }
+
     public interface MonthCallBack {
-        public void sure(int year, int month);
+        void sure(int year, int month);
 
-        public void cancel();
+        void cancel();
     }
+
+    public interface HourMinCallBack {
+        void sure(int hour, int min);
+
+        void cancel();
+    }
+
     /**
      * @return :格式 例如 2018-02-09 05：30
      */
@@ -374,6 +424,7 @@ public class DatePickerUtils {
                 "%04d-%02d-%02d", year, month, day);
         return date;
     }
+
     /**
      * @return :格式 例如 2018-02
      */
@@ -382,6 +433,16 @@ public class DatePickerUtils {
                 "%04d-%02d", year, month);
         return date;
     }
+
+    /**
+     * @return :格式 例如 05：30
+     */
+    public static String formatHourMin(int hour, int min) {
+        String dateAndTime = String.format(Locale.CHINA,
+                "%02d:%02d", hour, min);
+        return dateAndTime;
+    }
+
     /**
      * @return :格式 例如 2018.02.09
      */
@@ -421,6 +482,13 @@ public class DatePickerUtils {
         isCyclic = cyclic;
     }
 
+    public void setCurHour(int curHour) {
+        this.curHour = curHour;
+    }
+
+    public void setCurMin(int curMin) {
+        this.curMin = curMin;
+    }
 
     public static class Builder {
         private Context context;
@@ -429,8 +497,10 @@ public class DatePickerUtils {
         private int tTxtSize = 14;//标题栏：文字大小（确定、取消按钮、标题） 单位sp
         private String tTitle;//标题栏：标题文字
         private boolean isShowLabel = true;//时间控件是否显示label 年月日等
-        private  boolean isCyclic = true;//数据是否循环显示
-        private  int visibleItemNum = 5;
+        private boolean isCyclic = true;//数据是否循环显示
+        private int visibleItemNum = 5;
+        private int curHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);//当前小时
+        private int curMin = Calendar.getInstance().get(Calendar.MINUTE);//当前分钟
 
         private Builder(Context context) {
             this.context = context;
@@ -449,8 +519,11 @@ public class DatePickerUtils {
             util.setShowLabel(isShowLabel);
             util.setCyclic(isCyclic);
             util.setVisibleItemNum(visibleItemNum);
+            util.setCurHour(curHour);
+            util.setCurMin(curMin);
             return util;
         }
+
         public Builder settBgColor(int tBgColor) {
             this.tBgColor = tBgColor;
             return this;
@@ -493,6 +566,26 @@ public class DatePickerUtils {
          */
         public Builder setVisibleItemNum(int visibleItemNum) {
             this.visibleItemNum = visibleItemNum;
+            return this;
+        }
+
+        /**
+         * 设置当前小时：值为 0~23
+         * 只在显示 只显示小时分钟的方法里起作用
+         * @param curHour
+         */
+        public Builder setCurHour(int curHour) {
+            this.curHour = curHour;
+            return this;
+        }
+
+        /**
+         * 设置当前分钟 值为 0~59
+         * 只在显示 只显示小时分钟的方法里起作用
+         * @param curMin
+         */
+        public Builder setCurMin(int curMin) {
+            this.curMin = curMin;
             return this;
         }
     }

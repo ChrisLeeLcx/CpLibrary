@@ -1,7 +1,6 @@
 package com.lee.demo.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
@@ -48,7 +47,7 @@ import cn.lee.cplibrary.widget.pwindow.CommonPopupWindow;
  */
 public class DialogActivity extends SwipeBackActivity implements View.OnClickListener {
 
-    private TextView tvDate, tvAddr, tvAddr2, tvTime, tvGregorianLunar, tvMonth;
+    private TextView tvDate, tvAddr, tvAddr2, tvTime, tvGregorianLunar, tvMonth, tvHourMin;
     private CityPickerUtil cityPickerUtil;
     private TextView tvSort;
     private PopupWindowUtil popupWindowUtil;
@@ -77,6 +76,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     @Override
     public void initView() {
         tvGregorianLunar = (TextView) findViewById(R.id.tv_gregorian_lunar);
+        tvHourMin = (TextView) findViewById(R.id.tv_hour_min);
         tvMonth = (TextView) findViewById(R.id.tv_month);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
@@ -87,10 +87,11 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
         tvSort.setOnClickListener(this);
         tvDate.setOnClickListener(this);
         tvMonth.setOnClickListener(this);
+        tvHourMin.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         tvAddr.setOnClickListener(this);
         tvAddr2.setOnClickListener(this);
-        findViewById(R.id.btn_1btn).setOnClickListener(this);
+         findViewById(R.id.btn_1btn).setOnClickListener(this);
         findViewById(R.id.btn_2btn).setOnClickListener(this);
         findViewById(R.id.btn_top_round).setOnClickListener(this);
         findViewById(R.id.btn_bottom).setOnClickListener(this);
@@ -209,6 +210,26 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                             @Override
                             public void sure(int year, int month, int day, int hour, int min) {
                                 tvTime.setText(DatePickerUtils.format(year, month, day, hour, min));
+                            }
+
+                            @Override
+                            public void cancel() {
+
+                            }
+                        });
+
+                break;
+            case R.id.tv_hour_min:
+                DatePickerUtils.Builder.builder(getSelfActivity())
+                        .setCyclic(false)
+                        .setCurHour(1)
+                        .setCurMin(59)
+                        .settTitle("请选择营业时间")
+                        .setVisibleItemNum(5).build()
+                        .showHourMin(new DatePickerUtils.HourMinCallBack() {
+                            @Override
+                            public void sure( int hour, int min) {
+                                tvHourMin.setText(DatePickerUtils.formatHourMin( hour, min));
                             }
 
                             @Override
