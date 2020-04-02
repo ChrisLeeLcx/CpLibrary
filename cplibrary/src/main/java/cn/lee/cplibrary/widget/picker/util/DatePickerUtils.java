@@ -56,8 +56,7 @@ public class DatePickerUtils {
         Calendar c = Calendar.getInstance();
         int curYear = c.get(Calendar.YEAR);
         int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
-        int curDate = c.get(Calendar.DATE);
-        View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
+         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
         final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
         setView(view);
         view.findViewById(R.id.new_day).setVisibility(View.GONE);
@@ -157,8 +156,8 @@ public class DatePickerUtils {
         int curYear = c.get(Calendar.YEAR);
         int curMonth = c.get(Calendar.MONTH) + 1;// 通过Calendar算出的月数要+1
         int curDate = c.get(Calendar.DATE);
-        int curHour = c.get(Calendar.HOUR_OF_DAY);
-        int curMin = c.get(Calendar.MINUTE);
+//        int curHour = c.get(Calendar.HOUR_OF_DAY);
+//        int curMin = c.get(Calendar.MINUTE);
         View view = LayoutInflater.from(context).inflate(R.layout.cp_date_time_picker_layout, null);
         final Dialog dialog = CpComDialog.getBottomDialog(context, true, view);
         setView(view);
@@ -571,7 +570,7 @@ public class DatePickerUtils {
 
         /**
          * 设置当前小时：值为 0~23
-         * 只在显示 只显示小时分钟的方法里起作用
+         * 只在显示时分的方法里起作用
          * @param curHour
          */
         public Builder setCurHour(int curHour) {
@@ -581,7 +580,7 @@ public class DatePickerUtils {
 
         /**
          * 设置当前分钟 值为 0~59
-         * 只在显示 只显示小时分钟的方法里起作用
+         * 只在显示时分的方法里起作用
          * @param curMin
          */
         public Builder setCurMin(int curMin) {

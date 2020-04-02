@@ -205,6 +205,8 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                 break;
             case R.id.tv_time:
                 DatePickerUtils.Builder.builder(getSelfActivity())
+                        .setCurHour(0)
+                        .setCurMin(0)
                         .setVisibleItemNum(9).build()
                         .showDateAndTime(new DatePickerUtils.DateAndTimeCallBack() {
                             @Override
