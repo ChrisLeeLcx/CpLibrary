@@ -26,6 +26,7 @@ public class EditTextUtil {
     }
     /**
      * EditText失去焦点
+     * 父布局或其他View添加android:focusableInTouchMode="true" 才会起作用
      */
     public static void clearEtFocus(EditText... v) {
         EditText[] et = v;

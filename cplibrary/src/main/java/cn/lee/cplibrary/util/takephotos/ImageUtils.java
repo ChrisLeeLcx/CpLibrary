@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import cn.lee.cplibrary.constant.CpConfig;
+import cn.lee.cplibrary.util.LogUtil;
 
 /**
  * Created by gaolei on 2017/12/19.
@@ -31,10 +32,37 @@ public class ImageUtils {
      * @return Bitmap 对象
      */
 
+//    public static Bitmap compressImageFromFile(String srcPath, float desWidth) {
+//        BitmapFactory.Options newOpts = new BitmapFactory.Options();
+//        newOpts.inJustDecodeBounds = true;//只读边,不读内容
+//        Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+//        newOpts.inJustDecodeBounds = false;
+//        int w = newOpts.outWidth;
+//        int h = newOpts.outHeight;
+//        float desHeight = desWidth * h / w;
+//        int be = 1;
+//        if (w > h && w > desWidth) {
+//            be = (int) (newOpts.outWidth / desWidth);
+//        } else if (w < h && h > desHeight) {
+//            be = (int) (newOpts.outHeight / desHeight);
+//        }
+//        if (be <= 0) {
+//            be = 1;
+//        }
+//        newOpts.inSampleSize = be;//设置采样率
+//
+//        newOpts.inPreferredConfig = Bitmap.Config.ARGB_8888;//该模式是默认的,可不设
+//        newOpts.inPurgeable = true;// 同时设置才会有效
+//        newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
+//
+//        bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+//        return bitmap;
+//    }
     public static Bitmap compressImageFromFile(String srcPath, float desWidth) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;//只读边,不读内容
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        LogUtil.i("","3="+bitmap);
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
@@ -50,14 +78,15 @@ public class ImageUtils {
         }
         newOpts.inSampleSize = be;//设置采样率
 
+        LogUtil.i("","4="+bitmap);
         newOpts.inPreferredConfig = Bitmap.Config.ARGB_8888;//该模式是默认的,可不设
         newOpts.inPurgeable = true;// 同时设置才会有效
         newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
-
+        LogUtil.i("","srcPath="+srcPath+",,newOpts="+newOpts);
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        LogUtil.i("","5="+bitmap);
         return bitmap;
     }
-
     /**
      * 压缩图片（质量压缩）
      *
