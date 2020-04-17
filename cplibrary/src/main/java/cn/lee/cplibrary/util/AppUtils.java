@@ -191,6 +191,7 @@ public class AppUtils {
     public static String getAppId(Activity context) {
         return context.getApplication().getPackageName();
     }
+
     /**
      * @fun： 关闭软键盘
      * @author: ChrisLee at 2017-4-21 下午3:56:02
@@ -205,6 +206,7 @@ public class AppUtils {
 
     /**
      * 跳转到设置中心->项目应用信息界面（可以设置应用通知管理、应用权限、清楚缓存等）
+     *
      * @param activity
      */
     public static void jumpAppSettingInfo(Activity activity) {
@@ -216,10 +218,11 @@ public class AppUtils {
 
     /**
      * 打电话
+     *
      * @param activity
      * @param phoneNo
      */
-    public static void callPhone(final @NonNull Activity activity, String phoneNo ) {
+    public static void callPhone(final @NonNull Activity activity, String phoneNo) {
         if (ObjectUtils.isEmpty(phoneNo)) {
             ToastUtil.showToast(activity, "您拨打的是空号");
             return;
@@ -231,8 +234,9 @@ public class AppUtils {
                     .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
                 @Override
                 public void sure() {
-                   jumpAppSettingInfo(activity);
+                    jumpAppSettingInfo(activity);
                 }
+
                 @Override
                 public void cancel() {
                 }
@@ -265,5 +269,37 @@ public class AppUtils {
     public static void jumpMobileNet(Activity activity) {
         Intent intent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
         activity.startActivity(intent);
+    }
+
+
+    //---------------覆盖安装相应方法--------------------
+    private static int old_verCode;//之前保存的VersionCode,
+    private static final String SP_NAME = "sp_verCode";
+    private static final String KEY = "verCode";
+
+    /**
+     * 1、是否是覆盖安装，调用后配合saveVerCodeToSp使用才起作用
+     * 一般若方法返回true，则要在相应的进入页面的地方调用保存当前vercode到sp中
+     * 2、覆盖安装功能一般在过度页面检测
+     * 3、只能检测与当前版本数不同的覆盖安装
+     *
+     **/
+    public static boolean isCoverInstall(Context c) {
+        old_verCode = SharedPreferencesUtils.getShareInteger(c, SP_NAME, KEY);
+        int curVerCode = getVersionCode(c);
+        boolean isCover = true;
+        if (old_verCode == 0) {//首次安装，或者卸载后安装
+            isCover = false;
+        } else if (curVerCode == old_verCode) {//当前版本：（1）安装后版本数一致（2）未安装
+            isCover = false;
+        }
+        return isCover;
+    }
+
+    /**
+     * 将当前版本数保存到sp里面
+     **/
+    public static void saveVerCodeToSp(Context c) {
+        SharedPreferencesUtils .putShareValue(c, SP_NAME, KEY, getVersionCode(c));
     }
 }
