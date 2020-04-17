@@ -7,7 +7,7 @@ package com.lee.demo.constant;
  */
 
 public class Config {
-    public static final boolean isDebug = true;//是否开启debug
+    public static final boolean isDebug =false;//是否开启debug
     public static final Environment CURRENT_ENVIRONMENT = Environment.LOCAL;//项目当前服务器环境
 
     public static final String SMS_URI_ALL = "content://sms/"; //所有短信
