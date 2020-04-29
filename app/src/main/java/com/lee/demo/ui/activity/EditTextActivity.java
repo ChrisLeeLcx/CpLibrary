@@ -77,6 +77,14 @@ public class EditTextActivity extends SwipeBackActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 LogUtil.i("", "", "银行卡号输入=" + etBankCardNum.getText().toString().trim());
+
+                if(ObjectUtils.isEmpty(s.toString().trim())){
+                    EditTextUtil.setEditTextEditState(true,etPrice);
+
+                }else{
+                    EditTextUtil.setEditTextEditState(false,etPrice);
+                }
+
             }
         });
         findViewById(R.id.btn_sure).setOnClickListener(new View.OnClickListener() {
