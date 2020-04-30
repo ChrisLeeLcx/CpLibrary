@@ -32,6 +32,7 @@ public class EditTextUtil {
             }
         }
     }
+
     /**
      * EditText失去焦点
      * 父布局或其他View添加android:focusableInTouchMode="true" 才会起作用
@@ -59,7 +60,7 @@ public class EditTextUtil {
                     editText.setFocusableInTouchMode(true);
                     editText.setFocusable(true);
                     editText.requestFocus();
-                    setCopyAndPasteAble(editText,true);
+                    setCopyAndPasteAble(editText, true);
                 }
             }
         } else {
@@ -67,11 +68,12 @@ public class EditTextUtil {
                 if (editText != null) {
                     editText.setFocusable(false);
                     editText.setFocusableInTouchMode(false);
-                    setCopyAndPasteAble(editText,false);
+                    setCopyAndPasteAble(editText, false);
                 }
             }
         }
     }
+
     /**
      * 设置EditText是否可以编辑
      *
@@ -97,6 +99,7 @@ public class EditTextUtil {
             }
         }
     }
+
     /**
      * 设置EditText当inputType="passWord"的时候，密码是否可见
      *
@@ -115,29 +118,33 @@ public class EditTextUtil {
                     .getInstance());
         }
     }
+
     /**
      * android EditText设置光标到内容最后
      */
     public static void setEditTextCursorLast(EditText et) {
         et.setSelection(et.getText().toString().length());
     }
+
     /**
      * 防止EditText输入时，软键盘将下面布局顶上去
+     *
      * @param activity activity上下文
-     * @param et 对应EditText
+     * @param et       对应EditText
      */
-    public static void setEtFocusChangeSystemFit(final Activity activity, EditText...et) {
-        for (int i=0;i<et.length;i++){
+    public static void setEtFocusChangeSystemFit(final Activity activity, EditText... et) {
+        for (int i = 0; i < et.length; i++) {
             et[i].setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(hasFocus){
+                    if (hasFocus) {
                         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
                     }
                 }
             });
         }
     }
+
     /**
      * EditText获取焦点并显示软键盘
      */
@@ -159,13 +166,13 @@ public class EditTextUtil {
         if (isAble) {
             for (EditText editText : eTexts) {
                 if (editText != null) {
-                    setCopyAndPasteAble(editText,true);
+                    setCopyAndPasteAble(editText, true);
                 }
             }
         } else {
             for (EditText editText : eTexts) {
                 if (editText != null) {
-                    setCopyAndPasteAble(editText,false);
+                    setCopyAndPasteAble(editText, false);
                 }
             }
         }
@@ -173,13 +180,14 @@ public class EditTextUtil {
 
     /**
      * 设置EdiText是否有复制粘贴菜单
+     *
      * @param editText
-     * @param isAble true 有复制粘贴菜单，false禁止
+     * @param isAble   true 有复制粘贴菜单，false禁止
      */
     public static void setCopyAndPasteAble(final EditText editText, final boolean isAble) {
         try {
             if (editText == null) {
-                return ;
+                return;
             }
             editText.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -191,7 +199,7 @@ public class EditTextUtil {
             editText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if(!isAble){
+                    if (!isAble) {
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             // setInsertionDisabled when user touches the view
                             setInsertionDisabled(editText);
@@ -200,29 +208,32 @@ public class EditTextUtil {
                     return false;
                 }
             });
+            if (isAble) {
+                editText.setCustomSelectionActionModeCallback(null);
+            } else {
+                editText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {//长按出来的复选框
+                    @Override
+                    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                        return false;
+                    }
 
+                    @Override
+                    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                        return false;
+                    }
 
-            editText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {//???
-                @Override
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
+                    @Override
+                    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
+                    @Override
+                    public void onDestroyActionMode(ActionMode mode) {
 
-                @Override
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    return false;
-                }
+                    }
+                });
+            }
 
-                @Override
-                public void onDestroyActionMode(ActionMode mode) {
-
-                }
-            });
 //           EditText在横屏编辑的时候会出现一个新的不同的编辑界面，这个界面里还是可以复制粘贴的，因此也要取消这个额外的UI，加上下面这一句：
             // android:imeOptions="flagNoExtractUi"
             editText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
