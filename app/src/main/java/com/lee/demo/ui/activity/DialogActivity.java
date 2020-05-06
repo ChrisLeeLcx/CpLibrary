@@ -111,7 +111,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
 
         //数据来源于外界
         cityPickerLoadDataUtil = new CityPickerLoadDataUtil(getSelfActivity());
-        cityPickerLoadDataUtil.setProvinceShow(new String[]{"安徽省", "江苏省"});//只显示这两个省，默认显示所有省份
+//        cityPickerLoadDataUtil.setProvinceShow(new String[]{"安徽省", "江苏省"});//只显示这两个省，默认显示所有省份
 //        cityPickerLoadDataUtil.setDefaultArea("江苏省","镇江市","丹徒区");  //默认显示的省份
 //        cityPickerLoadDataUtil.setDefaultArea("江苏省","镇江市","");  //默认显示的省份
 //        cityPickerLoadDataUtil.setDefaultArea("江苏省","","");  //默认显示的省份
@@ -514,13 +514,13 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
     };
 
     private void showCityPickDialog() {
-        List<String> listShow = Arrays.asList(cityPickerLoadDataUtil.getProvinceShow());//显示的省份
+//        List<String> listShow = Arrays.asList(cityPickerLoadDataUtil.getProvinceShow());//显示的省份
         final List<BaseProvinceBean> beansShow = new ArrayList<>();//目前显示的省份
         for (int i = 0; i < beans.size(); i++) {
             BaseProvinceBean bean = beans.get(i);
-            if (listShow.contains(bean.getName())) {
+//            if (listShow.contains(bean.getName())) {
                 beansShow.add(bean);
-            }
+//            }
         }
         cityPickerLoadDataUtil.showDialog(beans, new CityPickerLoadDataUtil.CityPickerCallBack() {
 

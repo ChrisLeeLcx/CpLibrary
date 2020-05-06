@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
@@ -136,7 +137,7 @@ public class CityPickerLoadDataUtil {
             public void onChanged(WheelView wheel, int oldValue, int newValue) {//刷新市、区
                 try {
                     String pp = provincesAll.get(provinceView.getCurrentItem());
-                    String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
+                    String cc = citiesAll.get(pp).get(0);
                     updateCity(context, cityView, citiesAll.get(pp));
                     updateCity(context, districtView, districtsAll.get(pp).get(cc));
                 } catch (IndexOutOfBoundsException e) {

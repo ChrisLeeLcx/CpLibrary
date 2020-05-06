@@ -176,7 +176,7 @@ public class CityPickerUtil {
             public void onChanged(WheelView wheel, int oldValue, int newValue) {//刷新市、区
                 try {
                     String pp = provincesAll.get(provinceView.getCurrentItem());
-                    String cc = citiesAll.get(pp).get(cityView.getCurrentItem());
+                    String cc = citiesAll.get(pp).get(0);
 //                indexP = newValue;
 //                Map<String, List<String>> mapDD = districtsAll.get(provincesAll.get(indexP));
 //                updateCity(context, cityView, citiesAll.get(provincesAll.get(indexP)));
