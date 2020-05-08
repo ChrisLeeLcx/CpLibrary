@@ -3,7 +3,6 @@ package cn.lee.cplibrary.util.takephotos;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,12 +31,14 @@ import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtils;
+import cn.lee.cplibrary.util.timer.TimeUtils;
 
 /**
  * 获取拍照或者相册中的图片
  */
 public class PhotoUtil {
     public static boolean onlyUseSystemCamera = true;//调用相机拍照时候：是否只使用系统相机
+    public static boolean isShowGuideDialog ;//用户永久拒绝需要的权限时，是否显示引导对话框，使用时候可自行设置
 
     public static File tempFile;
     //请求相机
@@ -59,9 +61,9 @@ public class PhotoUtil {
 
     /*权限数组*/
     private static final String[] permissionArray = new String[]{
-            Manifest.permission.CAMERA
-            , Manifest.permission.WRITE_EXTERNAL_STORAGE
-            , Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.CAMERA//访问相机权限
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE //写存储卡权限：WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.READ_EXTERNAL_STORAGE//读写存储卡权限：READ_EXTERNAL_STORAGE
     };
 
     /**
@@ -132,8 +134,8 @@ public class PhotoUtil {
     private static Dialog picDialog;
 
     /**
-     * 打开上传图片的Dialog 必须重写onActivityResult
-     *
+     * shouldShowRequestPermissionRationale：功能：是否会显示相机权限请求框，1、true显示，2、false不显示当允许权限后/或者点击不允许并且勾选了不再询问）
+     * 注意：打开上传图片的Dialog 必须重写onActivityResult
      * @param activity 一定不能为空
      * @param fragment 不为null表示在Fragment中上传图片且activity是fragment挂载的Activity ，是null表示在Activity中上传图片
      * @return
@@ -150,16 +152,17 @@ public class PhotoUtil {
                 //权限判断
                 if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        //系统不允许显示READ_EXTERNAL_STORAGE权限申请对话框
+                        showGuideDialog(activity,"请允许访问存储空间");
+                    }
                     //申请READ_EXTERNAL_STORAGE权限
                     ActivityCompat.requestPermissions(activity, new String[]{
                                     Manifest.permission.READ_EXTERNAL_STORAGE},
                             READ_EXTERNAL_STORAGE_REQUEST_CODE);
-                } else if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED) {
+                } else {
                     //跳转到调用系统图库
                     gotoPhoto(activity, fragment);
-                } else {
-                    ToastUtil.showToast(activity, "请允许访问相册");
                 }
             }
         });
@@ -168,19 +171,29 @@ public class PhotoUtil {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
-                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE,CAMERA多个权限
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
-                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                                CAMERA_ACCESSIBILITY);
-                    }
-                } else if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    //跳转到调用系统相机
+                boolean isCameraPermit = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;//是否开启了访问相机权限
+                boolean isStorageWPermit = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;//是否开启了访问存储空间权限
+                boolean isCameraShow = ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA);//是否会显示相机权限请求框
+                boolean isStorageWShow = ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);//是否会显示存储空间权限请求框
+                if (isCameraPermit && isStorageWPermit) {//跳转到调用系统相机
                     gotoCarema(activity, fragment);
                 } else {
-                    ToastUtil.showToast(activity, "需设置权限才可拍照");
+                    if (isCameraPermit) {//相机:允 (存储一定未允)
+                        if(!isStorageWShow){
+                            showGuideDialog(activity,"请允许访问存储空间");
+                        }
+                    } else {//相机:未允，
+                        if (isStorageWPermit) {//存储:允
+                            if(!isCameraShow){
+                                showGuideDialog(activity,"请允许访问相机");
+                            }
+                        } else {//存储:未允
+                            if(!isStorageWShow && !isCameraShow){
+                                showGuideDialog(activity,"请允许访问存储空间和相机");
+                            }
+                        }
+                    }
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_ACCESSIBILITY);
                 }
             }
         });
@@ -197,8 +210,6 @@ public class PhotoUtil {
 //            picDialog.show();
 //        }
         return picDialog;
-
-
     }
 
 
@@ -403,6 +414,33 @@ public class PhotoUtil {
 
     public static void setOnlyUseSystemCamera(boolean onlyUseSystemCamera) {
         PhotoUtil.onlyUseSystemCamera = onlyUseSystemCamera;
+    }
+
+
+
+    public static void showGuideDialog(final Activity c, String msg){
+        if(!isShowGuideDialog){
+            ToastUtil.showToast(c, msg);
+            return;
+        }
+        TimeUtils.isCheckFastClick=false;
+        CpComDialog.Builder.builder(c).
+                setTitle("提示").setContent(msg).setTxtCancel("拒绝").setSure("设置")
+                .setTitleSize(20).setContentSize(16).setBtnSize(20)
+                .setBtnCancelColor(Color.parseColor("#8d8d8d"))
+                .setCancel(false)
+                .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
+            @Override
+            public void sure() {
+                AppUtils.jumpAppSettingInfo(c);
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        });
+        TimeUtils.isCheckFastClick=true;
     }
 }
 

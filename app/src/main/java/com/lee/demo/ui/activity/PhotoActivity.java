@@ -47,6 +47,7 @@ public class PhotoActivity extends AppCompatActivity {
         PhotoUtil.setQuality(400);
         PhotoUtil.setDesWidth(1200f);
         PhotoUtil.setOnlyUseSystemCamera(true);
+        PhotoUtil.isShowGuideDialog= true;
         LogUtil.i("","PhotoUtil="+ ImageUtils.getQuality()+",,"+ImageUtils.getDesWidth());
     }
     @Override

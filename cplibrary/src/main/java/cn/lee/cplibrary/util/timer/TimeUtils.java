@@ -282,12 +282,14 @@ public class TimeUtils {
         return  count;
     }
 
+    //--------------点击时间差----------------
 
     /**
      * 两次点击间隔不能少于1000ms
      */
     private static final int MIN_DELAY_TIME = 1000;
     private static long lastClickTime;
+    public static boolean isCheckFastClick=true;//是否检测点击过快情况,注意：因为是全局静态变量，外部使用过后应该恢复原来true的状态
 
     /**
      * 时间差，判断重复点击
@@ -295,6 +297,9 @@ public class TimeUtils {
      * @return 为false时，正常逻辑实现。true时,说明点击过快，自定义处理
      */
     public static boolean isFastClick() {
+        if(!isCheckFastClick){
+            return false;
+        }
         long currentClickTime = System.currentTimeMillis();
         if ((currentClickTime - lastClickTime) <= MIN_DELAY_TIME) {
             return true;
@@ -302,4 +307,6 @@ public class TimeUtils {
         lastClickTime = currentClickTime;
         return false;
     }
+
+
 }

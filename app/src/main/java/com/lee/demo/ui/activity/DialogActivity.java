@@ -30,6 +30,7 @@ import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.dialog.BaseDialogBean;
 import cn.lee.cplibrary.util.dialog.bottom.CpBottomDialog;
 import cn.lee.cplibrary.util.dialog.bottomround.CpBottomRoundDialog;
+import cn.lee.cplibrary.util.timer.TimeUtils;
 import cn.lee.cplibrary.widget.picker.bean.BaseCityBean;
 import cn.lee.cplibrary.widget.picker.bean.BaseProvinceBean;
 import cn.lee.cplibrary.widget.picker.bean.ProvinceBean;
@@ -264,6 +265,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
             case R.id.btn_1btn:
                 String title1 = "清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗";
 //                String title1 = "我是标题哦！";
+                TimeUtils.isCheckFastClick=false;
                 CpComDialog.Builder.builder(getSelfActivity())
                         .setTitle("我是标题哦！").setContent(title1).build().show1BtnDialog(
                         new CpComDialog.Dialog1BtnCallBack() {
@@ -272,6 +274,7 @@ public class DialogActivity extends SwipeBackActivity implements View.OnClickLis
                                 ToastUtil.showToast(getSelfActivity(), "确定");
                             }
                         });
+                TimeUtils.isCheckFastClick=true;
                 break;
             case R.id.btn_2btn:
                 String title = "清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗清空历史记录吗";
