@@ -13,16 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lee.demo.R;
-import com.lee.demo.base.BaseApplication;
 import com.lee.demo.base.BaseWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.lee.cplibrary.util.permissionutil.PermissionDemoActivity;
+
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "GetVerCodeActivity";
     private RecyclerView recyclerView;
-    private Button btn_switch;
     private List<ActivityBean> totalList = new ArrayList<>();
 
     @Override
@@ -32,29 +31,19 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         initData();
         initRecyclerView();
-        final BaseApplication application = (BaseApplication) getApplication();
-        btn_switch =findViewById(R.id.btn_switch);
-        btn_switch.setText(application.isDayMode()?"切换夜间模式":"切换日间模式");
-        btn_switch .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                application.switchDayNightMode();
-                btn_switch.setText(application.isDayMode()?"切换夜间模式":"切换日间模式");
-                recreate();
-            }
-        });
-        findViewById(R.id.btn_webView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BaseWebViewActivity.class);
-                intent.putExtra(BaseWebViewActivity.KEY_URL,"https://ebikeyw.fangxiangjia.com");
-                startActivity(intent);
 
+
+        findViewById(R.id.iv_to_top).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
             }
         });
+
     }
-
     private void initData() {
+        totalList.add(new ActivityBean("未知分类", OtherActivity.class));
+        totalList.add(new ActivityBean("工具类", UtilActivity.class));
         totalList.add(new ActivityBean("各种选框", DialogActivity.class));
         totalList.add(new ActivityBean("安卓6.0运行时权限", PermissionActivity.class));
         totalList.add(new ActivityBean("拍照相册", PhotoActivity.class));
@@ -70,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("拖拽排序RecyclerView", DragSortRvActivity.class));
         totalList.add(new ActivityBean("滑动点击删除Rv", SlideMenuActivity.class));
         totalList.add(new ActivityBean("懒加载ViewPager", OrderActivity.class));
-        totalList.add(new ActivityBean("其他", OtherActivity.class));
         totalList.add(new ActivityBean("考试答题", ExamActivity.class));
         totalList.add(new ActivityBean("各种截图", ShotActivity.class));
         totalList.add(new ActivityBean("短信监听", GetVerCodeActivity.class));

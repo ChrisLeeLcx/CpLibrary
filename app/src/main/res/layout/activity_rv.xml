@@ -4,21 +4,9 @@
     android:layout_height="match_parent"
     android:background="@color/bg_main"
     android:orientation="vertical">
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         />
-    <ImageView
-        android:id="@+id/iv_to_top"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="24dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/cp_shadow_oval"
-        android:scaleType="centerInside"
-        android:src="@drawable/to_top" />
+       />
 </RelativeLayout>

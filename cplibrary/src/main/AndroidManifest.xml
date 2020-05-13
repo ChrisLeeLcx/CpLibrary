@@ -28,6 +28,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/cp_file_paths" />
         </provider>
+        <activity android:name=".util.permissionutil.PermissionDemoActivity"/>
+
     </application>
 
 </manifest>

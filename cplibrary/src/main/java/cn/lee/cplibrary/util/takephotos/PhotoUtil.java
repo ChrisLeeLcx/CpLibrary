@@ -155,11 +155,13 @@ public class PhotoUtil {
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         //系统不允许显示READ_EXTERNAL_STORAGE权限申请对话框
                         showGuideDialog(activity,"请允许访问存储空间");
+                    }else{
+                        //申请READ_EXTERNAL_STORAGE权限
+                        ActivityCompat.requestPermissions(activity, new String[]{
+                                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                                READ_EXTERNAL_STORAGE_REQUEST_CODE);
                     }
-                    //申请READ_EXTERNAL_STORAGE权限
-                    ActivityCompat.requestPermissions(activity, new String[]{
-                                    Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_EXTERNAL_STORAGE_REQUEST_CODE);
+
                 } else {
                     //跳转到调用系统图库
                     gotoPhoto(activity, fragment);
@@ -178,22 +180,28 @@ public class PhotoUtil {
                 if (isCameraPermit && isStorageWPermit) {//跳转到调用系统相机
                     gotoCarema(activity, fragment);
                 } else {
+                    boolean isRequst = true;
                     if (isCameraPermit) {//相机:允 (存储一定未允)
                         if(!isStorageWShow){
                             showGuideDialog(activity,"请允许访问存储空间");
+                            isRequst = false;
                         }
                     } else {//相机:未允，
                         if (isStorageWPermit) {//存储:允
                             if(!isCameraShow){
                                 showGuideDialog(activity,"请允许访问相机");
+                                isRequst = false;
                             }
                         } else {//存储:未允
                             if(!isStorageWShow && !isCameraShow){
                                 showGuideDialog(activity,"请允许访问存储空间和相机");
+                                isRequst = false;
                             }
                         }
                     }
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_ACCESSIBILITY);
+                    if(isRequst){
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_ACCESSIBILITY);
+                    }
                 }
             }
         });

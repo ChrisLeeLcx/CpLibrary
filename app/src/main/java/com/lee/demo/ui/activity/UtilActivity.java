@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 
+import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.StringUtil;
 
 public class UtilActivity extends BaseActivity {
@@ -36,6 +37,7 @@ public class UtilActivity extends BaseActivity {
     public void initView() {
         tvPhone = findViewById(R.id.tv_phone);
         tvPhone.setText(StringUtil.hideMiddleFourNumber("18551815425"));
+        LogUtil.i("","OnCreate");
     }
 
     @Override

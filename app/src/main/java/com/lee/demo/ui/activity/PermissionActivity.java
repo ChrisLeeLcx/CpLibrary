@@ -1,6 +1,8 @@
 package com.lee.demo.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,33 +11,30 @@ import java.util.List;
 
 import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.ToastUtil;
+import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
+import cn.lee.cplibrary.util.timer.TimeUtils;
 
 /**
  * 权限的Demo
  */
 public class PermissionActivity extends AppCompatActivity implements PermissionProxy {
-
     private PermissionUtil permissionUtil;
-
     /*定位权限数组*/
-    private String[] permissionArray = new String[]{
-            Manifest.permission.RECORD_AUDIO
+    protected String[] permissionArray = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,//读
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,//写
+            Manifest.permission.CAMERA,//照相机
+            Manifest.permission.CALL_PHONE,//打电话
     };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(cn.lee.cplibrary.R.layout.cp_layout_empty);
         permissionUtil = new PermissionUtil(this);
-        //方式1
-        permissionUtil.requestPermissions(this, 1, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
-        //方式2
-        if (!permissionUtil.shouldShowRequestPermissionRationale(this, 2, Manifest.permission.RECORD_AUDIO)) {
-            permissionUtil.requestPermissions(this, 2, permissionArray);
-        }
-        LogUtil.i("", this, "Person_Demo");
+        permissionUtil.requestPermissions(this, 2, permissionArray);
     }
 
     @Override
@@ -48,9 +47,6 @@ public class PermissionActivity extends AppCompatActivity implements PermissionP
     @Override
     public void granted(Object source, int requestCode) {
         switch (requestCode) {
-            case 1:
-                LogUtil.i("", this, "granted-1");
-                break;
             case 2:
                 LogUtil.i("", this, "granted-2");
                 break;
@@ -60,18 +56,13 @@ public class PermissionActivity extends AppCompatActivity implements PermissionP
     }
 
     @Override
+    public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
+        showGuideDialog(this,"是否开启权限");
+    }
+
+    @Override
     public void denied(Object source, int requestCode, List deniedPermissions) {
         switch (requestCode) {
-            case 1:
-                LogUtil.i("", this, "denied-1");
-                for (int i = 0; i < deniedPermissions.size(); i++) {
-                    if (!permissionUtil.shouldShowRequestPermissionRationale(this, 1, (String) deniedPermissions.get(i))) {
-                        //说明用户拒绝了权限并且 设置 不再提示，则此时 引导用户至设置页手动授权
-                        AppUtils.jumpAppSettingInfo(this);
-                        break;
-                    }
-                }
-                break;
             case 2:
                 LogUtil.i("", this, "denied-2");
                 break;
@@ -83,9 +74,6 @@ public class PermissionActivity extends AppCompatActivity implements PermissionP
     @Override
     public void rationale(Object source, int requestCode) {
         switch (requestCode) {
-            case 1:
-                LogUtil.i("", this, "rationale1");
-                break;
             case 2:
                 LogUtil.i("", this, "rationale2");
                 break;
@@ -99,5 +87,24 @@ public class PermissionActivity extends AppCompatActivity implements PermissionP
         return true;
     }
 
+    private void showGuideDialog(final Activity c, String msg) {
+        TimeUtils.isCheckFastClick = false;
+        CpComDialog.Builder.builder(c).
+                setTitle("提示").setContent(msg).setTxtCancel("拒绝").setSure("开启")
+                .setTitleSize(20).setContentSize(16).setBtnSize(20)
+                .setBtnCancelColor(Color.parseColor("#8d8d8d"))
+                .setCancel(false)
+                .build().show2BtnDialog(new CpComDialog.Dialog2BtnCallBack() {
+            @Override
+            public void sure() {
+                AppUtils.jumpAppSettingInfo(c);
+            }
 
+            @Override
+            public void cancel() {
+
+            }
+        });
+        TimeUtils.isCheckFastClick = true;
+    }
 }

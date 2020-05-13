@@ -29,7 +29,7 @@ public class DragSortRvActivity extends SwipeBackActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_main;
+        return R.layout.activity_rv;
     }
 
     @Override

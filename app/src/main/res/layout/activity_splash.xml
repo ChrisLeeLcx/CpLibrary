@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+   >
+
+    <!--过渡页页面-->
+    <RelativeLayout
+        android:id="@+id/rl_splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--<ImageView-->
+            <!--andridnameidname/activity_splash_image"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:background="@drawable/icon_splash_midd"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="121dp"-->
+            <!--android:visibility="visible" />-->
+        <ImageView
+            android:id="@+id/activity_splash_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/ic_launcher"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:visibility="visible" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:textSize="14sp"
+            android:textColor="#9a9a9a"
+            android:text="Copyright © 2020 Chrislee" />
+    </RelativeLayout>
+
+
+    <!--引导页面-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guide_vp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_enter_mian"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@color/blue"
+        android:visibility="gone" />
+</RelativeLayout>

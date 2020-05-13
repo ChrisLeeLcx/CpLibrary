@@ -151,6 +151,11 @@ public class CheckAllMsgActivity extends AppCompatActivity implements Permission
     }
 
     @Override
+    public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
+
+    }
+
+    @Override
     public void rationale(Object source, int requestCode) {
 
     }

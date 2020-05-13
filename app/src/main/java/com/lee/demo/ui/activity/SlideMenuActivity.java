@@ -32,7 +32,7 @@ public class SlideMenuActivity extends SwipeBackActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_main;
+        return R.layout.activity_rv;
     }
 
     @Override
@@ -49,12 +49,6 @@ public class SlideMenuActivity extends SwipeBackActivity {
     @Override
     public void initView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        findViewById(R.id.iv_to_top).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
-            }
-        });
     }
 
     @Override

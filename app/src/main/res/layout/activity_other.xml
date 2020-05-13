@@ -1,77 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.lee.cplibrary.widget.scrollview.NEScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="30dp">
+    android:layout_height="match_parent">
 
-    <cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar
-        android:id="@+id/rating_bar"
-        style="@style/ratingBarEvaluate"
-        app:cp_mrb_progressBackgroundTint="#FFFD5858"
-        app:cp_mrb_progressTint="#FFFD5858" />
-
-
-    <!--app:cp_mrb_progressBackgroundTint="@color/transparent"-->
-    <!--app:cp_mrb_indeterminateTint="#FF0021FD"-->
-    <!--控制星星控件的大小 和 间距用layout_width即可-->
-    <!--cp_mrb_fillBackgroundStars：true 没有选中的星星为实心，false：则为空心-->
-    <cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar
-        android:id="@+id/material_rating_bar"
-        style="@style/ratingBarIsIndicator"
-        android:layout_width="86dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
-        app:cp_mrb_fillBackgroundStars="true"
-        app:cp_mrb_progressTint="#FFFD5858"
-        app:cp_mrb_secondaryProgressTint="#FFFD5858" />
-
-    <TextView
-        android:id="@+id/tv_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="" />
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="获取数据" />
+        android:orientation="vertical"
+        android:padding="15dp">
 
 
-    <TextView
-        android:id="@+id/tv_right_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="right"
-        android:text="14-38万"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <LinearLayout
+            android:id="@+id/btn_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <cn.lee.cplibrary.widget.rangeseekbar.RangeSeekBar
-        android:id="@+id/rangeSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        app:cp_rsb_indicator_height="17dp"
-        app:cp_rsb_indicator_width="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1、APP主题切换" />
 
-    <Button
-        android:id="@+id/btn_call"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="拨打电话：18551815425" />
-    <ImageButton
-        android:id="@+id/iv"
-        android:layout_width="55dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/p_notice_off" android:layout_marginTop="20dp"
+            <Button
+                android:id="@+id/btn_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="切换日间模式"
 
-        />
-</LinearLayout>
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2、星星计分条" />
+
+            <cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar
+                android:id="@+id/rating_bar"
+                style="@style/ratingBarEvaluate"
+                app:cp_mrb_progressBackgroundTint="#FFFD5858"
+                app:cp_mrb_progressTint="#FFFD5858" />
+
+
+            <!--app:cp_mrb_progressBackgroundTint="@color/transparent"-->
+            <!--app:cp_mrb_indeterminateTint="#FF0021FD"-->
+            <!--控制星星控件的大小 和 间距用layout_width即可-->
+            <!--cp_mrb_fillBackgroundStars：true 没有选中的星星为实心，false：则为空心-->
+            <cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar
+                android:id="@+id/material_rating_bar"
+                style="@style/ratingBarIsIndicator"
+                android:layout_width="86dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="30dp"
+                app:cp_mrb_fillBackgroundStars="true"
+                app:cp_mrb_progressTint="#FFFD5858"
+                app:cp_mrb_secondaryProgressTint="#FFFD5858" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="" />
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="获取数据" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3、拖拽选择金额范围" />
+
+            <TextView
+                android:id="@+id/tv_right_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:text="14-38万"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <cn.lee.cplibrary.widget.rangeseekbar.RangeSeekBar
+                android:id="@+id/rangeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                app:cp_rsb_indicator_height="17dp"
+                app:cp_rsb_indicator_width="20dp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="5、是否开启应用通知:" />
+
+            <ImageButton
+                android:id="@+id/iv"
+                android:layout_width="55dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/p_notice_off"
+                />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6、拨打电话：18551815425" />
+
+    </LinearLayout>
+</cn.lee.cplibrary.widget.scrollview.NEScrollView>

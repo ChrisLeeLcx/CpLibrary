@@ -145,6 +145,11 @@ public class GetVerCodeActivity extends BaseActivity implements PermissionProxy,
     }
 
     @Override
+    public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
+
+    }
+
+    @Override
     public void rationale(Object source, int requestCode) {
 
     }

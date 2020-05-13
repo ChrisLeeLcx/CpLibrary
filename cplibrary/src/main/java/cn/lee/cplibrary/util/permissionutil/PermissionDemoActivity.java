@@ -13,8 +13,8 @@ import cn.lee.cplibrary.util.LogUtil;
 
 
 /**
- * function:PermissionUtil的使用方法
- * Created by ChrisLee on 2018/5/22.
+ * function:PermissionUtil的使用方法 RECORD_AUDIO
+ * Created by ChrisLee on 2018/5/22.  Manifest.permission.CALL_PHONE
  */
 
 public class PermissionDemoActivity extends AppCompatActivity implements PermissionProxy {
@@ -23,7 +23,7 @@ public class PermissionDemoActivity extends AppCompatActivity implements Permiss
 
     /*定位权限数组*/
     private String[] permissionArray = new String[]{
-            Manifest.permission.RECORD_AUDIO
+            Manifest.permission.CALL_PHONE
     };
 
     @Override
@@ -32,10 +32,10 @@ public class PermissionDemoActivity extends AppCompatActivity implements Permiss
         setContentView(R.layout.cp_layout_empty);
         permissionUtil = new PermissionUtil(this);
         //方式1
-        permissionUtil.requestPermissions(this, 1, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
+//        permissionUtil.requestPermissions(this, 1, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
         //方式2
-        if (!permissionUtil.shouldShowRequestPermissionRationale(this, 2, Manifest.permission.RECORD_AUDIO)) {
-            permissionUtil.requestPermissions(this, 2, permissionArray);
+        if (!permissionUtil.shouldShowRequestPermissionRationale(this, 2, Manifest.permission.CALL_PHONE)) {
+            permissionUtil.requestPermissions(this, 2, Manifest.permission.CALL_PHONE);
         }
         LogUtil.i("", this, "Person_Demo");
     }
@@ -59,6 +59,11 @@ public class PermissionDemoActivity extends AppCompatActivity implements Permiss
             default:
                 break;
         }
+    }
+
+    @Override
+    public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
+
     }
 
     @Override
