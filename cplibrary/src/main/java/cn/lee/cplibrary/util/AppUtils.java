@@ -1,6 +1,7 @@
 package cn.lee.cplibrary.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -9,19 +10,25 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.List;
 
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 
@@ -81,14 +88,17 @@ public class AppUtils {
         return mTm;
     }
 
+    @SuppressLint("MissingPermission")
     public static String getImsi(Context context) {
         return getTelephonyManager(context).getSubscriberId();
     }
 
+    @SuppressLint("MissingPermission")
     public static String getImei(Context context) {
         return getTelephonyManager(context).getDeviceId();
     }
 
+    @SuppressLint("MissingPermission")
     public static String getImsiPhone(Context context) {
         return getTelephonyManager(context).getLine1Number();
     }
@@ -217,6 +227,26 @@ public class AppUtils {
     }
 
     /**
+     * 启动应用的设置
+     *
+     * @since 2.5.0
+     */
+    public static void jumpAppSettingInfo(Context context) {
+        Intent intent = new Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        context.startActivity(intent);
+    }
+    /**
+     * 打开Gps设置界面
+     */
+    public static void openGpsSettings(Context context) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
      * 打电话
      *
      * @param activity
@@ -271,6 +301,73 @@ public class AppUtils {
         activity.startActivity(intent);
     }
 
+    /**
+     * 通过 object获取Activity
+     *
+     * @param object
+     */
+    public static Activity getActivity(Object object) {
+        if (object instanceof Fragment) {
+            return ((Fragment) object).getActivity();
+        } else if (object instanceof Activity) {
+            return (Activity) object;
+        } else {
+            throw new IllegalArgumentException("not supported!" + object.getClass().getName() + "is not a activity or fragment");
+        }
+    }
+
+    /**
+     * 判断定位服务是否开启
+     */
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+        } else {
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+    }
+    /**
+     * 判断定位服务是否开启
+     */
+    public static boolean checkLocationEnabled(Context context) {
+        // 考虑到大部分App可能还未target到API 28，这里使用反射调用API 28开始提供的检查定位开关的方法
+        if (Build.VERSION.SDK_INT >= 28) {//>=28
+            boolean isLocationEnabled = true;
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            try {
+                Method isLocationEnabledMethod = locationManager.getClass().getMethod("isLocationEnabled", new Class[]{});
+                isLocationEnabled = (boolean) isLocationEnabledMethod.invoke(locationManager);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return isLocationEnabled;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//>=19~28
+            int locationMode = Settings.Secure.getInt(context.getContentResolver(),
+                    Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_HIGH_ACCURACY);
+            boolean isLocationEnabled = locationMode != Settings.Secure.LOCATION_MODE_OFF;
+            return isLocationEnabled;
+        } else {// <9
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            List<String> allProviders = locationManager.getAllProviders();
+            if (allProviders == null || allProviders.isEmpty()) {
+                return false;
+            }
+            String usableProviders = Settings.Secure.getString(context.getContentResolver(),
+                    Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            boolean isLocationEnabled = !usableProviders.isEmpty();
+            return isLocationEnabled;
+        }
+
+    }
 
     //---------------覆盖安装相应方法--------------------
     private static int old_verCode;//之前保存的VersionCode,
@@ -282,7 +379,6 @@ public class AppUtils {
      * 一般若方法返回true，则要在相应的进入页面的地方调用保存当前vercode到sp中
      * 2、覆盖安装功能一般在过度页面检测
      * 3、只能检测与当前版本数不同的覆盖安装
-     *
      **/
     public static boolean isCoverInstall(Context c) {
         old_verCode = SharedPreferencesUtils.getShareInteger(c, SP_NAME, KEY);
@@ -300,6 +396,6 @@ public class AppUtils {
      * 将当前版本数保存到sp里面
      **/
     public static void saveVerCodeToSp(Context c) {
-        SharedPreferencesUtils .putShareValue(c, SP_NAME, KEY, getVersionCode(c));
+        SharedPreferencesUtils.putShareValue(c, SP_NAME, KEY, getVersionCode(c));
     }
 }

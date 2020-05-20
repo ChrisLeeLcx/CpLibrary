@@ -11,6 +11,10 @@ android {
         versionName "1.0.5.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+        ndk {//设置高德需要的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
+//          abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
+        }
     }
 
     signingConfigs {
@@ -30,7 +34,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true//表示去掉没有引用的资源，可以减少应用的体积，但这个只有在混淆开启后才有效。
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,4 +58,5 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     compile 'cc.solart:turbo-recyclerview-helper:1.0.3-beta'
     implementation files('libs/eventbus-3.0.0.jar')
+    compile 'com.amap.api:location:latest.integration'//高德定位
 }

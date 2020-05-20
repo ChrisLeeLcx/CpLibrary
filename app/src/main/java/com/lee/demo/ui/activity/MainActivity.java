@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.lee.demo.R;
 import com.lee.demo.base.BaseWebViewActivity;
+import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("考试答题", ExamActivity.class));
         totalList.add(new ActivityBean("各种截图", ShotActivity.class));
         totalList.add(new ActivityBean("短信监听", GetVerCodeActivity.class));
+        totalList.add(new ActivityBean("高德定位", GDLocationActivity.class));
     }
 
     private void initRecyclerView() {
@@ -138,5 +140,12 @@ public class MainActivity extends AppCompatActivity {
         public void setCls(Class<?> cls) {
             this.cls = cls;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GaoDeLBSUtil.getInstance(this).stopLocation();
+        GaoDeLBSUtil.getInstance(this).destroyLocation();
     }
 }
