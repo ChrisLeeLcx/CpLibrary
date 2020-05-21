@@ -58,7 +58,7 @@ public class GDLocationActivity extends BaseActivity implements View.OnClickList
     protected void initData() {
         lbsUtil = GaoDeLBSUtil.getInstance(getSelfActivity());
         lbsUtil. setBaseApp(baseApplication).setShowErrorDialog(true);
-//        lbsUtil.requestPer(this, false);//requestPer与startLocation 不能同时调用，否则权限检测结果会出错,此处需要注释掉
+        lbsUtil.requestPer(this, false);//requestPer与startLocation 不能同时调用，否则权限检测结果会出错,此处需要注释掉
         startLocation(false);
     }
 
@@ -96,7 +96,7 @@ public class GDLocationActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onLocationChanged(AMapLocation location) {
                 locBean = baseApplication.getLocationBean();
-                tv_info.setText(locBean.getStreet() + locBean.getStreetNum());
+                tv_info.setText("定位数据展示\n"+locBean.getAddress());
             }
 
             @Override

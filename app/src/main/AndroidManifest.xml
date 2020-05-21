@@ -35,7 +35,7 @@
         <!-- 高德key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="a7625ab291fee51d06d5a11a382d48e8" />
+            android:value="e451a25e1a2d0e6a8c5892ba493c9c52" />
         <!-- 定位需要的服务:必须加上，否则后台定位报错errorCode为 10 -->
         <service android:name="com.amap.api.location.APSService" />
         <!-- ***********************高德地图配置结束 *********************** -->
