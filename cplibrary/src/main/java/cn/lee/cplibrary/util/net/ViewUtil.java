@@ -2,6 +2,7 @@ package cn.lee.cplibrary.util.net;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -31,6 +33,7 @@ import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.ScreenUtil;
 
 /**
@@ -314,7 +317,30 @@ public class ViewUtil {
      */
     public static void setTextLineUnderline(TextView textView) {
         textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-
     }
+
+    /**
+     * 给TextView设置下划线
+     */
+    public static void closeKeyboardOnTouch(final Activity activity, View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        AppUtils.closeKeyboard(activity);
+                        break;
+                    case MotionEvent.ACTION_UP:
+//                        AppUtils.closeKeyboard(activity);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+//                        AppUtils.closeKeyboard(activity);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
 
 }

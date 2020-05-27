@@ -279,10 +279,10 @@ public class GaoDeLBSUtil {
             return;
         }
         if (locationClient != null) {
-            if (isLoading) {
-                CpComDialog.showProgressDialog(getContext(), "定位中...");
-            }
             if (!isNeedLocServiceOn() || (isNeedLocServiceOn() && AppUtils.checkLocationEnabled(getContext()))) {
+                if (isLoading) {
+                    CpComDialog.showProgressDialog(getContext(), "定位中...");
+                }
                 locationClient.setLocationOption(locationOption);  // 设置定位参数
                 locationClient.startLocation();   // 启动定位
             } else {

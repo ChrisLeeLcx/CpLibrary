@@ -3,6 +3,7 @@ package com.lee.demo.ui.activity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import cn.lee.cplibrary.util.AppUtils;
 import cn.lee.cplibrary.util.EditTextUtil;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.net.ViewUtil;
 import cn.lee.cplibrary.widget.edittext.DecimalInputFilter;
 import cn.lee.cplibrary.widget.edittext.IdcardValidator;
 import cn.lee.cplibrary.widget.edittext.PayPsdInputView;
@@ -113,7 +115,7 @@ public class EditTextActivity extends SwipeBackActivity {
             }
         });
 
-
+        ViewUtil.closeKeyboardOnTouch(getSelfActivity(),findViewById(R.id.scrollView));
     }
 
     @Override
