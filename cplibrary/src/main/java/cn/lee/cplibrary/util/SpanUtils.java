@@ -1321,7 +1321,7 @@ public final class SpanUtils {
      * @param tvAboutSpan
      * @param activity
      */
-    private void setTextDemo(TextView tvAboutSpan, Activity activity) {
+    private    void setTextDemo(TextView tvAboutSpan, Activity activity) {
         tvAboutSpan.setText(new SpanUtils(activity)
                 .appendLine("SpanUtils")
                 .setBackgroundColor(Color.LTGRAY)

@@ -119,7 +119,7 @@ public class GaoDeLBSUtil {
 
     /**
      * 外部第6步
-     * 销毁定位  ---  MainActivity的onDestroy方法中调用 （4）
+     * 销毁定位  ---  MainActivity的onDestroy/按退出鍵方法中调用 （4）
      * 应该在整个项目退出的时候再调用
      *
      * @author hongming.wang

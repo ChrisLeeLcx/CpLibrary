@@ -4,12 +4,14 @@ package com.lee.demo.base;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.lee.demo.constant.Config;
+import com.lee.demo.util.gaode.loc.ForegroundCallbacks;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
 import com.lee.demo.util.gaode.loc.LocationBean;
 
@@ -36,6 +38,29 @@ public class BaseApplication extends Application {
         LogUtil.setIsDebug(Config.isDebug);
         setDayNightMode();
         GaoDeLBSUtil.getInstance(context);
+
+        ForegroundCallbacks.init(this);
+        ForegroundCallbacks.get().addListener(new ForegroundCallbacks.Listener() {
+            @Override
+            public void onBecameForeground() {
+                LogUtil.i("","当前程序切换到前台");
+//                if(CacheUtils.getBoolean(getApplicationContext(), MyConst.GESTRUE_IS_LIVE)){
+//                    L.d("已经开启手势锁");
+//                    Intent intent = new Intent(getApplicationContext(), CheckGesPwdActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+//                }else{
+//
+//                }
+
+            }
+
+            @Override
+            public void onBecameBackground() {
+                LogUtil.i("","当前程序切换到后台");
+
+            }
+        });
     }
 
     public static BaseApplication getContext() {

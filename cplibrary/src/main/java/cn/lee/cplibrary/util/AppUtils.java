@@ -376,7 +376,7 @@ public class AppUtils {
 
     /**
      * 1、是否是覆盖安装，调用后配合saveVerCodeToSp使用才起作用
-     * 一般若方法返回true，则要在相应的进入页面的地方调用保存当前vercode到sp中
+     * 一般若方法返回true，则要在相应的进入页面的地方调用saveVerCodeToSp保存当前vercode到sp中
      * 2、覆盖安装功能一般在过度页面检测
      * 3、只能检测与当前版本数不同的覆盖安装
      **/

@@ -148,7 +148,7 @@ public class NotificationsUtils {
 
 
     /**
-     * app从安装到卸载的一声中是否检测过通知
+     * app从安装到卸载的一生中是否检测过通知
      */
     public static boolean isNoticeChecked(Context c) {
         boolean isFirst = SharedPreferencesUtils.getShareBoolean(
