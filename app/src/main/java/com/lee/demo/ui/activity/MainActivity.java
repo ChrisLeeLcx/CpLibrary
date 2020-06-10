@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("各种状态下布局", StateLayoutActivity.class));
         totalList.add(new ActivityBean("各种进度条", ProgressBarActivity.class));
         totalList.add(new ActivityBean("仿瓜子二手车品牌选择", BrandActivity.class));
+        totalList.add(new ActivityBean("网格字母索引（不带悬浮效果）", GridSideBarActivity.class));
         totalList.add(new ActivityBean("各种EditText", EditTextActivity.class));
         totalList.add(new ActivityBean("水波纹效果", ObjectRippleActivity.class));
         totalList.add(new ActivityBean("网页加载", BaseWebViewActivity.class));

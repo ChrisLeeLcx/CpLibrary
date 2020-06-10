@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!--内容列表-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/tv_dialog"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="A"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+
+    <RelativeLayout
+        android:layout_width="35dp"
+        android:layout_height="500dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="4dp">
+
+        <cn.lee.cplibrary.widget.sidebar.SideBar
+            android:id="@+id/sidebar_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            app:cp_bgColorNormal="@color/transparent"
+            app:cp_bgColorPress="@color/font_7D"
+            app:cp_padding="2dp"
+            app:cp_txtBgColorChoose="#30C45B"
+            app:cp_txtColorChoose="@color/white"
+            app:cp_txtColorNormal="#2D2D2D"
+            app:cp_txtSize="10sp" />
+    </RelativeLayout>
+</RelativeLayout>
