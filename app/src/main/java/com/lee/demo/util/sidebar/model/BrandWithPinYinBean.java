@@ -1,4 +1,4 @@
-package com.lee.demo.model;
+package com.lee.demo.util.sidebar.model;
 
 /**
  * @author: ChrisLee
@@ -6,8 +6,9 @@ package com.lee.demo.model;
  */
 
 
-import com.chad.library.adapter.base.entity.SectionEntity;
+import java.util.List;
 
+import cn.lee.cplibrary.widget.sidebar.BaseSideBarBean;
 
 /**
  * 带有拼音的bean
@@ -15,21 +16,42 @@ import com.chad.library.adapter.base.entity.SectionEntity;
  * @time: 2018/11/23
  */
 
-public class GirdSideBarWithPinYinBean extends SectionEntity<GirdSideBarWithPinYinBean.BrandBean> {
-    public String pys;//name的拼音首字母的大写
-    public GirdSideBarWithPinYinBean(boolean isHeader, String header) {//header 拼音索引
-        super(isHeader, header);
-    }
-    public GirdSideBarWithPinYinBean(GirdSideBarWithPinYinBean.BrandBean t) {
-        super(t);
+public class BrandWithPinYinBean extends BaseSideBarBean {
+
+    /**
+     * 头部列表
+     */
+    private List<BrandBean> headList;
+    /**
+     * 品牌的Bean值
+     */
+    private  BrandBean bean;
+
+    public List<BrandBean> getHeadList() {
+        return headList;
     }
 
-    public void setPys(String pys) {
-        this.pys = pys;
+    public void setHeadList(List<BrandBean> headList) {
+        this.headList = headList;
     }
 
-    public String getPys() {
-        return pys;
+    public BrandBean getBean() {
+        return bean;
+    }
+
+    public void setBean(BrandBean bean) {
+        this.bean = bean;
+    }
+
+    @Override
+    public String toString() {
+        return "BrandWithPinYinBean{" +
+                "headList=" + headList +
+                ", name='" + name + '\'' +
+                ", pys='" + pys + '\'' +
+                ", bean=" + bean +
+                ", type=" + type +
+                '}';
     }
 
     public static class BrandBean {
@@ -37,16 +59,10 @@ public class GirdSideBarWithPinYinBean extends SectionEntity<GirdSideBarWithPinY
         private String iconUrl;
         private String id;
 
-        public BrandBean( ) {
-        }
         public BrandBean(String id, String carName, String iconUrl) {
             this.id = id;
             this.carName = carName;
             this.iconUrl = iconUrl;
-        }
-
-        public void setId(String id) {
-            this.id = id;
         }
 
         public String getId() {
@@ -77,6 +93,5 @@ public class GirdSideBarWithPinYinBean extends SectionEntity<GirdSideBarWithPinY
                     '}';
         }
     }
-
 
 }

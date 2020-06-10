@@ -1,4 +1,4 @@
-package com.lee.demo.ui.adapter;
+package com.lee.demo.util.sidebar.dapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lee.demo.R;
-import com.lee.demo.model.BrandWithPinYinBean;
+import com.lee.demo.util.sidebar.model.BrandWithPinYinBean;
 import com.lee.demo.ui.activity.BrandActivity;
 import com.lee.demo.util.BitmapUtils;
 

@@ -11,20 +11,19 @@ import android.widget.TextView;
 import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 import com.lee.demo.base.SwipeBackActivity;
-import com.lee.demo.model.GirdSideBarWithPinYinBean;
-import com.lee.demo.ui.adapter.GridSideBarAdapter;
-import com.lee.demo.ui.adapter.GridSideBarHotBrandAdapter;
+import com.lee.demo.util.sidebar.GridSideBarLetterComparator;
+import com.lee.demo.util.sidebar.model.GirdSideBarWithPinYinBean;
+import com.lee.demo.util.sidebar.dapter.GridSideBarAdapter;
+import com.lee.demo.util.sidebar.dapter.GridSideBarHotBrandAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
 import cn.lee.cplibrary.util.DrawableUtil;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.widget.recycler.ScrollEnabledGridLayoutManager;
-import cn.lee.cplibrary.widget.sidebar.BaseSideBarBean;
 import cn.lee.cplibrary.widget.sidebar.ChineseToPinyinHelper;
 import cn.lee.cplibrary.widget.sidebar.SideBar;
 
@@ -202,7 +201,7 @@ public class GridSideBarActivity extends SwipeBackActivity {
             list.add(0, bean);
         }
 
-        Collections.sort(list, new LetterComparator());
+        Collections.sort(list, new GridSideBarLetterComparator());
         //设置不限品牌
         GirdSideBarWithPinYinBean allNameBean = new GirdSideBarWithPinYinBean(new GirdSideBarWithPinYinBean.BrandBean("", "不限品牌", null));
         allNameBean.setPys("*");
@@ -219,19 +218,5 @@ public class GridSideBarActivity extends SwipeBackActivity {
         toast(bean.getCarName());
     }
 
-    public class LetterComparator implements Comparator<GirdSideBarWithPinYinBean> {
 
-        @Override
-        public int compare(GirdSideBarWithPinYinBean l, GirdSideBarWithPinYinBean r) {
-            if (l == null || r == null) {
-                return 0;
-            }
-            String lhsSortLetters = l.pys.substring(0, 1).toUpperCase();
-            String rhsSortLetters = r.pys.substring(0, 1).toUpperCase();
-            if (lhsSortLetters == null || rhsSortLetters == null) {
-                return 0;
-            }
-            return lhsSortLetters.compareTo(rhsSortLetters);
-        }
-    }
 }

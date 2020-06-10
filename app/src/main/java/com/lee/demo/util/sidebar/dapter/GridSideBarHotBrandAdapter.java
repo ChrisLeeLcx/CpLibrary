@@ -1,4 +1,4 @@
-package com.lee.demo.ui.adapter;
+package com.lee.demo.util.sidebar.dapter;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,9 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lee.demo.R;
-import com.lee.demo.model.BrandWithPinYinBean;
-import com.lee.demo.model.GirdSideBarWithPinYinBean;
-import com.lee.demo.ui.activity.BrandActivity;
+import com.lee.demo.util.sidebar.model.GirdSideBarWithPinYinBean;
 import com.lee.demo.ui.activity.GridSideBarActivity;
 import com.lee.demo.util.BitmapUtils;
 

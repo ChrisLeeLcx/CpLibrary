@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 import com.lee.demo.base.SwipeBackActivity;
-import com.lee.demo.model.BrandWithPinYinBean;
-import com.lee.demo.ui.adapter.BrandAdapter;
+import com.lee.demo.util.sidebar.model.BrandWithPinYinBean;
+import com.lee.demo.util.sidebar.dapter.BrandAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

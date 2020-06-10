@@ -179,6 +179,14 @@
     public *** get*();
     public *** is*();
 }
+-keep class com.lee.demo.util.sidebar.model.** {
+    *;
+}
+-keep class com.lee.demo.util.sidebar.model.** {
+    public void set*(***);
+    public *** get*();
+    public *** is*();
+}
 #-----------处理第三方依赖库---------
 # Glide框架混淆设置
 -keep public class * implements com.bumptech.glide.module.GlideModule
