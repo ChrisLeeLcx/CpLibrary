@@ -192,7 +192,7 @@ public class GridSideBarActivity extends SwipeBackActivity {
 
         }
 
-        //设置字母列表--设置头部
+        //设置字母列表--设置组头部
         for (String letter : letterSets) {
             GirdSideBarWithPinYinBean bean = new GirdSideBarWithPinYinBean(true, letter);
             bean.setPys(letter);
