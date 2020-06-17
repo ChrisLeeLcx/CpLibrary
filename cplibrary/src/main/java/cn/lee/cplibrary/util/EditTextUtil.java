@@ -32,7 +32,17 @@ public class EditTextUtil {
             }
         }
     }
-
+    /**
+     * EditText 默认是文字键盘，可以相互切换输入字母，中文等。就是输入还是没有限制的。
+     */
+    public static void setEtCharFirst(EditText... v) {
+        EditText[] et = v;
+        for (EditText view : et) {
+            if (view != null) {
+                view.setRawInputType(Configuration.KEYBOARD_NOKEYS);
+            }
+        }
+    }
     /**
      * EditText失去焦点
      * 父布局或其他View添加android:focusableInTouchMode="true" 才会起作用
