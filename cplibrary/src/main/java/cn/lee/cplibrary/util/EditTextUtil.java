@@ -83,7 +83,32 @@ public class EditTextUtil {
             }
         }
     }
-
+    /**
+     * 设置EditText是否可以编辑
+     *
+     * @param isEdit：true：可以编辑复制粘贴，否则不可以编辑不可以复制粘贴
+     * @param et
+     */
+    public static void setEditTextNoFocusEditState(boolean isEdit, EditText... et) {
+        EditText[] eTexts = et;
+        if (isEdit) {
+            for (EditText editText : eTexts) {
+                if (editText != null) {
+                    editText.setFocusableInTouchMode(true);
+                    editText.setFocusable(true);
+                    setCopyAndPasteAble(editText, true);
+                }
+            }
+        } else {
+            for (EditText editText : eTexts) {
+                if (editText != null) {
+                    editText.setFocusable(false);
+                    editText.setFocusableInTouchMode(false);
+                    setCopyAndPasteAble(editText, false);
+                }
+            }
+        }
+    }
     /**
      * 设置EditText是否可以编辑
      *
