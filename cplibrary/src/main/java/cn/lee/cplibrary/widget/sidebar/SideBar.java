@@ -91,6 +91,9 @@ public class SideBar extends View {
         paint.setTypeface(Typeface.DEFAULT_BOLD);
         paint.setTextSize(textSize);
         // 获取每个文字所占据空间的高度
+        if(letterList==null||letterList.size()<=0){
+            return;
+        }
         int singleTextHeight = viewHeight / letterList.size();
         for (int i = 0; i < letterList.size(); i++) {
             if (choosedPosition == i) {
@@ -112,7 +115,6 @@ public class SideBar extends View {
             //ChrisLee:文字垂直居中
             canvas.drawText(letterList.get(i), (viewWidth - textWidth) / 2,
                     singleTextHeight * (i + 1) - singleTextHeight / 2 + textSize / 2, paint);
-
         }
     }
 
@@ -123,8 +125,8 @@ public class SideBar extends View {
         // 手指点击处的y轴的坐标
         float y = event.getY();
         // 手指点击处所对应的首字母的索引下标
-        int position = (int) (y / (getHeight() / letterList.size()));
-
+//        int position = (int) (y / (getHeight() / letterList.size()));
+        int position = (letterList==null||letterList.size()==0) ? -1 : (int) (y / (getHeight() / letterList.size()));
         switch (event.getAction()) {
             // 手指抬起
             case MotionEvent.ACTION_UP:
