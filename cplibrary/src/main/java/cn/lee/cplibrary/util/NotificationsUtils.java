@@ -73,19 +73,26 @@ public class NotificationsUtils {
      */
     public static void toNotificationSetting(Context context) {
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {//LEE 20
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//以上8.0
+            Intent intent3 = new Intent();
+            intent3.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            intent3.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+            context.startActivity(intent3);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {//LEE 20 5.0
             Intent intent = new Intent();
             intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
             intent.putExtra("app_package", context.getApplicationContext().getPackageName());
             intent.putExtra("app_uid", context.getApplicationInfo().uid);
             context.startActivity(intent);
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {//4.4
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.setData(Uri.parse("package:" + context.getApplicationContext().getPackageName()));
             context.startActivity(intent);
         }
+
+
     }
 
 
