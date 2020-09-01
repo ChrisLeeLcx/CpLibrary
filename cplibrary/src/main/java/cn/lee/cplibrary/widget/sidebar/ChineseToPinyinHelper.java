@@ -1,5 +1,7 @@
 package cn.lee.cplibrary.widget.sidebar;
 
+import cn.lee.cplibrary.util.ObjectUtils;
+
 /**
  * Java汉字转换为拼音
  */
@@ -158,6 +160,9 @@ public class ChineseToPinyinHelper {
 
 	/** * 词组解析 * * @param chs * @return */
 	public String getPinyin(String chs) {
+		if(ObjectUtils.isEmpty(chs)){
+			return "-1";
+		}
 		String key, value;
 		buffer = new StringBuilder();
 		for (int i = 0; i < chs.length(); i++) {
