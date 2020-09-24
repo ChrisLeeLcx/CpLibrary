@@ -35,7 +35,7 @@ public class DeviceIdUtil {
 
     public static String getDeviceInfoSimple(Context context) {
         return "手机品牌：" + getDeviceBrand()
-                + "\n" + "手机型号：" + getSystemModel().replace(" ", "")
+                + "\n" + "手机型号：" + getSystemModel()
                 + "\n" + "唯一标识UniqueID：" + getDeviceUniqueID(context)
                 + "\n" + "ANDROID_ID：" + getANDROID_ID(context)
                 + "\n" + "SerialNumber：" + getSerialNumber()
