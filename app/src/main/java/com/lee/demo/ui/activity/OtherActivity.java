@@ -17,6 +17,7 @@ import com.lee.demo.base.SwipeBackActivity;
 
 import java.text.DecimalFormat;
 
+import cn.lee.cplibrary.util.DeviceIdUtil;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.NotificationsUtils;
 import cn.lee.cplibrary.util.PhoneCallUtil;
@@ -30,7 +31,7 @@ import cn.lee.cplibrary.widget.ratingbar.MaterialRatingBar;
  * 星星评价控件、RangSeekBar可拖动进度条
  */
 public class OtherActivity extends SwipeBackActivity {
-    private TextView tv_content, tvRightTxt;
+    private TextView tv_content, tvRightTxt, tvDeviceUniqueId;
     private Button btn, btn_switch, btn_call;
     private ImageView iv;
     private MaterialRatingBar rating_bar, material_rating_bar;
@@ -68,6 +69,11 @@ public class OtherActivity extends SwipeBackActivity {
         initSeekBar();
         initNotice();
         initCall();
+        //获取设备唯一标识
+
+        String deviceUniqueId =DeviceIdUtil.getDeviceInfoSimple(getSelfActivity());
+        tvDeviceUniqueId.setText("6、"+deviceUniqueId);
+        LogUtil.i("",deviceUniqueId);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -246,6 +252,7 @@ public class OtherActivity extends SwipeBackActivity {
         btn = (Button) findViewById(R.id.btn);
         tvRightTxt = (TextView) findViewById(R.id.tv_right_txt);
         seekBar = (RangeSeekBar) findViewById(R.id.rangeSeekBar);
+        tvDeviceUniqueId = (TextView) findViewById(R.id.tv_device_unique_id);
     }
 
 
