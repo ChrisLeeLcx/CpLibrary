@@ -15,7 +15,7 @@ import java.util.UUID;
  *
  * 一、注意事项：getDeviceUniqueID获取的设备唯一标识有以下问题
  * （1）唯一标识DeviceUniqueID由：ANDROID_ID + Serial + 硬件uuid（即UniquePsuedoID）组合后ND5编码得到
- * （2）若3个硬件标识数据均未能获得，用 返回手机型号+"-1" 提示用户
+ * （2）若3个硬件标识数据均未能获得，用 返回手机型号+"-111" 提示用户，获取不了情况是极少数极少数
  * （3）若要保证DeviceUniqueID唯一则需要：手机不被root、不恢复出厂设置
  * <p>
  * 二、以下参数不适用组合唯一标识的原因
@@ -58,7 +58,7 @@ public class DeviceIdUtil {
             return getMD5Str(onlyId);
         }
         //如果以上硬件标识数据均无法获得，返回字符串：手机型号+"-1"，来提示后台
-        return getSystemModel().replace(" ", "")+"-1";
+        return getSystemModel().replace(" ", "")+"-111";
     }
 
     public static String getANDROID_ID(Context context) {
