@@ -67,13 +67,12 @@ public class NotificationsUtils {
     }
 
     /**
-     * 跳转设置页面 去设置通知权限
-     *
-     * @param context
+     * ---废弃---
+     * 跳转设置页面 去设置通知权限 经测试AGM H1 8.1不能跳转
      */
-    public static void toNotificationSetting(Context context) {
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//以上8.0
+    public static void toNotificationSetting1(Context context) {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {//21
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//以上8.0 26
             Intent intent3 = new Intent();
             intent3.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
             intent3.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
@@ -94,7 +93,42 @@ public class NotificationsUtils {
 
 
     }
+    /**
+     * 跳转设置页面 去设置通知权限
+     *
+     * @param context
+     */
+    public static void toNotificationSetting(Context context) {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {//21
+        ApplicationInfo appInfo = context.getApplicationInfo();
+        String pkg = context.getApplicationContext().getPackageName();
+        int uid = appInfo.uid;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//以上8.0 26
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            //这种方案适用于 API 26, 即8.0（含8.0）以上可以用
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, pkg);
+            intent.putExtra(Settings.EXTRA_CHANNEL_ID, uid);
+            //这种方案适用于 API21——25，即 5.0——7.1 之间的版本可以使用
+            intent.putExtra("app_package", pkg);
+            intent.putExtra("app_uid", uid);
+            context.startActivity(intent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {//LEE 20 5.0
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", context.getApplicationContext().getPackageName());
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);
+            context.startActivity(intent);
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {//4.4
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + context.getApplicationContext().getPackageName()));
+            context.startActivity(intent);
+        }
 
+
+    }
 
     /**
      * 检测是开启了通知，若未开启，则显示弹框开启
