@@ -386,7 +386,7 @@ public class AppUtils {
         boolean isCover = true;
         if (old_verCode == 0) {//首次安装，或者卸载后安装
             isCover = false;
-        } else if (curVerCode == old_verCode) {//当前版本：（1）安装后版本数一致（2）未安装
+        } else if (curVerCode == old_verCode) {//2种相等情况当前版本：（1）安装后版本数一致（2）未安装
             isCover = false;
         }
         return isCover;
