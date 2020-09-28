@@ -49,6 +49,9 @@ public class OtherActivity1 extends SwipeBackActivity {
         String deviceUniqueId = DeviceIdUtil.getDeviceInfoSimple(getSelfActivity());
         tvDeviceUniqueId.setText("6、" + deviceUniqueId);
         LogUtil.i("", deviceUniqueId);
+        //获取SIM信息（不需要权限的）
+        tvSim.setText("7、" + SIMUtil.getInstance(getSelfActivity()).getSIMInfoSimple());
+        //获取SIM信息（需要权限的）
         simPerUtil = new SIMPerUtil(getSelfActivity(), new SIMPerUtil.GetSIMInfoCallBack() {
             @Override
             public void onGet(SIMPerUtil.SIMInfo info) {
@@ -67,8 +70,6 @@ public class OtherActivity1 extends SwipeBackActivity {
 
             }
         });
-
-        tvSim.setText("7、" + SIMUtil.getInstance(getSelfActivity()).getSIMInfoSimple());
         tvSim1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +79,6 @@ public class OtherActivity1 extends SwipeBackActivity {
                 }
             }
         });
-
 
     }
 
