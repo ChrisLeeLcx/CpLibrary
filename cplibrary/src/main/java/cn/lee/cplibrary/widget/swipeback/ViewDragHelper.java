@@ -534,7 +534,7 @@ public class ViewDragHelper {
      * Capture a specific child view for dragging within the parent. The
      * callback will be notified but
      * {@link me.imid.swipebacklayout.lib.ViewDragHelper.Callback#tryCaptureView(View, int)}
-     * will not be asked permission to capture this view.
+     * will not be asked permissions to capture this view.
      *
      * @param childView       Child view to capture
      * @param activePointerId ID of the pointer that is dragging the captured

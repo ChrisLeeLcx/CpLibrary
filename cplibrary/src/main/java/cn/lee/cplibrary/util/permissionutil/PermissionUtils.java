@@ -119,7 +119,7 @@ public class PermissionUtils {
         if (grantResults.length < 1) {
             return false;
         }
-        // Verify that each required permission has been granted, otherwise return false.
+        // Verify that each required permissions has been granted, otherwise return false.
         for (int result : grantResults) {
             if (result != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -140,7 +140,7 @@ public class PermissionUtils {
         if (cxt instanceof Activity) {
             Activity activity = (Activity) cxt;
             if (!Settings.System.canWrite(activity)) {
-                Log.i(TAG, "Setting not permission");
+                Log.i(TAG, "Setting not permissions");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                 intent.setData(Uri.parse("package:" + activity.getPackageName()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -150,7 +150,7 @@ public class PermissionUtils {
         } else if (cxt instanceof Fragment) {
             Fragment fragment = (Fragment) cxt;
             if (!Settings.System.canWrite(fragment.getContext())) {
-                Log.i(TAG, "Setting not permission");
+                Log.i(TAG, "Setting not permissions");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                 intent.setData(Uri.parse("package:" + fragment.getContext().getPackageName()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -175,7 +175,7 @@ public class PermissionUtils {
         if (cxt instanceof Activity) {
             Activity activity = (Activity) cxt;
             if (!Settings.canDrawOverlays(activity.getBaseContext())) {
-                Log.i(TAG, "Setting not permission");
+                Log.i(TAG, "Setting not permissions");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + activity.getPackageName()));
                 activity.startActivityForResult(intent, req);
@@ -184,7 +184,7 @@ public class PermissionUtils {
         } else if (cxt instanceof Fragment) {
             Fragment fragment = (Fragment) cxt;
             if (!Settings.canDrawOverlays(fragment.getActivity())) {
-                Log.i(TAG, "Setting not permission");
+                Log.i(TAG, "Setting not permissions");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + fragment.getActivity().getPackageName()));
                 fragment.startActivityForResult(intent, req);

@@ -25,7 +25,7 @@ import cn.lee.cplibrary.util.LogUtil;
  * 3、申请授权
  * 4、处理权限申请回调 在Activity 或Fragment的 onRequestPermissionsResult方法中处理权限申请成功或者失败的结果，
  * 在方法的最后再调用父类处理方法  super.onRequestPermissionsResult（...）
- * 主要涉及到的类：1、Manifest包含安卓中所有的权限的类（permission_group：是Dangerous Permissions 分组权限，permission：是包含Normal Permissions和Dangerous Permissions，是全部的权限）
+ * 主要涉及到的类：1、Manifest包含安卓中所有的权限的类（permission_group：是Dangerous Permissions 分组权限，permissions：是包含Normal Permissions和Dangerous Permissions，是全部的权限）
  * 1、方式shouldShowRequestPermissionRationale，回到最初的解释“应不应该解释下请求这个权限的目的”。
  * 1.都没有请求过这个权限，用户不一定会拒绝你，所以你不用解释，故返回false;
  * 2.请求了但是被拒绝了，此时返回true，意思是你该向用户好好解释下了；
@@ -62,6 +62,15 @@ public class PermissionUtil {
 
     /**
      * 申请权限
+     * 每调取一次此方法，就会立即执行onRequestPermissionsResult，注意此方法同时调取多次，
+     * 会导致后面调用requestPer的对象在onRequestPermissionsResult空值
+     * 例如：在某Activity中先后调用:
+     *  PhoneCallUtil phoneCallUtil = new PhoneCallUtil(...);  //申请了打电话权限
+     *  SIMPerUtil simPerUtil = new SIMPerUtil(...);//申请了读取手机状态权限
+     *  然后在onRequestPermissionsResult中调用simPerUtil的方法会报空指针，因为执行顺序如下：
+     *  初始化对象 phoneCallUtil->requestPermissions(调用对象phoneCallUtil和simPerUtil的某些方法)->初始化对象simPerUtil
+     *  导致：requestPermissions中simPerUtil=null 报空指针
+     *
      */
     public void requestPermissions(Activity activity, int requestCode, String... permissions) {
         _requestPermissions(activity, requestCode, permissions);

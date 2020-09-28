@@ -14,7 +14,7 @@ import cn.lee.cplibrary.util.LogUtil;
 
 /**
  * function:PermissionUtil的使用方法 RECORD_AUDIO
- * Created by ChrisLee on 2018/5/22.  Manifest.permission.CALL_PHONE
+ * Created by ChrisLee on 2018/5/22.  Manifest.permissions.CALL_PHONE
  */
 
 public class PermissionDemoActivity extends AppCompatActivity implements PermissionProxy {
@@ -32,7 +32,7 @@ public class PermissionDemoActivity extends AppCompatActivity implements Permiss
         setContentView(R.layout.cp_layout_empty);
         permissionUtil = new PermissionUtil(this);
         //方式1
-//        permissionUtil.requestPermissions(this, 1, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
+//        permissionUtil.requestPermissions(this, 1, Manifest.permissions.READ_CONTACTS, Manifest.permissions.WRITE_CONTACTS);
         //方式2
         if (!permissionUtil.shouldShowRequestPermissionRationale(this, 2, Manifest.permission.CALL_PHONE)) {
             permissionUtil.requestPermissions(this, 2, Manifest.permission.CALL_PHONE);

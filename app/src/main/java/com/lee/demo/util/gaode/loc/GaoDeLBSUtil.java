@@ -58,7 +58,7 @@ public class GaoDeLBSUtil {
     //是否处理申请结果/是否显示进度条/是否定位成功/用户永久拒绝需要的权限时，是否显示引导对话框，使用时候可自行设置/是否显示定位服务弹窗/是否显示定位错误对话框
     private boolean isHandleResult, isLoading, isLocatedSuccess, isShowGuideDialog = true, isShowLocServiceDialog = true, isShowErrorDialog;
     //如果设置了target > 28，9.0 需要增加这个权限，否则不会弹出"始终允许"这个选择框
-    private static String BACKGROUND_LOCATION_PERMISSION = "android.permission.ACCESS_BACKGROUND_LOCATION";
+    private static String BACKGROUND_LOCATION_PERMISSION = "android.permissions.ACCESS_BACKGROUND_LOCATION";
     protected String[] needPermissions23 = {  // 6.0、23需要进行检测的权限数组
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,

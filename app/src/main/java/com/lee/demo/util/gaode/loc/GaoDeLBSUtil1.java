@@ -346,7 +346,7 @@ public class GaoDeLBSUtil1 {
             locationClient.startLocation();   // 启动定位
         }
     }
-    private static String BACKGROUND_LOCATION_PERMISSION = "android.permission.ACCESS_BACKGROUND_LOCATION";
+    private static String BACKGROUND_LOCATION_PERMISSION = "android.permissions.ACCESS_BACKGROUND_LOCATION";
 
     /**
      * 6.0、23需要进行检测的权限数组

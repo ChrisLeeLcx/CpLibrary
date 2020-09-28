@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initData() {
         totalList.add(new ActivityBean("未知分类", OtherActivity.class));
+        totalList.add(new ActivityBean("未知分类1", OtherActivity1.class));
         totalList.add(new ActivityBean("工具类", UtilActivity.class));
         totalList.add(new ActivityBean("各种选框", DialogActivity.class));
         totalList.add(new ActivityBean("安卓6.0运行时权限", PermissionActivity.class));

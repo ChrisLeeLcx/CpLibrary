@@ -133,12 +133,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="6、拨打电话：18551815425" />
-        <TextView
-            android:id="@+id/tv_device_unique_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="6、设备唯一标识：" />
 
     </LinearLayout>
 </cn.lee.cplibrary.widget.scrollview.NEScrollView>
