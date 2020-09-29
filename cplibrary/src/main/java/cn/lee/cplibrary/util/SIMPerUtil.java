@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -122,7 +123,8 @@ public class SIMPerUtil {
      * unavailable. 当用户没授权时候返回NULL
      */
     private String getSimSerialNumber() {
-        return telMgr.getSimSerialNumber();
+        String simSerialNum = telMgr.getSimSerialNumber();
+        return TextUtils.isEmpty(simSerialNum)?"":simSerialNum;
     }
 
 
