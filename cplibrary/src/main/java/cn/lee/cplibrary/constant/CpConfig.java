@@ -1,11 +1,10 @@
 package cn.lee.cplibrary.constant;
 
 import android.content.Context;
-import android.os.Environment;
 
 import java.io.File;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.FileUtils;
 
 /**

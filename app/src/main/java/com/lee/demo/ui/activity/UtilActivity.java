@@ -1,14 +1,8 @@
 package com.lee.demo.ui.activity;
 
-import android.app.Activity;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lee.demo.R;
@@ -20,10 +14,9 @@ import com.lee.demo.ui.adapter.UtilSectionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ScreenUtil;
-import cn.lee.cplibrary.util.SpanUtils;
 import cn.lee.cplibrary.util.StringUtil;
 import cn.lee.cplibrary.util.URLUtil;
 import cn.lee.cplibrary.util.WifiConnUtils;

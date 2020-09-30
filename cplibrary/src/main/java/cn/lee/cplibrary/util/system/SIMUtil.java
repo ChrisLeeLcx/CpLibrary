@@ -1,8 +1,11 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.util.system;
 
 
+import android.app.Service;
 import android.content.Context;
 import android.telephony.TelephonyManager;
+
+import cn.lee.cplibrary.util.LogUtil;
 
 /**
  * Created by ChrisLee on 2020/9/28.
@@ -199,6 +202,35 @@ public class SIMUtil {
         return info;
     }
 
+    public static String getSimStateInfo(Context context) {
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(Service.TELEPHONY_SERVICE);
+        int state = tm.getSimState();
+        String info;
+        switch (state) {
+            case TelephonyManager.SIM_STATE_UNKNOWN ://0
+                info = "未知状态";
+                break;
+            case TelephonyManager.SIM_STATE_ABSENT://1
+                info = "无SIM卡";
+                break;
+            case TelephonyManager.SIM_STATE_PIN_REQUIRED://2
+                info = "锁定状态，需要用户的PIN码解锁";
+                break;
+            case TelephonyManager.SIM_STATE_PUK_REQUIRED :// 3
+                info = "锁定状态，需要用户的PUK码解锁";
+                break;
+            case TelephonyManager.SIM_STATE_NETWORK_LOCKED ://4
+                info = "锁定状态，需要网络的PIN码解锁";
+                break;
+            case TelephonyManager.SIM_STATE_READY://5
+                info = "SIM良好";
+                break;
+            default:
+                info = "SIM卡被锁定或未知的状态";
+                break;
+        }
+        return info;
+    }
 
     /**
      * ICC卡是否存在

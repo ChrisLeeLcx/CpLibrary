@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,6 +16,7 @@ import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.permissionutil.PerUtils;
 import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.timer.TimeUtils;
 
 /**

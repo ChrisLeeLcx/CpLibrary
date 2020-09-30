@@ -17,12 +17,9 @@ import com.lee.demo.base.SwipeBackActivity;
 
 import java.text.DecimalFormat;
 
-import cn.lee.cplibrary.util.DeviceIdUtil;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.NotificationsUtils;
 import cn.lee.cplibrary.util.PhoneCallUtil;
-import cn.lee.cplibrary.util.SIMPerUtil;
-import cn.lee.cplibrary.util.SIMUtil;
 import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.widget.rangeseekbar.OnRangeChangedListener;
 import cn.lee.cplibrary.widget.rangeseekbar.RangeSeekBar;

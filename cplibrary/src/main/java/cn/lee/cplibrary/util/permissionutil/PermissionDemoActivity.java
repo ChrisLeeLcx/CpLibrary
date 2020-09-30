@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 
 import cn.lee.cplibrary.R;
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
 
 

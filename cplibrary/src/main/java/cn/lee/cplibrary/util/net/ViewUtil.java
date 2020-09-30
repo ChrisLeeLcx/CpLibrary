@@ -2,10 +2,7 @@ package cn.lee.cplibrary.util.net;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -15,16 +12,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -33,7 +26,7 @@ import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.List;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.ScreenUtil;
 
 /**

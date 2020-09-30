@@ -8,10 +8,10 @@ import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 import com.lee.demo.base.SwipeBackActivity;
 
-import cn.lee.cplibrary.util.DeviceIdUtil;
+import cn.lee.cplibrary.util.system.DeviceIdUtil;
 import cn.lee.cplibrary.util.LogUtil;
-import cn.lee.cplibrary.util.SIMPerUtil;
-import cn.lee.cplibrary.util.SIMUtil;
+import cn.lee.cplibrary.util.system.SIMPerUtil;
+import cn.lee.cplibrary.util.system.SIMUtil;
 
 public class OtherActivity1 extends SwipeBackActivity {
 

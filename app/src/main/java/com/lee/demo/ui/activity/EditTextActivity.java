@@ -3,7 +3,6 @@ package com.lee.demo.ui.activity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,7 +11,7 @@ import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
 import com.lee.demo.base.SwipeBackActivity;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.EditTextUtil;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;

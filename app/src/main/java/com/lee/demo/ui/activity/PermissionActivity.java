@@ -9,9 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
-import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;

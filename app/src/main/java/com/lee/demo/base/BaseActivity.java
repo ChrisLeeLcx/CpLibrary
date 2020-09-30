@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.lee.cplibrary.util.ActivityHelper;
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.SystemBarUtils;
 import cn.lee.cplibrary.util.ToastUtil;

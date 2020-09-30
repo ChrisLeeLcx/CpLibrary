@@ -25,7 +25,7 @@ import com.lee.demo.base.BaseApplication;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.SharedPreferencesUtils;
 import cn.lee.cplibrary.util.ToastUtil;

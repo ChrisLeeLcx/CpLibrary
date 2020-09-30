@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.util.system;
 
 
 import android.Manifest;
@@ -12,6 +12,8 @@ import android.text.TextUtils;
 
 import java.util.List;
 
+import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.permissionutil.PerUtils;
 import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
@@ -127,7 +129,17 @@ public class SIMPerUtil {
         return TextUtils.isEmpty(simSerialNum)?"":simSerialNum;
     }
 
-
+    /**
+     * SIM卡的序列号即 ICCID：
+     * 需要权限：READ_PHONE_STATE
+     * Returns the serial number of the SIM, if applicable. Return null if it is
+     * unavailable. 当用户没授权时候返回NULL
+     */
+    public static String getSimSerialNumber(Context context) {
+        TelephonyManager telMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        String simSerialNum = telMgr.getSimSerialNumber();
+        return TextUtils.isEmpty(simSerialNum)?"":simSerialNum;
+    }
     /**
      * 唯一的用户ID：<br/>
      * 例如：IMSI(国际移动用户识别码) for a GSM phone.<br/>

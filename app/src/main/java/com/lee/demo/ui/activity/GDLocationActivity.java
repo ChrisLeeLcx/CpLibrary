@@ -12,7 +12,7 @@ import com.lee.demo.base.BaseActivity;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
 import com.lee.demo.util.gaode.loc.LocationBean;
 
-import cn.lee.cplibrary.util.AppUtils;
+import cn.lee.cplibrary.util.system.AppUtils;
 
 /**
  * 高德定位
