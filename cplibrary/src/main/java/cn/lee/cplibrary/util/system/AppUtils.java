@@ -95,7 +95,16 @@ public class AppUtils {
     public static String getImsi(Context context) {
         return getTelephonyManager(context).getSubscriberId();
     }
-
+    /**
+     * 获取设备唯一串号IMEI号
+     * 仅仅只对Android手机有效，对平板可能无效:
+     * 需要权限
+     * https://blog.csdn.net/pbm863521/article/details/73563084
+     * 针对有通话功能的手机，若双卡则有2个串号，但获取的是第一个
+     * 用 “*#06#”拨号可查看串号
+     * @param context
+     * @return
+     */
     @SuppressLint("MissingPermission")
     public static String getImei(Context context) {
         return getTelephonyManager(context).getDeviceId();
