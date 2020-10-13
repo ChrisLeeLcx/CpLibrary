@@ -28,7 +28,10 @@ import java.util.UUID;
  * 5、UniquePsuedoID(可用于组合)：硬件信息拼装 如果是同一批次出厂的的设备有可能出现生成的内容可能是一样的
  * 6、Android ID(可用于组合)：有时为null。出厂设置，手机被Root会被改变
  * 7、serial(可用于组合) 如：LKX7N18328000931,无需权限,极个别设备获取不到数据；在有些手机上会出现垃圾数据，比如红米手机返回的就是连续的非随机数
+ * 适配Android 10.0 及以上
+ * https://www.jianshu.com/p/e8b6cafa91d5
  * Created by ChrisLee on 2020/9/24.
+ *
  */
 
 public class DeviceIdUtil {
@@ -37,7 +40,7 @@ public class DeviceIdUtil {
         return "手机品牌：" + getDeviceBrand()
                 + "\n" + "手机型号：" + getSystemModel()
                 + "\n" + "唯一标识UniqueID：" + getDeviceUniqueID(context)
-                + "\n" + "ANDROID_ID：" + getANDROID_ID(context)
+                + "\n" + "ANDROID_ID：" + getAndroid_ID(context)
                 + "\n" + "SerialNumber：" + getSerialNumber()
                 + "\n" + "UniquePsuedoID：" + getUniquePsuedoID()
                 + "\n" + "randomUUID：" + UUID.randomUUID().toString().replace("-", "");
@@ -52,7 +55,7 @@ public class DeviceIdUtil {
     public static String getDeviceUniqueID(Context context) {
         //获得硬件uuid（根据硬件相关属性，生成uuid）（无需权限）
         String uuid = getUniquePsuedoID().replace("-", "");
-        String onlyId = getANDROID_ID(context) + getSerialNumber() + uuid;
+        String onlyId = getAndroid_ID(context) + getSerialNumber() + uuid;
         //不空
         if (!TextUtils.isEmpty(onlyId) && onlyId.length() > 0) {
             return getMD5Str(onlyId);
@@ -61,11 +64,11 @@ public class DeviceIdUtil {
         return getSystemModel().replace(" ", "")+"-111";
     }
 
-    public static String getANDROID_ID(Context context) {
+    public static String getAndroid_ID(Context context) {
         String ANDROID_ID = "";
         try {
-            ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
-//            ANDROID_ID= Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);//方式2
+//            ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
+            ANDROID_ID= Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);//方式2
         } catch (Exception e) {
             return "";
         }

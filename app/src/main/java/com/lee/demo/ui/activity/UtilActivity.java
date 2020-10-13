@@ -163,9 +163,9 @@ public class UtilActivity extends BaseActivity {
         mData.add(new SectionUtil(new UtilBean("getVersionCode\n", ""+ AppUtils.getVersionCode(getSelfActivity()))));
         mData.add(new SectionUtil(new UtilBean("getVersionName\n", ""+AppUtils.getVersionName(getSelfActivity()))));
         mData.add(new SectionUtil(new UtilBean("getScale\n获取屏幕密度", ""+AppUtils.getScale(getSelfActivity()))));
-        mData.add(new SectionUtil(new UtilBean("getImsi\n", ""+AppUtils.getImsi(getSelfActivity()))));
-        mData.add(new SectionUtil(new UtilBean("getImei\n", ""+AppUtils.getImei(getSelfActivity()))));
-        mData.add(new SectionUtil(new UtilBean("getImsiPhone\n", ""+AppUtils.getImsiPhone(getSelfActivity()))));
+        mData.add(new SectionUtil(new UtilBean("getImsiIMSI(国际移动用户识别码)\n", ""+AppUtils.getImsi(getSelfActivity()))));
+        mData.add(new SectionUtil(new UtilBean("Imei/DeviceId/设备串号\n", ""+AppUtils.getImei(getSelfActivity()))));
+        mData.add(new SectionUtil(new UtilBean("getImsiPhone/手机号\n", ""+AppUtils.getImsiPhone(getSelfActivity()))));
         mData.add(new SectionUtil(new UtilBean("getPhoneModel\n", ""+AppUtils.getPhoneModel())));
         mData.add(new SectionUtil(new UtilBean("getPhoneBrand\n", ""+AppUtils.getPhoneBrand())));
         mData.add(new SectionUtil(new UtilBean("getSystemVersion\n", ""+AppUtils.getSystemVersion())));

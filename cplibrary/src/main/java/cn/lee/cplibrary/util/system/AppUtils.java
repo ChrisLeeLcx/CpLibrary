@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -95,19 +96,32 @@ public class AppUtils {
     public static String getImsi(Context context) {
         return getTelephonyManager(context).getSubscriberId();
     }
+
     /**
-     * 获取设备唯一串号IMEI号
+     * 会根据手机设备的制式（GSM或CDMA）返回相应的设备码（IMEI、MEID和ESN））唯一串号
      * 仅仅只对Android手机有效，对平板可能无效:
      * 需要权限
      * https://blog.csdn.net/pbm863521/article/details/73563084
      * 针对有通话功能的手机，若双卡则有2个串号，但获取的是第一个
      * 用 “*#06#”拨号可查看串号
+     * 注意问题：   Android 10.0之后系统获取不到IMEI和UUID
+     * 则可用ANDROID_ID代替唯一性， DeviceIdUtil.getAndroid_ID()方式获取
+     *
      * @param context
      * @return
      */
     @SuppressLint("MissingPermission")
     public static String getImei(Context context) {
-        return getTelephonyManager(context).getDeviceId();
+        TelephonyManager tm = getTelephonyManager(context);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {//10.0
+////        if (Build.VERSION.SDK_INT >= 29) {//10.0
+//
+//        } else
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//8.0
+            return tm.getImei();
+        } else {
+            return tm.getDeviceId();
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -249,6 +263,7 @@ public class AppUtils {
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         context.startActivity(intent);
     }
+
     /**
      * 打开Gps设置界面
      */
@@ -347,6 +362,7 @@ public class AppUtils {
             return !TextUtils.isEmpty(locationProviders);
         }
     }
+
     /**
      * 判断定位服务是否开启
      */

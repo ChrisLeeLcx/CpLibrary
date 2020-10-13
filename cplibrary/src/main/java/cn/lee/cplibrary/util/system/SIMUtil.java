@@ -65,15 +65,6 @@ public class SIMUtil {
         return telMgr.getCallState();
     }
 
-    /**
-     * 手机号：<br/>
-     * 对于GSM网络来说即MSISDN
-     *
-     * @return null if it is unavailable.
-     */
-//    private String getLine1Number() {
-//        return telMgr.getLine1Number();
-//    }
 
     /**
      * 获取ISO标准的国家码，即国际长途区号。<br/>

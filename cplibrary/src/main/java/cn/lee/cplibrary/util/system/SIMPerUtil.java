@@ -212,7 +212,7 @@ public class SIMPerUtil {
                 callBack.onGet(simInfo);
             }
             String info =
-                    "SIM卡的手机号:" + simSerialNumber
+                    "SIM卡的手机号:" + line1Number
                             + "\n" + "SIM卡的序列号:" + simSerialNumber
                             + "\n" + "唯一的用户ID:" + subscriberId
                             + "\n" + "取得和语音邮件相关的标签，即为识别符:" + voiceMailAlphaTag
