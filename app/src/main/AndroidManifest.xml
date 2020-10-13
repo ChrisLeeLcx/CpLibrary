@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lee.demo">
-    <!--系统权限，系统级应用才能加此权限，Android 10.0以上要加此权限：才能获取SIM的CCID、手机的串号等-->
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+
     <uses-permission android:name="android.permission.READ_SMS" />
     <!-- 高德地图：Android 6.0及以上系统可以参考Android 6.0权限说明章节。 -->
     <!-- 用于进行网络定位 -->

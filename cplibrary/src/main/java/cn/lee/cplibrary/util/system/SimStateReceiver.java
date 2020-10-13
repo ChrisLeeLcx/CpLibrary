@@ -41,7 +41,7 @@ public class SimStateReceiver extends BroadcastReceiver {
 //     */
 //    public void registerSimStateReceiver() {
 //        unregisterSimStateReceiver();//取消以前注册过的，下面进行重新注册
-//        setIccid(SIMPerUtil.getSimSerialNumber(getContext()));//保存此刻的ICCID
+//        setIccid(SIMPerUtil.getSimSerialNumber1(getContext()));//保存此刻的ICCID
 //        receiver = new SimStateReceiver();
 //        IntentFilter filter = new IntentFilter();
 //        filter.addAction(SimStateReceiver.ACTION_SIM_STATE_CHANGED);

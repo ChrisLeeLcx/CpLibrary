@@ -4,9 +4,9 @@ package cn.lee.cplibrary.util.system;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -48,10 +48,10 @@ import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
 
 public class SIMPerUtil {
     //读取电话卡SIM权限
-        public static final String[] permissions = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS};
+    public static final String[] permissions = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS};
     public static final int REQUEST_READ_PHONE_STATE = 401;
     //SIM上的需要权限的参数
-    private String line1Number = "", simSerialNumber = "", subscriberId = "", voiceMailAlphaTag = "", voiceMailNumber = "";
+    private String line1Number = "", simSerialNumber1 = "", subscriberId = "", voiceMailAlphaTag = "", voiceMailNumber = "";
     private PermissionUtil permissionUtil;
     private boolean isHandleResult;//是否处理申请结果
     private boolean isActivity = true;//true：Activity中调用,false:fragment中调用
@@ -61,10 +61,10 @@ public class SIMPerUtil {
     //android API中的TelephonyManager对象，可以取得SIM卡中的信息
     private static TelephonyManager telMgr;
 
-    public   interface GetSIMInfoCallBack {
+    public interface GetSIMInfoCallBack {
         void onGet(SIMInfo info);//权限申请成功，获取到SIM信息
 
-        void onFail( );//权限申请失败
+        void onFail();//权限申请失败
     }
 
     private SIMPerUtil() {
@@ -72,7 +72,7 @@ public class SIMPerUtil {
 
 
     //activity中:在onCreate中先调用申请权限，但不处理申请结果
-    public SIMPerUtil(Activity activity,GetSIMInfoCallBack callBack) {
+    public SIMPerUtil(Activity activity, GetSIMInfoCallBack callBack) {
         telMgr = (TelephonyManager) activity.getSystemService(activity.TELEPHONY_SERVICE);
         this.isActivity = true;
         this.activity = activity;
@@ -83,7 +83,7 @@ public class SIMPerUtil {
     }
 
     //fragment中：在onCreate中先调用申请权限，但不处理申请结果
-    public SIMPerUtil(Fragment fragment,GetSIMInfoCallBack callBack) {
+    public SIMPerUtil(Fragment fragment, GetSIMInfoCallBack callBack) {
         telMgr = (TelephonyManager) fragment.getActivity().getSystemService(activity.TELEPHONY_SERVICE);
         this.isActivity = false;
         this.fragment = fragment;
@@ -95,6 +95,7 @@ public class SIMPerUtil {
 
     /**
      * 获取具体的SIM信息，
+     *
      * @param context
      */
     public void getSIMInfo(Context context) {
@@ -102,11 +103,12 @@ public class SIMPerUtil {
         List<String> showDenies = PerUtils.findShowDeniedPermissions(activity, permissions);
         boolean showGuide = (denies.size() > 0 && showDenies.size() <= 0) ? true : false;//有未允许的权限，并且未允许的权限都被禁止
         if (showGuide) {
-            ToastUtil.showToast(context,"请先允许访问手机状态权限");
+            ToastUtil.showToast(context, "请先允许访问手机状态权限");
         } else {
             requestPer(true);
         }
     }
+
     /**
      * 手机号：<br/>
      * 对于GSM网络来说即MSISDN
@@ -117,28 +119,68 @@ public class SIMPerUtil {
         return telMgr.getLine1Number();
     }
 
-
     /**
      * SIM卡的序列号即 ICCID：
      * 需要权限：READ_PHONE_STATE
      * Returns the serial number of the SIM, if applicable. Return null if it is
      * unavailable. 当用户没授权时候返回NULL
+     * Android 10.0以上不适用
      */
-    private String getSimSerialNumber() {
-        String simSerialNum = telMgr.getSimSerialNumber();
-        return TextUtils.isEmpty(simSerialNum)?"":simSerialNum;
-    }
+//    public static String getSimSerialNumber1(Context context) {
+//        TelephonyManager telMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+//        String simSerialNum = telMgr.getSimSerialNumber1();
+//        return TextUtils.isEmpty(simSerialNum)?"":simSerialNum;
+//    }
 
     /**
-     * SIM卡的序列号即 ICCID：
-     * 需要权限：READ_PHONE_STATE
+     * SIM卡的序列号即 ICCID：需要权限：READ_PHONE_STATE
+     * 适配Android 10.0以上，5.1以上适配双卡,有双卡也只返回1个
      * Returns the serial number of the SIM, if applicable. Return null if it is
      * unavailable. 当用户没授权时候返回NULL
      */
     public static String getSimSerialNumber(Context context) {
-        TelephonyManager telMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-        String simSerialNum = telMgr.getSimSerialNumber();
-        return TextUtils.isEmpty(simSerialNum)?"":simSerialNum;
+        String simSerialNum = "";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
+            SubscriptionManager sm = SubscriptionManager.from(context);
+            List<SubscriptionInfo> sis = sm.getActiveSubscriptionInfoList();
+            if (sis.size() >= 1) {
+                SubscriptionInfo si1 = sis.get(0);//卡槽1
+                simSerialNum = si1.getIccId();
+            }
+            if (TextUtils.isEmpty(simSerialNum) && sis.size() >= 2) {//卡槽1无卡 并且有2个卡槽 ，则获取第2个卡槽卡CCID
+                SubscriptionInfo si2 = sis.get(1);
+                simSerialNum = si2.getIccId();
+            }
+        } else {  //5.1以下，
+            TelephonyManager telMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+            simSerialNum = telMgr.getSimSerialNumber();//Android 10.0以上不适用
+        }
+        return TextUtils.isEmpty(simSerialNum) ? "" : simSerialNum;
+    }
+    /**
+     * SIM卡的序列号即 ICCID：需要权限：READ_PHONE_STATE
+     * 适配Android 10.0以上，5.1以上适配双卡, 有多卡返回多个
+     * Returns the serial number of the SIM, if applicable. Return null if it is
+     * unavailable. 当用户没授权时候返回NULL
+     */
+    public static String[] getMoreSimSerialNumber(Context context) {
+        String[] serialNum = new String[2];
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
+            SubscriptionManager sm = SubscriptionManager.from(context);
+            List<SubscriptionInfo> sis = sm.getActiveSubscriptionInfoList();
+            if (sis.size() >= 1) {
+                SubscriptionInfo si1 = sis.get(0);//卡槽1
+                serialNum[0] = si1.getIccId();
+            }
+            if (sis.size() >= 2) {//卡槽2
+                SubscriptionInfo si2 = sis.get(1);
+                serialNum[1] = si2.getIccId();
+            }
+        } else {  //5.1以下，
+            TelephonyManager telMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+            serialNum[0] = telMgr.getSimSerialNumber();//Android 10.0以上不适用
+        }
+        return serialNum;
     }
     /**
      * 唯一的用户ID：<br/>
@@ -203,18 +245,22 @@ public class SIMPerUtil {
         @Override
         public void granted(Object source, int requestCode) {
             line1Number = getLine1Number();
-            simSerialNumber = getSimSerialNumber();
+            simSerialNumber1 = getMoreSimSerialNumber(activity)[0];
             subscriberId = getSubscriberId();
             voiceMailAlphaTag = getVoiceMailAlphaTag();
             voiceMailNumber = getVoiceMailNumber();
-            if(callBack!=null){
-                SIMInfo simInfo = new SIMInfo(line1Number, simSerialNumber, subscriberId, voiceMailAlphaTag, voiceMailNumber);
+            if (callBack != null) {
+                SIMInfo simInfo = new SIMInfo(line1Number, simSerialNumber1, subscriberId, voiceMailAlphaTag, voiceMailNumber);
+                simInfo.setSimSerialNumber2(getMoreSimSerialNumber(activity)[1]);
                 callBack.onGet(simInfo);
             }
             String info =
                     "SIM卡的手机号:" + line1Number
-                            + "\n" + "SIM卡的序列号:" + simSerialNumber
+                            + "\n" + "方法2获取-SIM卡的序列号1:" + simSerialNumber1
+                            + "\n" + "方法2获取-SIM卡的序列号2:" + getMoreSimSerialNumber(activity)[1]
                             + "\n" + "唯一的用户ID:" + subscriberId
+                            + "\n" + "当前卡槽数量:" + subscriberId
+                            + "\n" + "当前实际插卡数量:" + subscriberId
                             + "\n" + "取得和语音邮件相关的标签，即为识别符:" + voiceMailAlphaTag
                             + "\n" + "获取语音邮件号码:" + voiceMailNumber;
             LogUtil.i("", "******SIMPerUtil工具类******\n" + info);
@@ -223,7 +269,7 @@ public class SIMPerUtil {
         @Override
         public void denied(Object source, int requestCode, List deniedPermissions) {
             LogUtil.i("", "denied=" + deniedPermissions);
-            if(callBack!=null){
+            if (callBack != null) {
                 callBack.onFail();
             }
 
@@ -233,7 +279,7 @@ public class SIMPerUtil {
         @Override
         public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
             LogUtil.i("", "deniedNoShow=" + noShowPermissions);
-            if(callBack!=null){
+            if (callBack != null) {
                 callBack.onFail();
             }
         }
@@ -252,7 +298,8 @@ public class SIMPerUtil {
 
     public static class SIMInfo {
         private String line1Number = "";
-        private String simSerialNumber = "";
+        private String simSerialNumber1 = "";
+        private String simSerialNumber2 = "";
         private String subscriberId = "";
         private String voiceMailAlphaTag = "";
         private String voiceMailNumber = "";
@@ -260,9 +307,9 @@ public class SIMPerUtil {
         public SIMInfo() {
         }
 
-        public SIMInfo(String line1Number, String simSerialNumber, String subscriberId, String voiceMailAlphaTag, String voiceMailNumber) {
+        public SIMInfo(String line1Number, String simSerialNumber1, String subscriberId, String voiceMailAlphaTag, String voiceMailNumber) {
             this.line1Number = line1Number;
-            this.simSerialNumber = simSerialNumber;
+            this.simSerialNumber1 = simSerialNumber1;
             this.subscriberId = subscriberId;
             this.voiceMailAlphaTag = voiceMailAlphaTag;
             this.voiceMailNumber = voiceMailNumber;
@@ -277,12 +324,12 @@ public class SIMPerUtil {
             this.line1Number = line1Number;
         }
 
-        public String getSimSerialNumber() {
-            return simSerialNumber;
+        public String getSimSerialNumber1() {
+            return simSerialNumber1;
         }
 
-        public void setSimSerialNumber(String simSerialNumber) {
-            this.simSerialNumber = simSerialNumber;
+        public void setSimSerialNumber1(String simSerialNumber1) {
+            this.simSerialNumber1 = simSerialNumber1;
         }
 
         public String getSubscriberId() {
@@ -307,6 +354,14 @@ public class SIMPerUtil {
 
         public void setVoiceMailNumber(String voiceMailNumber) {
             this.voiceMailNumber = voiceMailNumber;
+        }
+
+        public String getSimSerialNumber2() {
+            return simSerialNumber2;
+        }
+
+        public void setSimSerialNumber2(String simSerialNumber2) {
+            this.simSerialNumber2 = simSerialNumber2;
         }
     }
 }

@@ -3,6 +3,7 @@ package cn.lee.cplibrary.util.system;
 
 import android.app.Service;
 import android.content.Context;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
 import cn.lee.cplibrary.util.LogUtil;
@@ -16,10 +17,13 @@ public class SIMUtil {
     private static SIMUtil simUtil = null;
     //android API中的TelephonyManager对象，可以取得SIM卡中的信息
     private static TelephonyManager telMgr;
+    private static Context mContext;
 
     private SIMUtil() {
     }
+
     public static SIMUtil getInstance(Context context) {
+        mContext = context;
         if (simUtil == null) {
             simUtil = new SIMUtil();
         }
@@ -31,6 +35,7 @@ public class SIMUtil {
 
     /**
      * 获取信息demo
+     *
      * @return
      */
     public String getSIMInfoSimple() {
@@ -39,6 +44,8 @@ public class SIMUtil {
                         + "\n" + "电话状态[0 无活动/1 响铃/2 摘机]:" + getCallState()
                         + "\n" + "获取ISO标准的国家码，即国际长途区号:" + getNetworkCountryIso()
                         + "\n" + "MCC+MNC:" + getNetworkOperator()
+                        + "\n" + "当前卡槽数量:" + getSubscriptionCountMax(mContext)
+                        + "\n" + "当前实际插卡数量:" + getSubscriptionCount(mContext)
                         + "\n" + "(当前已注册的用户)的名字:" + getNetworkOperatorName()
                         + "\n" + "当前使用的网络类型:" + getNetworkType()
                         + "\n" + "手机类型:" + getPhoneType()
@@ -194,11 +201,11 @@ public class SIMUtil {
     }
 
     public static String getSimStateInfo(Context context) {
-        TelephonyManager tm = (TelephonyManager)context.getSystemService(Service.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
         int state = tm.getSimState();
         String info;
         switch (state) {
-            case TelephonyManager.SIM_STATE_UNKNOWN ://0
+            case TelephonyManager.SIM_STATE_UNKNOWN://0
                 info = "未知状态";
                 break;
             case TelephonyManager.SIM_STATE_ABSENT://1
@@ -207,10 +214,10 @@ public class SIMUtil {
             case TelephonyManager.SIM_STATE_PIN_REQUIRED://2
                 info = "锁定状态，需要用户的PIN码解锁";
                 break;
-            case TelephonyManager.SIM_STATE_PUK_REQUIRED :// 3
+            case TelephonyManager.SIM_STATE_PUK_REQUIRED:// 3
                 info = "锁定状态，需要用户的PUK码解锁";
                 break;
-            case TelephonyManager.SIM_STATE_NETWORK_LOCKED ://4
+            case TelephonyManager.SIM_STATE_NETWORK_LOCKED://4
                 info = "锁定状态，需要网络的PIN码解锁";
                 break;
             case TelephonyManager.SIM_STATE_READY://5
@@ -267,5 +274,30 @@ public class SIMUtil {
         return telMgr.getDataState();
     }
 
+    /**
+     * 获取SIM卡数量相关信息：
+     * 获取当前实际插卡数量
+     */
+    public static String getSubscriptionCount(Context context) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
+            SubscriptionManager sm = SubscriptionManager.from(context);
+            int count = sm.getActiveSubscriptionInfoCount();//当前实际插卡数量
+            return count + "";
+        }
+        return "5.1以下获取失败";
+    }
+
+    /**
+     * /获取SIM卡数量相关信息：
+     * 获取当前卡槽数量
+     */
+    public static String getSubscriptionCountMax(Context context) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
+            SubscriptionManager sm = SubscriptionManager.from(context);
+            int max = sm.getActiveSubscriptionInfoCountMax();//当前卡槽数量
+            return max + "";
+        }
+        return "5.1以下获取失败";
+    }
 
 }
