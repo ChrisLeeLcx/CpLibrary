@@ -51,7 +51,7 @@ public class SIMPerUtil {
     public static final String[] permissions = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS};
     public static final int REQUEST_READ_PHONE_STATE = 401;
     //SIM上的需要权限的参数
-    private String line1Number = "", simSerialNumber1 = "", subscriberId = "", voiceMailAlphaTag = "", voiceMailNumber = "";
+    private String line1Number = "", subscriberId = "", voiceMailAlphaTag = "", voiceMailNumber = "";
     private PermissionUtil permissionUtil;
     private boolean isHandleResult;//是否处理申请结果
     private boolean isActivity = true;//true：Activity中调用,false:fragment中调用
@@ -157,6 +157,7 @@ public class SIMPerUtil {
         }
         return TextUtils.isEmpty(simSerialNum) ? "" : simSerialNum;
     }
+
     /**
      * SIM卡的序列号即 ICCID：需要权限：READ_PHONE_STATE
      * 适配Android 10.0以上，5.1以上适配双卡, 有多卡返回多个
@@ -182,6 +183,7 @@ public class SIMPerUtil {
         }
         return serialNum;
     }
+
     /**
      * 唯一的用户ID：<br/>
      * 例如：IMSI(国际移动用户识别码) for a GSM phone.<br/>
@@ -244,19 +246,21 @@ public class SIMPerUtil {
     private PermissionProxy proxy = new PermissionProxy() {
         @Override
         public void granted(Object source, int requestCode) {
-            line1Number = getLine1Number();
-            simSerialNumber1 = getMoreSimSerialNumber(activity)[0];
-            subscriberId = getSubscriberId();
-            voiceMailAlphaTag = getVoiceMailAlphaTag();
-            voiceMailNumber = getVoiceMailNumber();
+            String line1Number = getLine1Number();
+            String subscriberId = getSubscriberId();
+            String voiceMailAlphaTag = getVoiceMailAlphaTag();
+            String voiceMailNumber = getVoiceMailNumber();
             if (callBack != null) {
-                SIMInfo simInfo = new SIMInfo(line1Number, simSerialNumber1, subscriberId, voiceMailAlphaTag, voiceMailNumber);
+                SIMInfo simInfo = new SIMInfo(line1Number, subscriberId, voiceMailAlphaTag, voiceMailNumber);
+                simInfo.setSimSerialNumber(getSimSerialNumber(activity));
+                simInfo.setSimSerialNumber1(getMoreSimSerialNumber(activity)[0]);
                 simInfo.setSimSerialNumber2(getMoreSimSerialNumber(activity)[1]);
                 callBack.onGet(simInfo);
             }
             String info =
                     "SIM卡的手机号:" + line1Number
-                            + "\n" + "方法2获取-SIM卡的序列号1:" + simSerialNumber1
+                            + "\n" + "方法1获取-SIM卡的序列号1:" + getSimSerialNumber(activity)
+                            + "\n" + "方法2获取-SIM卡的序列号1:" + getMoreSimSerialNumber(activity)[0]
                             + "\n" + "方法2获取-SIM卡的序列号2:" + getMoreSimSerialNumber(activity)[1]
                             + "\n" + "唯一的用户ID:" + subscriberId
                             + "\n" + "当前卡槽数量:" + subscriberId
@@ -298,6 +302,7 @@ public class SIMPerUtil {
 
     public static class SIMInfo {
         private String line1Number = "";
+        private String simSerialNumber = "";
         private String simSerialNumber1 = "";
         private String simSerialNumber2 = "";
         private String subscriberId = "";
@@ -307,9 +312,8 @@ public class SIMPerUtil {
         public SIMInfo() {
         }
 
-        public SIMInfo(String line1Number, String simSerialNumber1, String subscriberId, String voiceMailAlphaTag, String voiceMailNumber) {
+        public SIMInfo(String line1Number, String subscriberId, String voiceMailAlphaTag, String voiceMailNumber) {
             this.line1Number = line1Number;
-            this.simSerialNumber1 = simSerialNumber1;
             this.subscriberId = subscriberId;
             this.voiceMailAlphaTag = voiceMailAlphaTag;
             this.voiceMailNumber = voiceMailNumber;
@@ -362,6 +366,14 @@ public class SIMPerUtil {
 
         public void setSimSerialNumber2(String simSerialNumber2) {
             this.simSerialNumber2 = simSerialNumber2;
+        }
+
+        public String getSimSerialNumber() {
+            return simSerialNumber;
+        }
+
+        public void setSimSerialNumber(String simSerialNumber) {
+            this.simSerialNumber = simSerialNumber;
         }
     }
 }

@@ -58,8 +58,9 @@ public class OtherActivity1 extends SwipeBackActivity {
                 simInfo= info;
                 String in =
                         "SIM卡的手机号:" + info.getLine1Number()
-                                + "\n" + "SIM卡的序列号1:" + info.getSimSerialNumber1()
-                                + "\n" + "SIM卡的序列号2:" + info.getSimSerialNumber2()
+                                + "\n" + "方式1:SIM序列号:" + info.getSimSerialNumber()
+                                + "\n" + "方式2:SIM序列号1:" + info.getSimSerialNumber1()
+                                + "\n" + "方式2:SIM序列号2:" + info.getSimSerialNumber2()
                                 + "\n" + "唯一的用户ID:" + info.getSubscriberId()
                                 + "\n" + "取得和语音邮件相关的标签，即为识别符:" + info.getVoiceMailAlphaTag()
                                 + "\n" + "获取语音邮件号码:" + info.getVoiceMailNumber();

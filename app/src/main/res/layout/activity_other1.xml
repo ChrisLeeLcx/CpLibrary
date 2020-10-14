@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:gravity="left|center_vertical"
             android:text="8、SIM信息（需要权限）" />
 
     </LinearLayout>
