@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.lee.demo.util.gaode.loc.LocationBean;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.SharedPreferencesUtils;
+import cn.lee.cplibrary.util.system.SIMPerUtil;
+import cn.lee.cplibrary.util.system.SimStateReceiver;
 
 /**
  * @author ChrisLee
@@ -220,5 +223,34 @@ public class BaseApplication extends Application {
             }
         });
     }
+    //-------------------------SIM监测广播------------------------
+    private SimStateReceiver receiver;
+    /**
+     * 注冊SIM状态监测广播:需要在登录界面注册
+     * 注意：不能在Application中调用，因为监测SIM需要权限，权限在过度页面授权，而Application先于过度页面执行，
+     *      导致未授权时候打不开页面
+     */
+    public void registerSimStateReceiver(Activity activity) {
+        unregisterSimStateReceiver();//取消以前注册过的，下面进行重新注册
+//        setIccid(SIMPerUtil.getSimSerialNumber(activity));//保存此刻的ICCID
+        receiver = new SimStateReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(SimStateReceiver.ACTION_SIM_STATE_CHANGED);
+        filter.addAction(SimStateReceiver.ACTION_CONNECTION);
+        filter.addCategory(SimStateReceiver.CATEGORY_fxj);
+        registerReceiver(receiver, filter);
+    }
 
+    /**
+     * 取消SIM状态监测广播接受者的注册：（应该在整个APP退出的时候取消注册）
+     * MainActivity页面的OnDestroy方法中调用
+     */
+    public void unregisterSimStateReceiver() {
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+            receiver = null;
+            LogUtil.i(SimStateReceiver.TAG, "BaseApplication unregisterSimStateReceiver");
+
+        }
+    }
 }

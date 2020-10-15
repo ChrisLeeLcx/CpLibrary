@@ -48,6 +48,8 @@ import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
 
 public class SIMPerUtil {
     //读取电话卡SIM权限
+//    注意：https://www.zhihu.com/question/391240969
+//    READ_PHONE_STATE权限在Android 10 以上针对权限有空白通行证的手机 即使动态申请也不会弹出权限申请框，需要用户手动设置
     public static final String[] permissions = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS};
     public static final int REQUEST_READ_PHONE_STATE = 401;
     //SIM上的需要权限的参数

@@ -41,6 +41,8 @@ public class OtherActivity1 extends SwipeBackActivity {
     @Override
     public void initView() {
         findViews();
+        baseApplication.registerSimStateReceiver(getSelfActivity());
+
     }
 
     @Override

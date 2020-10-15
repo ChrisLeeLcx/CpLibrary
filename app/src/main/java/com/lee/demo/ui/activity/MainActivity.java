@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.lee.demo.R;
+import com.lee.demo.base.BaseApplication;
 import com.lee.demo.base.BaseWebViewActivity;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
 
@@ -24,11 +25,12 @@ import cn.lee.cplibrary.util.permissionutil.PermissionDemoActivity;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<ActivityBean> totalList = new ArrayList<>();
-
+    BaseApplication  baseApplication ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+           baseApplication = (BaseApplication) getApplication();
         recyclerView = findViewById(R.id.recyclerView);
         initData();
         initRecyclerView();
@@ -149,5 +151,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         GaoDeLBSUtil.getInstance(this).stopLocation();
         GaoDeLBSUtil.getInstance(this).destroyLocation();
+        baseApplication.unregisterSimStateReceiver();
     }
 }
