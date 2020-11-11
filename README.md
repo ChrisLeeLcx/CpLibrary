@@ -77,7 +77,6 @@
 
 ## 图例展示  
 ![进度条和loading](https://github.com/ChrisLeeLcx/CpLibrary/blob/master/screenshot/dialog.gif)
-
 ![dialog](screenshot/dialog.gif)	
 
 ![品牌列表](screenshot/品牌列表.gif)
