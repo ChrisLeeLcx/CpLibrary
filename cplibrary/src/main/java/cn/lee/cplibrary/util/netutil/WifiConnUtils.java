@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util;
+package cn.lee.cplibrary.util.netutil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import cn.lee.cplibrary.util.net.SecurityType;
+import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.netutil.SecurityType;
 
 /**
  * wifi信息工具类：功能：检查WIFI状态 开启WIFI 1、关闭WIFI 2、扫描wifi 3、得到Scan结果 4 、 Scan结果转为Sting 5

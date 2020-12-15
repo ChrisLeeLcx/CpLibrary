@@ -19,7 +19,7 @@ import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ScreenUtil;
 import cn.lee.cplibrary.util.StringUtil;
 import cn.lee.cplibrary.util.URLUtil;
-import cn.lee.cplibrary.util.WifiConnUtils;
+import cn.lee.cplibrary.util.netutil.WifiConnUtils;
 
 public class UtilActivity extends BaseActivity {
 

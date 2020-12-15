@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util.net;
+package cn.lee.cplibrary.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

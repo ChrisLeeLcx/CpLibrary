@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util.net;
+package cn.lee.cplibrary.util.netutil;
 
 public enum SecurityType {
 	PSK, WEP, EAP, OPEN

@@ -15,7 +15,7 @@ import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.EditTextUtil;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
-import cn.lee.cplibrary.util.net.ViewUtil;
+import cn.lee.cplibrary.util.ViewUtil;
 import cn.lee.cplibrary.widget.edittext.DecimalInputFilter;
 import cn.lee.cplibrary.widget.edittext.IdcardValidator;
 import cn.lee.cplibrary.widget.edittext.PayPsdInputView;

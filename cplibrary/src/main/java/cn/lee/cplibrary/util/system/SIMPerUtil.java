@@ -173,13 +173,15 @@ public class SIMPerUtil {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
             SubscriptionManager sm = SubscriptionManager.from(context);
             List<SubscriptionInfo> sis = sm.getActiveSubscriptionInfoList();
-            if (sis.size() >= 1) {
-                SubscriptionInfo si1 = sis.get(0);//卡槽1
-                serialNum[0] = si1.getIccId();
-            }
-            if (sis.size() >= 2) {//卡槽2
-                SubscriptionInfo si2 = sis.get(1);
-                serialNum[1] = si2.getIccId();
+            if(sis!=null){
+                if (sis.size() >= 1) {
+                    SubscriptionInfo si1 = sis.get(0);//卡槽1
+                    serialNum[0] = si1.getIccId();
+                }
+                if (sis.size() >= 2) {//卡槽2
+                    SubscriptionInfo si2 = sis.get(1);
+                    serialNum[1] = si2.getIccId();
+                }
             }
         } else {  //5.1以下，
             TelephonyManager telMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);

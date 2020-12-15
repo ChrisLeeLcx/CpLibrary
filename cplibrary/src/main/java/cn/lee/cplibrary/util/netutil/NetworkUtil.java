@@ -1,4 +1,4 @@
-package cn.lee.cplibrary.util.net;
+package cn.lee.cplibrary.util.netutil;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
