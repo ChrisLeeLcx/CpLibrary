@@ -142,10 +142,11 @@ public class CpComDialog {
                 .getAttributes();
         lp.width = display.getWidth() - 100;
         mProgressDialog.getWindow().setAttributes(lp);
-        mProgressDialog.setCancelable(false);
+        mProgressDialog.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_DIM_BEHIND);//去掉对话框周围黑边
+//        mProgressDialog.getWindow().setDimAmount(0);
+        mProgressDialog.setCancelable(false);//不可点击取消
         TextView textView = mProgressDialog
                 .findViewById(R.id.tv_info);
-
         if (textView == null || ObjectUtils.isEmpty(content)) {
             textView.setVisibility(View.GONE);
         } else {
