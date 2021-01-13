@@ -18,6 +18,7 @@ public class CpConfig {
     private String cachePath; //項目的缓存目录
     private String imgCachePath;//項目的图片件缓存目录
     private String logCachePath;//項目的日志文件目录
+    private String videoCachePath;//項目的视频缓存目录
 
     public CpConfig(Context context) {
         this.context = context;
@@ -25,6 +26,7 @@ public class CpConfig {
         cachePath = FileUtils.getSDCardPath() + projectName;
         imgCachePath = cachePath + File.separator + "img" + File.separator;
         logCachePath = cachePath + File.separator + "log" + File.separator;
+        videoCachePath = cachePath + File.separator + "video" + File.separator;
     }
 
     public String getProjectName() {
@@ -41,5 +43,9 @@ public class CpConfig {
 
     public String getLogCachePath() {
         return logCachePath;
+    }
+
+    public String getVideoCachePath() {
+        return videoCachePath;
     }
 }

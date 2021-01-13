@@ -38,4 +38,13 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <style name="cp_ActivityTranslucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item><!--页面淡入淡出动画-->
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsTranslucent">true</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/cp_transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+    </style>
 </resources>

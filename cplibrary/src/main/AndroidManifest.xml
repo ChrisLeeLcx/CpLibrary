@@ -4,34 +4,44 @@
     package="cn.lee.cplibrary">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--添加震动权限-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 添加震动权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!--拍照需要的权限-->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 拍照需要的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 录像需要的权限 -->
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--android:icon="@drawable/geren_xiugaimc"-->
-    <!--android:roundIcon="@drawable/geren_xiugaimc"-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
+
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/cp_file_paths" />
         </provider>
-        <activity android:name=".util.permissionutil.PermissionDemoActivity"/>
+
+        <activity android:name=".util.permissionutil.PermissionDemoActivity" />
+        <activity android:name=".util.video.VideoRecordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".util.video.VideoCompressActivity"  android:exported="true"
+            android:theme="@style/cp_ActivityTranslucent"/>
+        <activity android:name=".util.video.VideoPlayerActivity"  android:exported="true"
+            android:theme="@style/cp_ActivityTranslucent"/>
 
     </application>
 

@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+        <!-- 原视频缩略图-->
+        <ImageView
+            android:id="@+id/image_src"
+            android:layout_width="90dp"
+            android:layout_height="160dp"
+            android:background="@color/black"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="左原视频缩略图\n右压缩视频缩略图" />
+        <!-- 压缩视频缩略图-->
+        <ImageView
+            android:id="@+id/image_compress"
+            android:layout_width="90dp"
+            android:layout_height="160dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/black"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="录制视频" />
+    <Button
+        android:id="@+id/btn_play_uri"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="播放网络视频" />
+    <Button
+        android:id="@+id/btn_play_src"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="播放本地原视频" />
+    <Button
+        android:id="@+id/btn_play_compress"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="播放本地压缩视频" />
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="" />
+</LinearLayout>

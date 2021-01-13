@@ -64,4 +64,5 @@ dependencies {
     compile 'cc.solart:turbo-recyclerview-helper:1.0.3-beta'
     implementation files('libs/eventbus-3.0.0.jar')
     compile 'com.amap.api:location:latest.integration'//高德定位
+    implementation "com.android.support:design:27.1.1"
 }
