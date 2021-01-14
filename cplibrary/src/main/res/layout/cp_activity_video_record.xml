@@ -13,37 +13,40 @@
         android:orientation="vertical" />
     <!-- 屏幕顶部按钮-->
     <RelativeLayout
+        android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+        android:paddingTop="10dp">
 
         <ImageView
-            android:id="@+id/btn_finish"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_video_finish" />
 
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/buttonFlash"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:maxHeight="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_flash_off_white" />
+
+        <ImageView
+            android:id="@+id/button_ChangeCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:orientation="horizontal"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
-
-
-            <ImageView
-                android:id="@+id/button_ChangeCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="60dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_camera_menu_switch" />
-
-        </LinearLayout>
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_camera_menu_switch" />
     </RelativeLayout>
 
     <!-- 屏幕底部按钮-->
@@ -58,64 +61,42 @@
         android:orientation="horizontal"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:weightSum="100">
+        android:weightSum="3">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="33"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_video_right_arrow"
+            android:visibility="invisible" />
 
-            <ImageView
-                android:id="@+id/buttonFlash"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="60dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_flash_off_white" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/button_capture"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/player_record" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="33"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/button_capture"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/player_record" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="33"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-
-            <ImageView
-                android:id="@+id/btn_next"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_video_right_arrow" />
-
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/btn_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/player_pause" />
     </LinearLayout>
     <!--计时器-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/buttonsLayout"
+        android:layout_marginRight="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 

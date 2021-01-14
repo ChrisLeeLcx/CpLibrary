@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -30,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.lee.cplibrary.R;
-import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.widget.video.CameraPreview;
 
@@ -42,17 +42,14 @@ import cn.lee.cplibrary.widget.video.CameraPreview;
 
 public class VideoRecordActivity extends AppCompatActivity implements View.OnClickListener {
     //控件
-    ImageView button_ChangeCamera;
+    ImageView button_ChangeCamera, buttonCapture, buttonFlash, chronoRecordingImage, btnFinish, btnNext, btnPause;
     LinearLayout cameraPreview;
-    ImageView buttonCapture;
-    ImageView buttonFlash;
+    RelativeLayout rlTop;
     Chronometer textChrono;
-    ImageView chronoRecordingImage;
-    ImageView btnFinish, btnNext;
     private CameraPreview mPreview;
+
     private Camera mCamera;
     private MediaRecorder mediaRecorder;
-
     private String url_file;
     private static boolean flash = false;
     private static boolean cameraFront = false;
@@ -81,14 +78,16 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     private long pauseTime = 0;// 总暂停时间
     private long pauseStartTime = 0;// 开始暂停时间
     private VideoRecordActivity context;
-    private static int duration=-1;////录制视频的时长，-1表示不限制时长 ，单位ms
+    private static int duration = -1;////录制视频的时长，-1表示不限制时长 ，单位ms
+
     public static void startActivityForResult(Activity activity, int requestCode, int quality) {
         Intent intent = new Intent(activity, VideoRecordActivity.class);
         intent.putExtra("quality", quality);
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
     }
-    public static void startActivityForResult(Activity activity, int requestCode, int quality,int videoDuration) {
-        duration =videoDuration;
+
+    public static void startActivityForResult(Activity activity, int requestCode, int quality, int videoDuration) {
+        duration = videoDuration;
         Intent intent = new Intent(activity, VideoRecordActivity.class);
         intent.putExtra("quality", quality);
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
@@ -332,18 +331,23 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.btn_finish) {
+        if (id == R.id.btn_back) {//关闭当前页面
             back();
-        } else if (id == R.id.btn_next) {//拍摄结束，进入下页面处理压缩
-            recordFinish();
-        } else if (id == R.id.button_capture) {//开始或暂停
-            if (recordState == RecordState.pre) {//开始录制
-                recordStart();
-            } else if (recordState == RecordState.recording) {//正在录制：暂停录制
+        } else if (id == R.id.btn_pause) {//暂停拍摄：7.0及以上适用
+            if (recordState == RecordState.recording) {//正在录制状态：暂停录制
                 recordPause();
-            } else if (recordState == RecordState.pause) {//正在录制：暂停录制
+            } else if (recordState == RecordState.pause) {//暂停录制状态：继续录制
                 recordResume();
             }
+        } else if (id == R.id.button_capture) {//开始或暂停
+            if (recordState == RecordState.pre) {//开始录制
+                rlTop.setVisibility(View.INVISIBLE);
+                recordStart();
+            } else {//拍摄结束，进入下页面处理压缩
+                rlTop.setVisibility(View.VISIBLE);
+                recordFinish();
+            }
+            setBtnPauseVisible();
         }
     }
 
@@ -369,7 +373,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
                     } else {
                         changeRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     }
-                    buttonCapture.setImageResource(R.drawable.player_recording);
+                    buttonCapture.setImageResource(R.drawable.player_finish);
                 } catch (final Exception ex) {
                     Log.i("---", "Exception in thread");
                     recordError(RESULT_CODE_FOR_RECORD_VIDEO_FAILED);
@@ -388,10 +392,8 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
                 mediaRecorder.pause();
                 stopChronometer();
                 recordState = RecordState.pause;
-                buttonCapture.setImageResource(R.drawable.player_pause);
+                btnPause.setImageResource(R.drawable.player_resume);
             }
-        } else {
-
         }
     }
 
@@ -404,10 +406,8 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
                 pauseTime += SystemClock.elapsedRealtime() - pauseStartTime; //总暂停时间以前暂停时间+本次暂停时间
                 textChrono.start();
                 recordState = RecordState.recording;
-                buttonCapture.setImageResource(R.drawable.player_recording);
+                btnPause.setImageResource(R.drawable.player_pause);
             }
-        } else {
-
         }
     }
 
@@ -464,8 +464,10 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         buttonFlash = (ImageView) findViewById(R.id.buttonFlash);
         chronoRecordingImage = (ImageView) findViewById(R.id.chronoRecordingImage);
         textChrono = (Chronometer) findViewById(R.id.textChrono);
-        btnFinish = findViewById(R.id.btn_finish);
+        btnFinish = findViewById(R.id.btn_back);
         btnNext = findViewById(R.id.btn_next);
+        btnPause = findViewById(R.id.btn_pause);
+        rlTop = findViewById(R.id.rl_top);
         buttonFlash.setOnClickListener(flashListener);
         mPreview = new CameraPreview(VideoRecordActivity.this, mCamera);
         cameraPreview.addView(mPreview);
@@ -473,6 +475,8 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         button_ChangeCamera.setOnClickListener(switchCameraListener);
         btnFinish.setOnClickListener(this);
         btnNext.setOnClickListener(this);
+        btnPause.setOnClickListener(this);
+        setBtnPauseGone();
         //点击对焦
         cameraPreview.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -489,6 +493,25 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+    }
+
+    /**
+     * 设置暂停按钮显示
+     */
+    private void setBtnPauseVisible() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0及以上 有暂停录制功能
+            btnPause.setVisibility(View.VISIBLE);
+        } else {
+            btnPause.setVisibility(View.INVISIBLE);
+        }
+    }
+    /**
+     * 设置暂停按钮隐藏
+     */
+    private void setBtnPauseGone() {
+        if (btnPause.getVisibility() == View.VISIBLE) {
+            btnPause.setVisibility(View.INVISIBLE);
+        }
     }
 
     //检查设备是否有摄像头
@@ -539,7 +562,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
 //        //这个属性很重要，这个也直接影响到视频录制的大小，这个设置的越大，视频越清晰
 //        mediaRecorder.setVideoEncodingBitRate(12 * 1024 * 1024);
         //设置录制最长时间
-         if(duration>0){
+        if (duration > 0) {
             mediaRecorder.setMaxDuration(duration);
         }
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -610,9 +633,10 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         textChrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer arg0) {
-                if(duration>0 && countUp * 1000 >= duration){//录制有时长限制,并且超过了设置最大时长，计时器停止
+                if (duration > 0 && countUp * 1000 >= duration) {//录制有时长限制,并且超过了设置最大时长，计时器停止
                     stopChronometer();
-                }else{
+                    setBtnPauseGone();
+                } else {
                     //初始时间-暂停时间
                     countUp = (SystemClock.elapsedRealtime() - startTime - pauseTime) / 1000;
                 }
@@ -634,6 +658,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     private void changeRequestedOrientation(int orientation) {
         setRequestedOrientation(orientation);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {

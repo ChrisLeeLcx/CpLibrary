@@ -9,7 +9,6 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.MediaController;
@@ -20,7 +19,6 @@ import java.util.HashMap;
 import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
-import cn.lee.cplibrary.util.dialog.CpComDialog;
 
 /**
  * 视频播放页面
@@ -83,7 +81,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private void initVideoView() {
         MediaController mediaController = new MediaController(activity);
         videoView.setMediaController(mediaController); //加载一个MediaController
-        CpComDialog.showProgressDialog(this,"");
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             // 解决播放本地视频短暂黑屏问题
             @Override
@@ -93,7 +90,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
                     public boolean onInfo(MediaPlayer mp, int what, int extra) {
                         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START)
                             videoView.setBackgroundColor(Color.TRANSPARENT);
-                            CpComDialog.closeProgressDialog();
                         return true;
                     }
                 });

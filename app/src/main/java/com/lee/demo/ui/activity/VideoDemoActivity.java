@@ -46,6 +46,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         findViews();
         videoUtil = new CpVideoDialog(VideoDemoActivity.this);
         videoUtil.setDuration(5*1000);
+        videoUtil.setQuality(VideoRecordActivity.Q1080);
     }
 
     private void findViews() {
@@ -66,7 +67,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn:  //录制不限时视频
-                videoUtil.showChooseDialog(VideoRecordActivity.Q1080);
+                videoUtil.showChooseDialog( );
                 break;
             case R.id.btn_play_src:  //播放原视频
 //                pathSrc = "/storage/emulated/0/DCIM/Camera/VID20210111184738.mp4";

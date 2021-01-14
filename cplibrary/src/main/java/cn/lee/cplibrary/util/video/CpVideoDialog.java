@@ -30,6 +30,8 @@ public class CpVideoDialog {
     public static final int REQUEST_CODE_FOR_COMPRESS = 5231;//压缩视频请求码
     public static final int REQUEST_FOR_VIDEO_FILE = 5232;//选择文件中视频请求吗
     private int duration = -1;//录制视频的时长，-1表示不限制时长 ，单位ms
+    private int quality = VideoRecordActivity.Q1080;//录制视频的分辨率
+
     /***********录像权限相关开始***********/
     private static PermissionUtil permissionUtil;
     public static final int REQUEST_CODE_PER = 500;//权限请求码
@@ -52,10 +54,8 @@ public class CpVideoDialog {
     /**
      * 注意：打开上传图片Dialog的Activity
      * 必须重写onActivityResult、 onRequestPermissionsResult,permissionUtil.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-     *
-     * @param quality 拍摄视频的质量，值为VideoRecordActivity.Q480，Q720，Q1080，Q21600,质量越高，画质越清晰，文件越大
      */
-    public Dialog showChooseDialog(final int quality) {
+    public Dialog showChooseDialog() {
         View view = LayoutInflater.from(activity).inflate(R.layout.cp_dialog_pic_choose, null);
         final Dialog picDialog = CpComDialog.getBottomDialog(activity, true, view);
         Button btnAlbum = view.findViewById(R.id.photoAlbum);
@@ -198,6 +198,16 @@ public class CpVideoDialog {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+    /**
+     * quality 拍摄视频的质量，值为VideoRecordActivity.Q480，Q720，Q1080，Q21600,质量越高，画质越清晰，文件越大
+     */
+    public void setQuality(int quality) {
+        this.quality = quality;
     }
 }
 
