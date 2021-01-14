@@ -4,6 +4,9 @@ package cn.lee.cplibrary.util.system;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -44,13 +47,16 @@ import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
  * 2. 接着的2位数(FAC)是”最后装配号”，一般代表产地
  * 3. 之后的6位数(SNR)是”串号”，一般代表生产顺序号
  * 4. 最后1位数(SP)通常是”0″，为检验码，目前暂备用
+ * 8.0以上手机新增权限  READ_PHONE_NUMBERS 、ANSWER_PHONE_CALLS
  */
 
 public class SIMPerUtil {
     //读取电话卡SIM权限
-//    注意：https://www.zhihu.com/question/391240969
-//    READ_PHONE_STATE权限在Android 10 以上针对权限有空白通行证的手机 即使动态申请也不会弹出权限申请框，需要用户手动设置
-    public static final String[] permissions = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS};
+    //注意：https://www.zhihu.com/question/391240969
+    // READ_PHONE_STATE 权限在Android 10 以上针对权限有空白通行证的手机 即使动态申请也不会弹出权限申请框，需要用户手动设置
+    //READ_PHONE_NUMBERS 权限 android8.0以上的手机才有
+    public static final String[] permissions0 = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS};
+    public static final String[] permissions8 = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS,Manifest.permission.READ_PHONE_NUMBERS};
     public static final int REQUEST_READ_PHONE_STATE = 401;
     //SIM上的需要权限的参数
     private String line1Number = "", subscriberId = "", voiceMailAlphaTag = "", voiceMailNumber = "";
@@ -71,7 +77,6 @@ public class SIMPerUtil {
 
     private SIMPerUtil() {
     }
-
 
     //activity中:在onCreate中先调用申请权限，但不处理申请结果
     public SIMPerUtil(Activity activity, GetSIMInfoCallBack callBack) {
@@ -94,6 +99,17 @@ public class SIMPerUtil {
         requestPer(true);
     }
 
+    /**
+     * 返回获取sim卡各项信息的需要申请的权限
+     * @return
+     */
+    private  String[] getPermissions() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//8.0及以上
+            return permissions8;
+        }else{
+            return permissions0;
+        }
+    }
 
     /**
      * 获取具体的SIM信息，
@@ -101,8 +117,8 @@ public class SIMPerUtil {
      * @param context
      */
     public void getSIMInfo(Context context) {
-        List<String> denies = PerUtils.findDeniedPermissions(activity, permissions);
-        List<String> showDenies = PerUtils.findShowDeniedPermissions(activity, permissions);
+        List<String> denies = PerUtils.findDeniedPermissions(activity, getPermissions());
+        List<String> showDenies = PerUtils.findShowDeniedPermissions(activity, getPermissions());
         boolean showGuide = (denies.size() > 0 && showDenies.size() <= 0) ? true : false;//有未允许的权限，并且未允许的权限都被禁止
         if (showGuide) {
             ToastUtil.showToast(context, "请先允许访问手机状态权限");
@@ -144,8 +160,11 @@ public class SIMPerUtil {
         String simSerialNum = "";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
             SubscriptionManager sm = SubscriptionManager.from(context);
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                return "";
+            }
             List<SubscriptionInfo> sis = sm.getActiveSubscriptionInfoList();
-            if(sis!=null){
+            if (sis != null) {
                 if (sis.size() >= 1) {
                     SubscriptionInfo si1 = sis.get(0);//卡槽1
                     simSerialNum = si1.getIccId();
@@ -172,6 +191,9 @@ public class SIMPerUtil {
         String[] serialNum = new String[2];
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {//5.1以上
             SubscriptionManager sm = SubscriptionManager.from(context);
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                return serialNum;
+            }
             List<SubscriptionInfo> sis = sm.getActiveSubscriptionInfoList();
             if(sis!=null){
                 if (sis.size() >= 1) {
@@ -227,9 +249,9 @@ public class SIMPerUtil {
     public void requestPer(boolean isHandleResult) {
         this.isHandleResult = isHandleResult;
         if (isActivity) {
-            permissionUtil.requestPermissions(activity, REQUEST_READ_PHONE_STATE, permissions);
+            permissionUtil.requestPermissions(activity, REQUEST_READ_PHONE_STATE, getPermissions());
         } else {
-            permissionUtil.requestPermissions(fragment, REQUEST_READ_PHONE_STATE, permissions);
+            permissionUtil.requestPermissions(fragment, REQUEST_READ_PHONE_STATE, getPermissions());
         }
     }
 
