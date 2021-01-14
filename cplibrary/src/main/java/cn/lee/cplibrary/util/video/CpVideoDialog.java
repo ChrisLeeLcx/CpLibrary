@@ -133,7 +133,7 @@ public class CpVideoDialog {
      *
      * @param activity
      */
-    private void openVideoFile(Activity activity) {
+    public void openVideoFile(Activity activity) {
         Intent intent = new Intent();
         /* 开启Pictures画面Type设定为image */
         //intent.setType("video/*;image/*");
