@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.SystemBarUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.widget.video.CameraPreview;
 
@@ -98,6 +99,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cp_activity_video_record);
         context = this;
+        SystemBarUtils.setFullScreenNoText(context);
         quality = getIntent().getIntExtra("quality", Q480);
         initialize();
     }
