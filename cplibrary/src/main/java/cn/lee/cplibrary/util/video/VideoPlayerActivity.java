@@ -18,6 +18,7 @@ import android.widget.VideoView;
 import java.util.HashMap;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 
@@ -60,14 +61,12 @@ public class VideoPlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         boolean isUri = intent.getBooleanExtra(KEY_ISURI, true);
         String path = intent.getStringExtra(KEY_PATH);
+        LogUtil.i("","path="+path);
         if (isUri) {//播放网络视频
-
-
             Bitmap bitmap = getNetVideoBitmap(path);
             if (bitmap != null) {
                 videoView.setBackground(new BitmapDrawable(getResources(), bitmap));
             }
-
             videoView.setVideoURI(Uri.parse(path));
         } else {//播放本地视频
             videoView.setVideoPath(path);

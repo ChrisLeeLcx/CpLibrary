@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 
 import com.lee.demo.R;
@@ -46,6 +45,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         activity = this;
         findViews();
         videoUtil = new CpVideoDialog(VideoDemoActivity.this);
+        videoUtil.setDuration(5*1000);
     }
 
     private void findViews() {
@@ -66,14 +66,14 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn:  //录制不限时视频
-                videoUtil.showChooseDialog(VideoRecordActivity.Q720);
+                videoUtil.showChooseDialog(VideoRecordActivity.Q1080);
                 break;
             case R.id.btn_play_src:  //播放原视频
-                pathSrc = "/storage/emulated/0/DCIM/Camera/VID20210111184738.mp4";
+//                pathSrc = "/storage/emulated/0/DCIM/Camera/VID20210111184738.mp4";
                 VideoPlayerActivity.startActivity(activity, false, pathSrc);
                 break;
             case R.id.btn_play_compress://播放压缩视频
-                pathCompress = "/storage/emulated/0/DCIM/Camera/VID20210113161137355.mp4";
+//                pathCompress = "/storage/emulated/0/DCIM/Camera/VID20210113161137355.mp4";
                 VideoPlayerActivity.startActivity(activity, false, pathCompress);
                 break;
             case R.id.btn_play_uri:  //播放网络视频

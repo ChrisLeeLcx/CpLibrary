@@ -25,10 +25,11 @@ import cn.lee.cplibrary.util.timer.TimeUtils;
 public class CpVideoDialog {
 
     private Activity activity;
-    public static boolean isShowGuideDialog=true ;//用户永久拒绝需要的权限时，是否显示引导对话框，使用时候可自行设置
+    public static boolean isShowGuideDialog = true;//用户永久拒绝需要的权限时，是否显示引导对话框，使用时候可自行设置
     public static final int REQUEST_CODE_FOR_RECORD = 5230;//录制视频请求码
     public static final int REQUEST_CODE_FOR_COMPRESS = 5231;//压缩视频请求码
     public static final int REQUEST_FOR_VIDEO_FILE = 5232;//选择文件中视频请求吗
+    private int duration = -1;//录制视频的时长，-1表示不限制时长 ，单位ms
     /***********录像权限相关开始***********/
     private static PermissionUtil permissionUtil;
     public static final int REQUEST_CODE_PER = 500;//权限请求码
@@ -38,31 +39,35 @@ public class CpVideoDialog {
             Manifest.permission.RECORD_AUDIO,//录制音频权限
             Manifest.permission.CAMERA,//相机权限
     };
+
+    //录制,相册
     public enum VideoVersion {
-        //录制,相册
         record, album
     }
+
     public CpVideoDialog(Activity activity) {
         this.activity = activity;
     }
+
     /**
-     *  注意：打开上传图片Dialog的Activity
-     *  必须重写onActivityResult、 onRequestPermissionsResult,permissionUtil.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-     * @param quality  拍摄视频的质量，值为VideoRecordActivity.Q480，Q720，Q1080，Q21600,质量越高，画质越清晰，文件越大
+     * 注意：打开上传图片Dialog的Activity
+     * 必须重写onActivityResult、 onRequestPermissionsResult,permissionUtil.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+     *
+     * @param quality 拍摄视频的质量，值为VideoRecordActivity.Q480，Q720，Q1080，Q21600,质量越高，画质越清晰，文件越大
      */
-    public   Dialog showChooseDialog( final int quality) {
+    public Dialog showChooseDialog(final int quality) {
         View view = LayoutInflater.from(activity).inflate(R.layout.cp_dialog_pic_choose, null);
-        final Dialog   picDialog = CpComDialog.getBottomDialog(activity, true, view);
+        final Dialog picDialog = CpComDialog.getBottomDialog(activity, true, view);
         Button btnAlbum = view.findViewById(R.id.photoAlbum);
         Button btnRecord = view.findViewById(R.id.photograph);
         btnAlbum.setText("打开相册");
-        btnRecord.setText("拍摄短视频");
+        btnRecord.setText("拍摄视频");
         //相册
         btnAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
-                requestPermission(activity,quality, VideoVersion.album);
+                requestPermission(activity, quality, VideoVersion.album);
             }
         });
         //拍摄
@@ -70,7 +75,7 @@ public class CpVideoDialog {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
-                requestPermission(activity,quality, VideoVersion.record);
+                requestPermission(activity, quality, VideoVersion.record);
             }
         });
 
@@ -83,14 +88,16 @@ public class CpVideoDialog {
                 });
         return picDialog;
     }
+
     //请求权限
-    public  void requestPermission(final Activity activity, final int quality , final VideoVersion ver) {
+    public void requestPermission(final Activity activity, final int quality, final VideoVersion ver) {
         permissionUtil = new PermissionUtil(new PermissionProxy() {
             @Override
             public void granted(Object source, int requestCode) {
                 switch (ver) {
                     case record:
-                        VideoRecordActivity.startActivityForResult(activity, REQUEST_CODE_FOR_RECORD, quality);
+//                        VideoRecordActivity.startActivityForResult(activity, REQUEST_CODE_FOR_RECORD, quality);
+                        VideoRecordActivity.startActivityForResult(activity, REQUEST_CODE_FOR_RECORD, quality,duration);
                         break;
                     case album:
                         openVideoFile(activity);
@@ -105,7 +112,7 @@ public class CpVideoDialog {
             @Override
             public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
 //                ToastUtil.showToast(activity ,"需要的权限被禁止，请到设置中心设置权限");
-                showGuideDialog(activity,"请允许访问相关权限");
+                showGuideDialog(activity, "请允许访问相关权限");
             }
 
             @Override
@@ -123,6 +130,7 @@ public class CpVideoDialog {
 
     /**
      * 选择文件视频
+     *
      * @param activity
      */
     private void openVideoFile(Activity activity) {
@@ -138,10 +146,11 @@ public class CpVideoDialog {
 
     /**
      * 跳转到压缩页面 压缩
+     *
      * @param activity
      * @param inputPath
      */
-    public void copressVideo(Activity activity,String inputPath) {
+    public void copressVideo(Activity activity, String inputPath) {
         VideoCompressActivity.startActivityForResult(activity, REQUEST_CODE_FOR_COMPRESS, inputPath);
     }
 
@@ -154,12 +163,12 @@ public class CpVideoDialog {
         permissionUtil.onRequestPermissionsResult(activity, requestCode, permissions, grantResults);
     }
 
-    public  void showGuideDialog(final Activity c, String msg){
-        if(!isShowGuideDialog){
+    public void showGuideDialog(final Activity c, String msg) {
+        if (!isShowGuideDialog) {
             ToastUtil.showToast(c, msg);
             return;
         }
-        TimeUtils.isCheckFastClick=false;
+        TimeUtils.isCheckFastClick = false;
         CpComDialog.Builder.builder(c).
                 setTitle("提示").setContent(msg).setTxtCancel("拒绝").setSure("设置")
                 .setTitleSize(20).setContentSize(16).setBtnSize(20)
@@ -176,9 +185,20 @@ public class CpVideoDialog {
 
             }
         });
-        TimeUtils.isCheckFastClick=true;
+        TimeUtils.isCheckFastClick = true;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     * 设置录制视频的时长，-1表示不限制时长 ，单位 ms
+     * @param duration
+     */
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }
 
 

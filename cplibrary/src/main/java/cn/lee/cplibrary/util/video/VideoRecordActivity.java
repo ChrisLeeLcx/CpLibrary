@@ -6,17 +6,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,9 +26,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.lee.cplibrary.R;
@@ -87,8 +81,14 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     private long pauseTime = 0;// 总暂停时间
     private long pauseStartTime = 0;// 开始暂停时间
     private VideoRecordActivity context;
-
+    private static int duration=-1;////录制视频的时长，-1表示不限制时长 ，单位ms
     public static void startActivityForResult(Activity activity, int requestCode, int quality) {
+        Intent intent = new Intent(activity, VideoRecordActivity.class);
+        intent.putExtra("quality", quality);
+        ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
+    }
+    public static void startActivityForResult(Activity activity, int requestCode, int quality,int videoDuration) {
+        duration =videoDuration;
         Intent intent = new Intent(activity, VideoRecordActivity.class);
         intent.putExtra("quality", quality);
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
@@ -386,8 +386,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0及以上
             if (recordState == RecordState.recording) {
                 mediaRecorder.pause();
-                textChrono.stop();// 停止计时：让画面显示的数定格，但实际依旧在计时
-                pauseStartTime = SystemClock.elapsedRealtime();//暂停时刻
+                stopChronometer();
                 recordState = RecordState.pause;
                 buttonCapture.setImageResource(R.drawable.player_pause);
             }
@@ -395,6 +394,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
 
         }
     }
+
 
     //录制复位
     private void recordResume() {
@@ -419,7 +419,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         }
         //如果正在录制点击这个按钮表示录制完成
         mediaRecorder.stop(); //停止
-        stopChronometer();
+        finishChronometer();
         buttonCapture.setImageResource(R.drawable.player_record);
         changeRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         releaseMediaRecorder();
@@ -443,7 +443,7 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         if (mediaRecorder != null) {
             mediaRecorder.stop(); //停止录制
         }
-        stopChronometer();
+        finishChronometer();
         buttonCapture.setImageResource(R.drawable.player_record);
         changeRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         releaseMediaRecorder();
@@ -523,8 +523,25 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         mediaRecorder = new MediaRecorder();
         mCamera.unlock();
         mediaRecorder.setCamera(mCamera);
+        // 这两项需要放在setOutputFormat之前
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        // 这两项需要放在setOutputFormat之前
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+//        //设置录制视频的输出格式
+//        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+//        //设置音频编码格式
+//        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+//        //设置视频编码格式// 设置录制的视频编码h263 h264
+//        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+//        mediaRecorder.setVideoSize(1920, 1080);
+//        //这是设置视频录制的帧率，即1秒钟30帧。。必须放在设置编码和格式的后面，否则报错
+//        mediaRecorder.setVideoFrameRate(30);
+//        //这个属性很重要，这个也直接影响到视频录制的大小，这个设置的越大，视频越清晰
+//        mediaRecorder.setVideoEncodingBitRate(12 * 1024 * 1024);
+        //设置录制最长时间
+         if(duration>0){
+            mediaRecorder.setMaxDuration(duration);
+        }
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             if (cameraFront) {
                 mediaRecorder.setOrientationHint(270);
@@ -532,7 +549,6 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
                 mediaRecorder.setOrientationHint(90);
             }
         }
-
         mediaRecorder.setProfile(CamcorderProfile.get(quality));
 
         url_file = CpVideoUtil.getOutputMediaFile(context);
@@ -555,7 +571,6 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
 //        if (file1.exists()) {
 //            file1.delete();
 //        }
-
         mediaRecorder.setOutputFile(file1.toString());
         try {
             mediaRecorder.prepare();
@@ -573,10 +588,16 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     }
 
     //停止录制时长显示
-    private void stopChronometer() {
+    private void finishChronometer() {
         textChrono.stop();
         chronoRecordingImage.setVisibility(View.INVISIBLE);
         textChrono.setVisibility(View.INVISIBLE);
+    }
+
+    //计时器停止计时
+    private void stopChronometer() {
+        textChrono.stop();// 停止计时：让画面显示的数定格，但实际依旧在计时
+        pauseStartTime = SystemClock.elapsedRealtime();//暂停时刻
     }
 
     private long countUp;//计时器经历的时间，单位s，
@@ -585,17 +606,22 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     private void startChronometer() {
         textChrono.setVisibility(View.VISIBLE);
         final long startTime = SystemClock.elapsedRealtime();
+        //为Chronometer绑定事件监听器
         textChrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer arg0) {
-                //初始时间-暂停时间
-                countUp = (SystemClock.elapsedRealtime() - startTime - pauseTime) / 1000;
+                if(duration>0 && countUp * 1000 >= duration){//录制有时长限制,并且超过了设置最大时长，计时器停止
+                    stopChronometer();
+                }else{
+                    //初始时间-暂停时间
+                    countUp = (SystemClock.elapsedRealtime() - startTime - pauseTime) / 1000;
+                }
+                // countUp = (SystemClock.elapsedRealtime() - startTime - pauseTime) / 1000; //初始时间-暂停时间
                 if (countUp % 2 == 0) {
                     chronoRecordingImage.setVisibility(View.VISIBLE);
                 } else {
                     chronoRecordingImage.setVisibility(View.INVISIBLE);
                 }
-
                 String asText = String.format("%02d", countUp / 60) + ":" + String.format("%02d", countUp % 60);
                 textChrono.setText(asText);
             }
@@ -624,7 +650,6 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
         if (requestCode == CpVideoDialog.REQUEST_CODE_FOR_COMPRESS) {//视频压缩：返回了
             if (resultCode == RESULT_OK) {//成功
                 String path = data.getStringExtra(VideoCompressActivity.INTENT_COMPRESS_VIDEO_PATH);
-                LogUtil.i("", "压缩视频地址:", path);
                 Intent intent = new Intent();
                 intent.putExtra(VideoCompressActivity.INTENT_COMPRESS_VIDEO_PATH, path);//压缩的视频的地址
                 intent.putExtra(INTENT_EXTRA_VIDEO_PATH, url_file);//录制的视频地址
