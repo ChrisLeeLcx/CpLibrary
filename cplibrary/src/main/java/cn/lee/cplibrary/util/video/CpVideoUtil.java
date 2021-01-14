@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -21,6 +23,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import cn.lee.cplibrary.constant.CpConfig;
@@ -246,4 +249,57 @@ public class CpVideoUtil {
 //        Log.i("filePath", url_file);
 //        return new File(url_file);
 //    }
+    public static String getFileSize(String path) {
+        File f = new File(path);
+        if (!f.exists()) {
+            return "0 MB";
+        } else {
+            long size = f.length();
+            return (size / 1024f) / 1024f + "MB";
+        }
+    }
+
+    /**
+     * 获取网络视频第一贞图片
+     * @param videoUrl 网络视频地址
+     * @return
+     */
+    public static Bitmap getNetVideoBitmap(String videoUrl) {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            //根据url获取缩略图
+            retriever.setDataSource(videoUrl, new HashMap());
+            //获得第一帧图片
+            bitmap = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } finally {
+            retriever.release();
+        }
+        return bitmap;
+    }
+
+    /**
+     * 获取视频文件截图
+     * @param path 视频文件的路径
+     * @return Bitmap 返回获取的Bitmap
+     */
+    public static Bitmap getLocalVideoThumb(String path) {
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+        media.setDataSource(path);
+        return media.getFrameAtTime();
+    }
+
+    /**
+     * 获取本地视频的时长，单位ms
+     * @param path
+     */
+    public static int getLocalVideoDuring(String path) {
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+        media.setDataSource(path);
+        String duration = media.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);//毫秒
+        int time = Integer.parseInt(duration);
+        return time;
+    }
 }

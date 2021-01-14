@@ -61,7 +61,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         String path = intent.getStringExtra(KEY_PATH);
         LogUtil.i("","path="+path);
         if (isUri) {//播放网络视频
-            Bitmap bitmap = getNetVideoBitmap(path);
+            Bitmap bitmap = CpVideoUtil.getNetVideoBitmap(path);
             if (bitmap != null) {
                 videoView.setBackground(new BitmapDrawable(getResources(), bitmap));
             }
@@ -113,22 +113,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
         intent.putExtra(VideoPlayerActivity.KEY_ISURI, isUri);
         intent.putExtra(VideoPlayerActivity.KEY_PATH, path);
         activity.startActivity(intent);
-    }
-
-    public static Bitmap getNetVideoBitmap(String videoUrl) {
-        Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        try {
-            //根据url获取缩略图
-            retriever.setDataSource(videoUrl, new HashMap());
-            //获得第一帧图片
-            bitmap = retriever.getFrameAtTime();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } finally {
-            retriever.release();
-        }
-        return bitmap;
     }
 
 }

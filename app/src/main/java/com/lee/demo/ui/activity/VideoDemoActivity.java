@@ -2,9 +2,7 @@ package com.lee.demo.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import com.lee.demo.R;
 
-import java.io.File;
 import java.net.URISyntaxException;
 
 import cn.lee.cplibrary.util.LogUtil;
@@ -45,7 +42,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         activity = this;
         findViews();
         videoUtil = new CpVideoDialog(VideoDemoActivity.this);
-        videoUtil.setDuration(5*1000);
+        videoUtil.setDuration(15*1000);
         videoUtil.setQuality(VideoRecordActivity.Q1080);
     }
 
@@ -99,7 +96,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
             LogUtil.i("", "原视频地址：" + pathSrc + "\n压缩视频地址：" + pathCompress);
             imageSrc.setImageBitmap(getVideoThumbnail(pathSrc));
             imageCompress.setImageBitmap(getVideoThumbnail(pathCompress));
-            first.setText("原视频大小：" + getFileSize(pathSrc) + "\n压缩视频大小:" + getFileSize(pathCompress));
+            first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc) + "\n压缩视频大小:" + CpVideoUtil.getFileSize(pathCompress));
         } else if (requestCode == CpVideoDialog.REQUEST_FOR_VIDEO_FILE && resultCode == RESULT_OK) {//选择文件中的视频：返回
             if (data != null && data.getData() != null) {
                 try {
@@ -109,7 +106,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
                     }
                     LogUtil.i("", "原视频地址：" + pathSrc);
                     imageSrc.setImageBitmap(getVideoThumbnail(pathSrc));
-                    first.setText("原视频大小：" + getFileSize(pathSrc));
+                    first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc)+"\n原视频时长："+CpVideoUtil.getLocalVideoDuring(pathSrc));
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
@@ -119,7 +116,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
                 pathCompress = data.getStringExtra(VideoCompressActivity.INTENT_COMPRESS_VIDEO_PATH);
                 LogUtil.i("", "压缩视频地址:" + pathCompress);
                 imageCompress.setImageBitmap(getVideoThumbnail(pathCompress));
-                first.setText(first.getText().toString() + "\n压缩视频大小:" + getFileSize(pathCompress));
+                first.setText(first.getText().toString() + "\n压缩视频大小:" + CpVideoUtil.getFileSize(pathCompress)+"\n压缩视频时长："+CpVideoUtil.getLocalVideoDuring(pathCompress));
             }
             if (resultCode == VideoCompressActivity.RESULT_CODE_FOR_COMPRESS_VIDEO_FAILED) {//失败
                 ToastUtil.showToast(activity, "处理失败,请重新上传");
@@ -133,19 +130,11 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
 
     private Bitmap getVideoThumbnail(String path) {
         //根据视频地址获取缩略图
-        Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
+//        Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
+        Bitmap bitmap = CpVideoUtil.getLocalVideoThumb(path);
         return bitmap;
     }
 
-    private String getFileSize(String path) {
-        File f = new File(path);
-        if (!f.exists()) {
-            return "0 MB";
-        } else {
-            long size = f.length();
-            return (size / 1024f) / 1024f + "MB";
-        }
-    }
 
 
     @Override
