@@ -16,6 +16,8 @@ import com.lee.demo.R;
 import com.lee.demo.base.BaseApplication;
 import com.lee.demo.base.BaseWebViewActivity;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
+import com.lee.demo.util.scanner.OCRDemoActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("各种截图", ShotActivity.class));
         totalList.add(new ActivityBean("短信监听", GetVerCodeActivity.class));
         totalList.add(new ActivityBean("高德定位", GDLocationActivity.class));
+        totalList.add(new ActivityBean("识别", OCRDemoActivity.class));
     }
 
     private void initRecyclerView() {
