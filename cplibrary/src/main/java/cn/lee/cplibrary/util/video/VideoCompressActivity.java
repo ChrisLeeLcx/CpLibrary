@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.ObjectUtils;
+import cn.lee.cplibrary.util.SystemBarUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.video.videocompressor.VideoCompress;
@@ -38,6 +39,7 @@ public class VideoCompressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        SystemBarUtils.setFullScreenNoText(context);
         init();
         compressVideo();
     }

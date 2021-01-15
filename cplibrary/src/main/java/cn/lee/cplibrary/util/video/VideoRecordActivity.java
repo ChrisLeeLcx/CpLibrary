@@ -52,8 +52,8 @@ public class VideoRecordActivity extends AppCompatActivity implements View.OnCli
     private Camera mCamera;
     private MediaRecorder mediaRecorder;
     private String url_file;
-    private static boolean flash = false;
-    private static boolean cameraFront = false;
+    private  boolean flash = false;
+    private  boolean cameraFront = false;
     private int quality = CamcorderProfile.QUALITY_480P;
 
     private static final int FOCUS_AREA_SIZE = 500;

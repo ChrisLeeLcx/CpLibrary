@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+     >
     <!--    android:background="#000000"-->
     <!-- 点击整个平局聚焦-->
     <LinearLayout
@@ -16,13 +16,14 @@
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp">
+        android:paddingTop="15dp"
+        android:paddingBottom="5dp"
+        android:background="#000000">
 
         <ImageView
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_video_finish" />
 
@@ -30,9 +31,8 @@
         <ImageView
             android:id="@+id/buttonFlash"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:maxHeight="60dp"
             android:scaleType="fitCenter"
@@ -41,11 +41,11 @@
         <ImageView
             android:id="@+id/button_ChangeCamera"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
+            android:paddingRight="10dp"
             android:src="@drawable/ic_camera_menu_switch" />
     </RelativeLayout>
 
