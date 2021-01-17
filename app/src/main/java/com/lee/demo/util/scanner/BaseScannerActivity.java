@@ -94,9 +94,9 @@ public abstract class BaseScannerActivity extends AppCompatActivity implements V
 //        scannerView.setEnableBarcode(true);//是否启用条码识别
 //        scannerView.setEnableBankCard(true); //是否使用银行卡识别
 //        scannerView.setEnableIdCard(true);//是否使用身份证识别
-//        scannerView.setEnableIdCard2(true);//是否使用身份证识别（第二种方式）// wu
+//        scannerView.setEnableIdCard2(true);//是否使用身份证识别（第二种方式）//无arm64-v8a
 //        scannerView.setEnableLicensePlate(true);//使用车牌识别
-//        scannerView.setEnableDrivingLicense(true); //是否使用驾驶证识别
+//        scannerView.setEnableDrivingLicense(true); //是否使用驾驶证识别//无arm64-v8a
         scannerView.setCallback(new Callback() {
             @Override
             public void result(Result result) {
