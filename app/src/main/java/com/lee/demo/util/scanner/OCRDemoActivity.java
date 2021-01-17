@@ -59,9 +59,8 @@ public class OCRDemoActivity extends AppCompatActivity {
         findViewById(R.id.btn_bank_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//识别银行卡
-//                SBankCardActivity.startActivityForResult(activity);
-//                需要将app的build.gradle中 abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
-//                换成 abiFilters 'armeabi', 'armeabi-v7a'才行
+                SBankCardActivity.startActivityForResult(activity);
+
 
             }
         });
@@ -69,6 +68,8 @@ public class OCRDemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {//识别行驶证
                 SDrivingLicenceActivity.startActivityForResult(activity);
+                // 需要将app的build.gradle中 abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
+                // 换成 abiFilters 'armeabi', 'armeabi-v7a'才行，因为没有arm64-v8a库
             }
         });
 

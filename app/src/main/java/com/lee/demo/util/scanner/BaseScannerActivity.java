@@ -29,7 +29,7 @@ import cn.lee.cplibrary.util.SystemBarUtils;
  * 3、车牌识别：对新能源车牌的识别率较低,对蓝牌识别率较高，建议和百度识别混合使用
  * 4、身份证识别：建议使用ScannerIdCardLib即第一种识别方式
  * 5、银行卡识别：只能识别部分银行卡（卡号平面的）eg建设银行，卡号凸起的识别不了eg：中国银行
- * 6、行驶证识别：识别不出来
+ * 6、驾驶证识别：识别率不高，识别速度较慢
  */
 
 public abstract class BaseScannerActivity extends AppCompatActivity implements View.OnClickListener {
