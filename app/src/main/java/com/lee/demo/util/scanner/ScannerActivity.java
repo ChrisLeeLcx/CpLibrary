@@ -45,6 +45,8 @@ public class ScannerActivity extends AppCompatActivity {
         tvResult = findViewById(R.id.tv_result);
         llQrcode = findViewById(R.id.ll_qrcode);
         llBarcode = findViewById(R.id.ll_barcode);
+        scannerView.setEnableLicensePlate(true);
+
         scannerView.setShouldAdjustFocusArea(true);
         scannerView.setViewFinder(new ViewFinder(this));
         scannerView.setSaveBmp(false);
@@ -57,19 +59,12 @@ public class ScannerActivity extends AppCompatActivity {
                 scannerView.restartPreviewAfterDelay(2000);
             }
         });
-        ((SwitchCompat) findViewById(R.id.sc_direction)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                scannerView.onPause();
-                scannerView.setCameraDirection(isChecked ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK);
-                scannerView.onResume();
-            }
-        });
         ((SwitchCompat) findViewById(R.id.sc_zxing)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scannerView.setEnableZXing(isChecked);
-                if (isChecked) flag |= 0b1; else flag &= 0b10;
+                if (isChecked) flag |= 0b1;
+                else flag &= 0b10;
                 llQrcode.setVisibility(flag == 0 ? View.GONE : View.VISIBLE);
                 llBarcode.setVisibility(flag == 0 ? View.GONE : View.VISIBLE);
             }
@@ -78,7 +73,8 @@ public class ScannerActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 scannerView.setEnableZBar(isChecked);
-                if (isChecked) flag |= 0b10; else flag &= 0b1;
+                if (isChecked) flag |= 0b10;
+                else flag &= 0b1;
                 llQrcode.setVisibility(flag == 0 ? View.GONE : View.VISIBLE);
                 llBarcode.setVisibility(flag == 0 ? View.GONE : View.VISIBLE);
             }

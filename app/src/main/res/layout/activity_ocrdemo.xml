@@ -4,17 +4,47 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp">
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="识别" />
-
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="识别结果" />
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别" />
+
+    <Button
+        android:id="@+id/btn_licence_plate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别车牌" />
+
+    <Button
+        android:id="@+id/btn_id_front"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别身份证正面" />
+
+    <Button
+        android:id="@+id/btn_id_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别身份证反面" />
+
+    <Button
+        android:id="@+id/btn_bank_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别银行卡" />
+
+    <Button
+        android:id="@+id/btn_driving_licence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别行驶证" />
+
+
 </LinearLayout>

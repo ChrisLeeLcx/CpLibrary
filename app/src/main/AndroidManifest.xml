@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lee.demo">
+
     <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.READ_SMS" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
@@ -14,12 +15,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!--录像需要的权限-->
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+
+    <!--识别需要的权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -81,13 +81,25 @@
         <activity android:name=".ui.activity.GetVerCodeActivity" />
         <activity android:name=".ui.activity.GDLocationActivity" />
         <activity android:name=".ui.activity.OtherActivity1" />
-        <activity android:name=".util.scanner.OCRScanActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e451a25e1a2d0e6a8c5892ba493c9c52" />
 
         <service android:name="com.amap.api.location.APSService" />
+
+        <activity
+            android:name=".util.scanner.SLicencePlateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.scanner.SBankCardActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".util.scanner.SDrivingLicenceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".util.scanner.SIDCardActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

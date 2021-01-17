@@ -10,9 +10,13 @@ import android.view.View;
 
 import com.shouzhong.scanner.IViewFinder;
 
-public class TestViewFinder extends View implements IViewFinder {
+/**
+ * 基本扫描界面
+ */
+public class BaseViewFinder extends View implements IViewFinder {
     private Rect framingRect;//扫码框所占区域
-    private float widthRatio = 0.8f;//扫码框宽度占view总宽度的比例
+    private float widthRatio = 0.85f;//扫码框宽度占view总宽度的比例
+    private float heightRatio = 0.75f;//扫码框高度占view总高度的比例
     private float heightWidthRatio = 1f;//扫码框的高宽比
     private int leftOffset = -1;//扫码框相对于左边的偏移量，若为负值，则扫码框会水平居中
     private int topOffset = -1;//扫码框相对于顶部的偏移量，若为负值，则扫码框会竖直居中
@@ -29,7 +33,7 @@ public class TestViewFinder extends View implements IViewFinder {
 
     private int position;
 
-    public TestViewFinder(Context context) {
+    public BaseViewFinder(Context context) {
         super(context);
         setWillNotDraw(false);//需要进行绘制
         laserPaint = new Paint();
@@ -65,7 +69,7 @@ public class TestViewFinder extends View implements IViewFinder {
         canvas.drawRect(framingRect.left + 10, top, framingRect.right - 10, top + 5, laserPaint);
         position = framingRect.bottom - framingRect.top - 25 < position ? 0 : position + 2;
         //区域刷新
-        postInvalidateDelayed(20, framingRect.left + 10, framingRect.top + 10, framingRect.right - 10, framingRect.bottom - 10);
+        postInvalidateDelayed(10, framingRect.left + 10, framingRect.top + 10, framingRect.right - 10, framingRect.bottom - 10);
     }
 
     /**
@@ -120,8 +124,8 @@ public class TestViewFinder extends View implements IViewFinder {
         Point viewSize = new Point(getWidth(), getHeight());
         int width, height;
         width = (int) (getWidth() * widthRatio);
-        height = (int) (heightWidthRatio * width);
-
+//        height = (int) (heightWidthRatio * width);
+        height = (int) (getHeight() * heightRatio);
         int left, top;
         if (leftOffset < 0) {
             left = (viewSize.x - width) / 2;//水平居中
@@ -139,5 +143,22 @@ public class TestViewFinder extends View implements IViewFinder {
     @Override
     public Rect getFramingRect() {
         return framingRect;
+    }
+
+
+    public void setWidthRatio(float widthRatio) {
+        this.widthRatio = widthRatio;
+    }
+
+    public void setHeightRatio(float heightRatio) {
+        this.heightRatio = heightRatio;
+    }
+
+    public void setLeftOffset(int leftOffset) {
+        this.leftOffset = leftOffset;
+    }
+
+    public void setTopOffset(int topOffset) {
+        this.topOffset = topOffset;
     }
 }
