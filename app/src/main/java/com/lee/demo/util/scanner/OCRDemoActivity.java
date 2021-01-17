@@ -12,9 +12,7 @@ import com.lee.demo.R;
 /**
  * OCR识别Demo
  * 使用到的开源识别项目有：
- * 1、https://github.com/shouzhong/Scanner 二维码/条码识别、身份证识别、银行卡识别、车牌识别、图片文字识别、黄图识别、驾驶证（驾照）识别
- * 存在问题：
- * （1）车牌识别：对新能源车牌的识别率较低,对蓝牌识别率较高
+ * 1、https://github.com/shouzhong/Scanner
  * Created by ChrisLee on 2020/12/30.
  */
 public class OCRDemoActivity extends AppCompatActivity {
@@ -61,7 +59,10 @@ public class OCRDemoActivity extends AppCompatActivity {
         findViewById(R.id.btn_bank_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//识别银行卡
-                SBankCardActivity.startActivityForResult(activity);
+//                SBankCardActivity.startActivityForResult(activity);
+//                需要将app的build.gradle中 abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
+//                换成 abiFilters 'armeabi', 'armeabi-v7a'才行
+
             }
         });
         findViewById(R.id.btn_driving_licence).setOnClickListener(new View.OnClickListener() {
