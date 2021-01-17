@@ -7,11 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.lee.demo.R;
-
-import cn.lee.cplibrary.util.JsonUtils;
-import cn.lee.cplibrary.util.ScreenUtil;
 
 /**
  * OCR识别Demo
@@ -47,12 +43,7 @@ public class OCRDemoActivity extends AppCompatActivity {
         findViewById(R.id.btn_licence_plate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//识别车牌
-//                SLicencePlateActivity.startActivityForResult(activity);
-
-                String s="{\"cardNumber\":\"341623199305012406\",\"birth\":\"1993-05-01\",\"name\":\"李翌侠\",\"sex\":\"女\",\"nation\":\"汉\",\"address\":\"安徽省利辛县纪王场乡永丰村西李庄31户\"}";
-                IdCardFrontBean frontBean = new Gson().fromJson(s,  IdCardFrontBean.class);
-
-                tvResult.setText("身份证正面:" + frontBean.getCardNumber() );
+                SLicencePlateActivity.startActivityForResult(activity);
             }
         });
         findViewById(R.id.btn_id_front).setOnClickListener(new View.OnClickListener() {
@@ -94,28 +85,15 @@ public class OCRDemoActivity extends AppCompatActivity {
         }
         if (requestCode == BaseScannerActivity.REQUEST_CODE_ID_CARD_FRONT && resultCode == RESULT_OK) {//身份证正面
             String result = data.getStringExtra(BaseScannerActivity.KEY_DATA);
-            String s="{\n" +
-                    "    \"cardNumber\":\"341623199305012406\",\n" +
-                    "    \"birth\":\"1993-05-01\",\n" +
-                    "    \"name\":\"李翌侠\",\n" +
-                    "    \"sex\":\"女\",\n" +
-                    "    \"nation\":\"汉\",\n" +
-                    "    \"address\":\"安徽省利辛县纪王场乡永丰村西李庄31户\"\n" +
-                    "}";
-             IdCardFrontBean frontBean = new Gson().fromJson(s,  IdCardFrontBean.class);
-
-            tvResult.setText("身份证正面:" + frontBean.getCardNumber() );
+            tvResult.setText("身份证正面:" + BaseScannerActivity.getIdCardFrontBean(result));
         }
         if (requestCode == BaseScannerActivity.REQUEST_CODE_ID_CARD_BACK && resultCode == RESULT_OK) {//身份证反面
             String result = data.getStringExtra(BaseScannerActivity.KEY_DATA);
-            SResultBean.IdCardBackBean bean = new Gson().fromJson(result, SResultBean.IdCardBackBean.class);
-
-            tvResult.setText("身份证反面:" + bean);
+            tvResult.setText("身份证反面:" + BaseScannerActivity.getIdCardBackBean(result));
         }
         if (requestCode == BaseScannerActivity.REQUEST_CODE_DRIVING_LICENSE && resultCode == RESULT_OK) {//驾驶证
             String result = data.getStringExtra(BaseScannerActivity.KEY_DATA);
-            SResultBean.DrivingLicenseBean bean = new Gson().fromJson(result, SResultBean.DrivingLicenseBean.class);
-            tvResult.setText("驾驶证:" + bean);
+            tvResult.setText("驾驶证:" + BaseScannerActivity.getDrivingLicenseBean(result));
         }
         super.onActivityResult(requestCode, resultCode, data);
 

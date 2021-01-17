@@ -16,10 +16,14 @@ import com.shouzhong.scanner.Callback;
 import com.shouzhong.scanner.Result;
 import com.shouzhong.scanner.ScannerView;
 
+import org.json.JSONObject;
+
+import cn.lee.cplibrary.util.JsonUtils;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.SystemBarUtils;
 
-/**OCR识别Demo
+/**
+ * OCR识别Demo
  * 1、使用到的开源识别项目有：https://github.com/shouzhong/Scanner 二维码/条码识别、身份证识别、银行卡识别、车牌识别、图片文字识别、黄图识别、驾驶证（驾照）识别
  * 1、so资源只有arm格式的，ScannerDrivingLicenseLib和ScannerIdCard2Lib无arm64-v8a格式
  * 3、车牌识别：对新能源车牌的识别率较低,对蓝牌识别率较高，建议和百度识别混合使用
@@ -48,10 +52,11 @@ public abstract class BaseScannerActivity extends AppCompatActivity implements V
     protected abstract BaseViewFinder getViewFinder();
 
     protected abstract BaseScannerActivity getSelfActivity();
+
     /**
      * 获取布局资源id
      */
-    protected   int getLayoutResId(){
+    protected int getLayoutResId() {
         return R.layout.activity_base_scanner_land;
     }
 
@@ -119,9 +124,9 @@ public abstract class BaseScannerActivity extends AppCompatActivity implements V
     @Override
     protected void onPause() {
         super.onPause();
-        LogUtil.i("",hasResult+"---11111-");
+        LogUtil.i("", hasResult + "---11111-");
         if (hasResult) {//解决报错
-            LogUtil.i("",hasResult+"----");
+            LogUtil.i("", hasResult + "----");
             //若不是正常返回结果时候调用本方法会报错： Found activity ActivityRecord{dbbe80d u0 com.lee.demo/.util.scanner.OCRDemoActivity t949 f} in proc activity list using null instead of expected ProcessRecord{5e45447 28552:com.lee.demo/u0a145}
             scannerView.onPause();
         }
@@ -156,5 +161,45 @@ public abstract class BaseScannerActivity extends AppCompatActivity implements V
             case R.id.ib_camera:
                 break;
         }
+    }
+
+
+    public static SResultBean.IdCardFrontBean getIdCardFrontBean(String json) {
+        JSONObject jsonObject = JsonUtils.formatterJsonObject(json);
+        SResultBean.IdCardFrontBean bean = new SResultBean.IdCardFrontBean();
+        if (jsonObject != null) {
+            bean.setCardNumber(jsonObject.optString("cardNumber"));
+            bean.setBirth(jsonObject.optString("birth"));
+            bean.setName(jsonObject.optString("name"));
+            bean.setSex(jsonObject.optString("sex"));
+            bean.setNation(jsonObject.optString("nation"));
+            bean.setAddress(jsonObject.optString("address"));
+        }
+        return bean;
+    }
+    public static SResultBean.IdCardBackBean getIdCardBackBean(String json) {
+        JSONObject jsonObject = JsonUtils.formatterJsonObject(json);
+        SResultBean.IdCardBackBean bean = new SResultBean.IdCardBackBean();
+        if (jsonObject != null) {
+            bean.setOrganization(jsonObject.optString("organization"));
+            bean.setValidPeriod(jsonObject.optString("validPeriod"));
+        }
+        return bean;
+    }
+    public static SResultBean.DrivingLicenseBean getDrivingLicenseBean(String json) {
+        JSONObject jsonObject = JsonUtils.formatterJsonObject(json);
+        SResultBean.DrivingLicenseBean bean = new SResultBean.DrivingLicenseBean();
+        if (jsonObject != null) {
+            bean.setCardNumber(jsonObject.optString("cardNumber"));
+            bean.setName(jsonObject.optString("name"));
+            bean.setSex(jsonObject.optString("sex"));
+            bean.setNationality(jsonObject.optString("nationality"));
+            bean.setAddress(jsonObject.optString("address"));
+            bean.setBirth(jsonObject.optString("birth"));
+            bean.setFirstIssue(jsonObject.optString("firstIssue"));
+            bean.set_class(jsonObject.optString("_class"));
+            bean.setValidPeriod(jsonObject.optString("validPeriod"));
+        }
+        return bean;
     }
 }
