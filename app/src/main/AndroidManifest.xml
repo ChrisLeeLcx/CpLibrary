@@ -31,12 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".util.scanner.ScannerActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".util.scanner.OCRDemoActivity"
-            android:screenOrientation="portrait" /> <!-- ***********************高德地图配置开始 *********************** -->
+        <!-- ***********************高德地图配置开始 *********************** -->
         <!-- 高德key -->
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
@@ -89,6 +84,12 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
+            android:name=".util.scanner.ScannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.scanner.OCRDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".util.scanner.SLicencePlateActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -100,6 +101,7 @@
         <activity
             android:name=".util.scanner.SIDCardActivity"
             android:screenOrientation="landscape" />
+
     </application>
 
 </manifest>
