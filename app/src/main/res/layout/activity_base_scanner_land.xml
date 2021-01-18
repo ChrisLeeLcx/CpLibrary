@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.shouzhong.scanner.ScannerView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_margin="15dp"
+        android:background="@color/transparent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@mipmap/camera_back_nomal" />
+
+        <ImageButton
+            android:id="@+id/ib_flash"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+             android:background="@mipmap/flash_off" />
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="居民身份证正面"
+        android:textSize="18sp"
+        android:textColor="@color/cp_glc_main"
+       />
+    <ImageButton
+        android:id="@+id/ib_camera"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:background="@mipmap/tack_pic_btn"
+        android:visibility="gone" />
+</RelativeLayout>

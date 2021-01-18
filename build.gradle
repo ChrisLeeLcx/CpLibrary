@@ -1,10 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+//注意：library下载中心连接添加多了的话，会导致打包APK 和Run APK特别的慢，可能会有七百分钟，正常1分钟左右，所以当第三方类库下载结束后，及时把下载中心连接注释掉
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
+        //  mavenCentral()
+        //jcenter { url "http://jcenter.bintray.com/" }
+        //maven { url "https://jitpack.io" }
+        //maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        //maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        //maven { url "https://maven.google.com" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
@@ -22,6 +28,12 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        //mavenCentral()
+        //jcenter { url "http://jcenter.bintray.com/" }
+        // maven { url "https://jitpack.io" }
+        //maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        //maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        //maven { url "https://maven.google.com" }
     }
 }
 
