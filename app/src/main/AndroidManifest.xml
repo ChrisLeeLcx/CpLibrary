@@ -3,17 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lee.demo">
 
+    <!--读取手机信息权限 -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 8.0以上手机新增权限READ_PHONE_NUMBERS读取手机号码、ANSWER_PHONE_CALLS -->
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <!-- 高德地图：Android 6.0及以上系统可以参考Android 6.0权限说明章节。 -->
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.READ_SMS" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于读取手机当前的状态 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于写入缓存数据到扩展存储卡 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 用于读取手机当前的状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 用于写入缓存数据到扩展存储卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <!--识别需要的权限-->
@@ -31,30 +42,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
         <!-- ***********************高德地图配置开始 *********************** -->
         <!-- 高德key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="e451a25e1a2d0e6a8c5892ba493c9c52" />
+        <!-- 定位需要的服务:必须加上，否则后台定位报错errorCode为 10 -->
+        <service android:name="com.amap.api.location.APSService" />
+        <!-- ***********************高德地图配置结束 *********************** -->
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 定位需要的服务:必须加上，否则后台定位报错errorCode为 10 -->
+        </activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-        </activity> <!-- ***********************高德地图配置结束 *********************** -->
+        </activity>
         <activity android:name=".ui.activity.DialogActivity" />
         <activity android:name=".ui.activity.PermissionActivity" />
         <activity android:name=".ui.activity.PhotoActivity" />
@@ -78,16 +89,9 @@
         <activity android:name=".ui.activity.CheckAllMsgActivity" />
         <activity android:name=".ui.activity.GetVerCodeActivity" />
         <activity android:name=".ui.activity.GDLocationActivity" />
-        <activity android:name=".ui.activity.OtherActivity1"/>
-        <activity android:name=".ui.activity.VideoDemoActivity"/>
         <activity android:name=".ui.activity.OtherActivity1" />
-
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="e451a25e1a2d0e6a8c5892ba493c9c52" />
-
-        <service android:name="com.amap.api.location.APSService" />
-
+        <activity android:name=".ui.activity.VideoDemoActivity" />
+        <!--识别页面开始-->
         <activity
             android:name=".util.scanner.ScannerActivity"
             android:screenOrientation="portrait" />
@@ -106,7 +110,7 @@
         <activity
             android:name=".util.scanner.SIDCardActivity"
             android:screenOrientation="landscape" />
-
+        <!--识别页面结束-->
     </application>
 
 </manifest>

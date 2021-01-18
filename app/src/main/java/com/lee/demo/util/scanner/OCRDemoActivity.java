@@ -1,13 +1,24 @@
 package com.lee.demo.util.scanner;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.lee.demo.R;
+
+import java.util.List;
+
+import cn.lee.cplibrary.util.ToastUtil;
+import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
+import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
+import cn.lee.cplibrary.util.video.CpVideoDialog;
+import cn.lee.cplibrary.util.video.VideoRecordActivity;
 
 /**
  * OCR识别Demo
@@ -19,6 +30,14 @@ public class OCRDemoActivity extends AppCompatActivity {
     private Button btn;
     private TextView tvResult;
     private OCRDemoActivity activity;
+    /***********录像权限相关开始***********/
+    private static PermissionUtil permissionUtil;
+    public static final int REQUEST_CODE_PER = 500;//权限请求码
+    private static final String[] permissionArray = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,//写
+            Manifest.permission.READ_EXTERNAL_STORAGE,//读
+            Manifest.permission.CAMERA,//相机权限
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +45,8 @@ public class OCRDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ocrdemo);
         activity = this;
         initView();
+        requestPermission(activity);
+
     }
 
     private void initView() {
@@ -98,6 +119,41 @@ public class OCRDemoActivity extends AppCompatActivity {
             tvResult.setText("驾驶证:" + BaseScannerActivity.getDrivingLicenseBean(result));
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    //请求权限
+    public void requestPermission(final Activity activity) {
+        permissionUtil = new PermissionUtil(new PermissionProxy() {
+            @Override
+            public void granted(Object source, int requestCode) {
+
+            }
+
+            @Override
+            public void denied(Object source, int requestCode, List deniedPermissions) {
+            }
+
+            @Override
+            public void deniedNoShow(Object source, int requestCode, List noShowPermissions) {
+                ToastUtil.showToast(activity, "需要的权限被禁止，请到设置中心设置权限");
+            }
+
+            @Override
+            public void rationale(Object source, int requestCode) {
+
+            }
+
+            @Override
+            public boolean needShowRationale(int requestCode) {
+                return false;
+            }
+        });
+        permissionUtil.requestPermissions(activity, REQUEST_CODE_PER, permissionArray);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionUtil.onRequestPermissionsResult(activity, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

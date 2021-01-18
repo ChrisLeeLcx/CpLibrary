@@ -42,7 +42,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         activity = this;
         findViews();
         videoUtil = new CpVideoDialog(VideoDemoActivity.this);
-        videoUtil.setDuration(15*1000);
+        videoUtil.setDuration(15 * 1000);
         videoUtil.setQuality(VideoRecordActivity.Q1080);
     }
 
@@ -64,14 +64,22 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn:  //录制不限时视频
-                videoUtil.showChooseDialog( );
+                videoUtil.showChooseDialog();
                 break;
             case R.id.btn_play_src:  //播放原视频
 //                pathSrc = "/storage/emulated/0/DCIM/Camera/VID20210111184738.mp4";
+                if (ObjectUtils.isEmpty(pathSrc)) {
+                    ToastUtil.showToast(activity, "请先录制视频");
+                    return;
+                }
                 VideoPlayerActivity.startActivity(activity, false, pathSrc);
                 break;
             case R.id.btn_play_compress://播放压缩视频
 //                pathCompress = "/storage/emulated/0/DCIM/Camera/VID20210113161137355.mp4";
+                if (ObjectUtils.isEmpty(pathCompress)) {
+                    ToastUtil.showToast(activity, "请先录制视频");
+                    return;
+                }
                 VideoPlayerActivity.startActivity(activity, false, pathCompress);
                 break;
             case R.id.btn_play_uri:  //播放网络视频
@@ -106,7 +114,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
                     }
                     LogUtil.i("", "原视频地址：" + pathSrc);
                     imageSrc.setImageBitmap(getVideoThumbnail(pathSrc));
-                    first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc)+"\n原视频时长："+CpVideoUtil.getLocalVideoDuring(pathSrc));
+                    first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc) + "\n原视频时长：" + CpVideoUtil.getLocalVideoDuring(pathSrc));
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
@@ -116,7 +124,7 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
                 pathCompress = data.getStringExtra(VideoCompressActivity.INTENT_COMPRESS_VIDEO_PATH);
                 LogUtil.i("", "压缩视频地址:" + pathCompress);
                 imageCompress.setImageBitmap(getVideoThumbnail(pathCompress));
-                first.setText(first.getText().toString() + "\n压缩视频大小:" + CpVideoUtil.getFileSize(pathCompress)+"\n压缩视频时长："+CpVideoUtil.getLocalVideoDuring(pathCompress));
+                first.setText(first.getText().toString() + "\n压缩视频大小:" + CpVideoUtil.getFileSize(pathCompress) + "\n压缩视频时长：" + CpVideoUtil.getLocalVideoDuring(pathCompress));
             }
             if (resultCode == VideoCompressActivity.RESULT_CODE_FOR_COMPRESS_VIDEO_FAILED) {//失败
                 ToastUtil.showToast(activity, "处理失败,请重新上传");
@@ -134,7 +142,6 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         Bitmap bitmap = CpVideoUtil.getLocalVideoThumb(path);
         return bitmap;
     }
-
 
 
     @Override

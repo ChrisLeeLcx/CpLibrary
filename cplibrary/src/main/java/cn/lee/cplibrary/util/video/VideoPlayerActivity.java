@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 import cn.lee.cplibrary.R;
 import cn.lee.cplibrary.util.LogUtil;
+import cn.lee.cplibrary.util.SystemBarUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 
 /**
@@ -38,6 +39,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cp_activity_video_player);
         activity = this;
+        SystemBarUtils.setFullScreenNoText(activity);
         videoView = findViewById(R.id.videoView);
         findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
             @Override

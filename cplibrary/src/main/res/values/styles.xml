@@ -39,7 +39,7 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="cp_ActivityTranslucent" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="cp_activityTranslucent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item><!--页面淡入淡出动画-->
         <item name="android:windowFrame">@null</item><!--边框-->
         <item name="android:windowIsTranslucent">true</item><!--半透明-->

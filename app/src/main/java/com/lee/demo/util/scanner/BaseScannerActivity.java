@@ -28,7 +28,7 @@ import cn.lee.cplibrary.util.SystemBarUtils;
  * 1、so资源只有arm格式的，ScannerDrivingLicenseLib和ScannerIdCard2Lib无arm64-v8a格式
  * 3、车牌识别：对新能源车牌的识别率较低,对蓝牌识别率较高，建议和百度识别混合使用
  * 4、身份证识别：建议使用ScannerIdCardLib即第一种识别方式
- * 5、银行卡识别：只能识别部分银行卡（卡号平面的）eg建设银行，卡号凸起的识别不了eg：中国银行
+ * 5、银行卡识别：只能识别部分银行卡（卡号平面的）eg建设银行，卡号凸起的识别效率低eg：中国银行
  * 6、驾驶证识别：识别率不高，识别速度较慢
  */
 
@@ -42,12 +42,12 @@ public abstract class BaseScannerActivity extends AppCompatActivity implements V
     public static final String KEY_TYPE = "key_type";
     public static final String KEY_PATH = "key_path";
 
-    public static final int REQUEST_CODE_TYPE_CODE = 0; // 二维码/条码
-    public static final int REQUEST_CODE_ID_CARD_FRONT = 1;// 身份证人头面
-    public static final int REQUEST_CODE_ID_CARD_BACK = 2;// 身份证国徽面
-    public static final int REQUEST_CODE_BANK_CARD = 3;// 银行卡
-    public static final int REQUEST_CODE_LICENSE_PLATE = 4;// 车牌
-    public static final int REQUEST_CODE_DRIVING_LICENSE = 5; // 驾驶证
+    public static final int REQUEST_CODE_TYPE_CODE = 5000; // 二维码/条码
+    public static final int REQUEST_CODE_ID_CARD_FRONT = 5001;// 身份证人头面
+    public static final int REQUEST_CODE_ID_CARD_BACK = 5002;// 身份证国徽面
+    public static final int REQUEST_CODE_BANK_CARD = 5003;// 银行卡
+    public static final int REQUEST_CODE_LICENSE_PLATE = 5004;// 车牌
+    public static final int REQUEST_CODE_DRIVING_LICENSE = 5005; // 驾驶证
 
     protected abstract BaseViewFinder getViewFinder();
 
