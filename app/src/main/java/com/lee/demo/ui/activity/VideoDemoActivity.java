@@ -2,6 +2,7 @@ package com.lee.demo.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.CamcorderProfile;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import com.lee.demo.R;
 
 import java.net.URISyntaxException;
 
+import cn.lee.cplibrary.constant.CpConfig;
+import cn.lee.cplibrary.util.FileUtils;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ToastUtil;
@@ -22,6 +25,7 @@ import cn.lee.cplibrary.util.video.CpVideoUtil;
 import cn.lee.cplibrary.util.video.VideoCompressActivity;
 import cn.lee.cplibrary.util.video.VideoPlayerActivity;
 import cn.lee.cplibrary.util.video.VideoRecordActivity;
+import cn.lee.cplibrary.util.video.videocompressor.VideoController;
 
 /**
  * 最初版本的视频录制页面参考 https://github.com/hui46226021/ShVideoDemo
@@ -34,6 +38,8 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
     CpVideoDialog videoUtil;
     private VideoDemoActivity activity;
     String pathSrc, pathCompress;
+    private boolean isSysCamera = true;//录制视频是否使用系统相机
+    private long min_compress_size = 5 * 1024 * 1024L;//超过5M则压缩
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +48,16 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         activity = this;
         findViews();
         videoUtil = new CpVideoDialog(VideoDemoActivity.this);
-        videoUtil.setDuration(15 * 1000);
-        videoUtil.setQuality(VideoRecordActivity.Q1080);
+        videoUtil.setSysCamera(isSysCamera);//不设置也是默认使用系统相机
+        if (isSysCamera) {//系统相机
+            videoUtil.setDuration(15 * 1000);//15s
+            videoUtil.setQuality(CamcorderProfile.QUALITY_HIGH);//高质量
+            videoUtil.setSys_max_size_limit(1024L * 1024 * 100);//100M
+        } else {//绘制相机
+            videoUtil.setDuration(15 * 1000);//15s
+            videoUtil.setQuality(VideoRecordActivity.Q1080);
+        }
+
     }
 
     private void findViews() {
@@ -98,20 +112,47 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CpVideoDialog.REQUEST_CODE_FOR_RECORD && resultCode == RESULT_OK) {//录制视频
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.i("", "resultCode=" + resultCode);
+        if (requestCode == CpVideoDialog.REQUEST_CODE_FOR_RECORD && resultCode == RESULT_OK) {//绘制相机：录制视频
             pathSrc = data.getStringExtra(VideoRecordActivity.INTENT_EXTRA_VIDEO_PATH);
             pathCompress = data.getStringExtra(VideoCompressActivity.INTENT_COMPRESS_VIDEO_PATH);
             LogUtil.i("", "原视频地址：" + pathSrc + "\n压缩视频地址：" + pathCompress);
             imageSrc.setImageBitmap(getVideoThumbnail(pathSrc));
             imageCompress.setImageBitmap(getVideoThumbnail(pathCompress));
             first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc) + "\n压缩视频大小:" + CpVideoUtil.getFileSize(pathCompress));
+        }
+        if (requestCode == CpVideoDialog.REQUEST_CODE_FOR_CAMERA) {//系统相机：录制视频
+            if (resultCode == RESULT_OK) {//成功
+                if (data == null || data.getData() == null) {
+                    return;
+                }
+                try {
+                    pathSrc = CpVideoUtil.getFilePath(this, data.getData());
+                    LogUtil.i("", "原视频地址：" + pathSrc);
+                    imageSrc.setImageBitmap(getVideoThumbnail(pathSrc));
+                    first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc) + "\n原视频时长：" + CpVideoUtil.getLocalVideoDuring(pathSrc));
+                    compress(pathSrc);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            } else {//失败 ：当用户点击返回按钮、或者取消时候 resultCode=RESULT_CANCELED，此时删除已经创建的文件
+//                FileUtils.deleteFile(pathSrc, new FileUtils.FileDeleteCallback() {
+//                    @Override
+//                    public void result(int state) {
+//                        if (state == 1) {
+//                            LogUtil.i("", "删除成功：" + pathSrc);
+//                        } else {
+//                            LogUtil.i("", "删除失败：" + pathSrc);
+//                        }
+//                    }
+//                });
+            }
         } else if (requestCode == CpVideoDialog.REQUEST_FOR_VIDEO_FILE && resultCode == RESULT_OK) {//选择文件中的视频：返回
             if (data != null && data.getData() != null) {
                 try {
                     pathSrc = CpVideoUtil.getFilePath(this, data.getData());
-                    if (!ObjectUtils.isEmpty(pathSrc)) {
-                        videoUtil.copressVideo(VideoDemoActivity.this, pathSrc);//进行压缩
-                    }
+                    compress(pathSrc);
                     LogUtil.i("", "原视频地址：" + pathSrc);
                     imageSrc.setImageBitmap(getVideoThumbnail(pathSrc));
                     first.setText("原视频大小：" + CpVideoUtil.getFileSize(pathSrc) + "\n原视频时长：" + CpVideoUtil.getLocalVideoDuring(pathSrc));
@@ -133,7 +174,23 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         }
         //if (requestCode == CpVideoDialog.REQUEST_CODE_FOR_RECORD && resultCode == RESULT_CANCELED) {//取消
         //}
-        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    /**
+     * 压缩标准
+     * @param srcPath
+     */
+    private void compress(String srcPath) {
+//        videoUtil.compressVideo(VideoDemoActivity.this, srcPath, VideoController.COMPRESS_QUALITY_LOW);//进行压缩
+        videoUtil.compressVideo(VideoDemoActivity.this, srcPath );//进行压缩
+//        if (FileUtils.getFileSize(srcPath) >  20 * 1024 * 1024L) {//大于 20M
+//            videoUtil.compressVideo(VideoDemoActivity.this, srcPath, VideoController.COMPRESS_QUALITY_LOW);//进行压缩
+//        }else if (FileUtils.getFileSize(srcPath) > 10 * 1024 * 1024L) {// 10~20
+//            videoUtil.compressVideo(VideoDemoActivity.this, srcPath, VideoController.COMPRESS_QUALITY_MEDIUM);//进行压缩
+//        }else if (FileUtils.getFileSize(srcPath) > min_compress_size) {//视频大于 min_compress_size
+//            videoUtil.compressVideo(VideoDemoActivity.this, srcPath,VideoController.COMPRESS_QUALITY_HIGH);//进行压缩
+//        }
     }
 
     private Bitmap getVideoThumbnail(String path) {
@@ -150,4 +207,5 @@ public class VideoDemoActivity extends AppCompatActivity implements View.OnClick
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
     /***********权限相关结束***********/
+
 }

@@ -20,6 +20,7 @@ import cn.lee.cplibrary.util.SystemBarUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.video.videocompressor.VideoCompress;
+import cn.lee.cplibrary.util.video.videocompressor.VideoController;
 
 /**
  * 视频压缩页面
@@ -34,6 +35,7 @@ public class VideoCompressActivity extends AppCompatActivity {
     private String outputPath;//压缩完成的路径
     TextView tvProgress;
     private VideoCompressActivity context;
+    private int quality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +45,32 @@ public class VideoCompressActivity extends AppCompatActivity {
         init();
         compressVideo();
     }
-
     public static void startActivityForResult(Activity activity, int requestCode, String inputPath) {
         Intent intent = new Intent(activity, VideoCompressActivity.class);
         intent.putExtra("inputPath", inputPath);//源视频路径
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
     }
+    /**
+     * @param activity
+     * @param requestCode
+     * @param inputPath
+     * @param quality     :值为 VideoController.COMPRESS_QUALITY_HIGH,
+     *                    VideoController.COMPRESS_QUALITY_MEDIUM，
+     *                    VideoController.COMPRESS_QUALITY_LOW
+     */
+    public static void startActivityForResult(Activity activity, int requestCode, String inputPath, int quality) {
+        Intent intent = new Intent(activity, VideoCompressActivity.class);
+        intent.putExtra("inputPath", inputPath);//源视频路径
+        intent.putExtra("quality", quality);//视频压缩质量
+        ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
+    }
 
-    //获取源视频路径
+    /**
+     * 获取源视频路径,默认低质量压缩
+     */
     private void init() {
         inputPath = getIntent().getStringExtra("inputPath");
+        quality = getIntent().getIntExtra("quality", VideoController.COMPRESS_QUALITY_LOW);
         if (ObjectUtils.isEmpty(inputPath)) {
             ToastUtil.showToast(this, "获取视频失败");
             finish();
@@ -62,7 +80,7 @@ public class VideoCompressActivity extends AppCompatActivity {
     //压缩
     private void compressVideo() {
         outputPath = CpVideoUtil.getOutputMediaFile(context);
-        VideoCompress.compressVideoLow(inputPath, outputPath, new VideoCompress.CompressListener() {
+        VideoCompress.compressVideo(inputPath, outputPath, quality, new VideoCompress.CompressListener() {
             @Override
             public void onStart() {//开始压缩
                 Dialog dialog = CpComDialog.showProgressDialog(VideoCompressActivity.this, "处理中...");
@@ -92,7 +110,7 @@ public class VideoCompressActivity extends AppCompatActivity {
             @Override
             public void onProgress(float percent) {//压缩进度%
                 //只保留整数部分
-                tvProgress.setText("处理中"+(int) Math.round(percent) + "%");//四舍五入
+                tvProgress.setText("处理中" + (int) Math.round(percent) + "%");//四舍五入
             }
         });
     }

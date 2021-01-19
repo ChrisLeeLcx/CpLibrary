@@ -5,19 +5,26 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
 import java.util.List;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
 import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
 import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.timer.TimeUtils;
+import cn.lee.cplibrary.util.video.videocompressor.VideoController;
 
 /**
  * 获取拍摄短视频或者相册中的视频
@@ -26,11 +33,15 @@ public class CpVideoDialog {
 
     private Activity activity;
     public static boolean isShowGuideDialog = true;//用户永久拒绝需要的权限时，是否显示引导对话框，使用时候可自行设置
-    public static final int REQUEST_CODE_FOR_RECORD = 5230;//录制视频请求码
+    public static final int REQUEST_CODE_FOR_RECORD = 5230;//绘制相机：录制视频请求码
     public static final int REQUEST_CODE_FOR_COMPRESS = 5231;//压缩视频请求码
     public static final int REQUEST_FOR_VIDEO_FILE = 5232;//选择文件中视频请求吗
-    private int duration = -1;//录制视频的时长，-1表示不限制时长 ，单位ms
-    private int quality = VideoRecordActivity.Q1080;//录制视频的分辨率
+    public static final int REQUEST_CODE_FOR_CAMERA = 5233;//系统相机：选择文件中视频请求吗
+    private int duration = -1;//录制视频的时长，-1表示不限制时长 ，单位ms（绘制相机，系统相机）
+    private int quality = VideoRecordActivity.Q1080;//系统相机和绘制相机：录制视频的分辨率
+    private boolean isSysCamera = true;//录制视频是否使用系统相机
+    //系统相机设置
+    private long sys_max_size_limit = 1024L * 1024 * 100;// 系统相机：允许的最大大小(以 B 为单位)  例如：限制大小为100M
 
     /***********录像权限相关开始***********/
     private static PermissionUtil permissionUtil;
@@ -42,9 +53,9 @@ public class CpVideoDialog {
             Manifest.permission.CAMERA,//相机权限
     };
 
-    //录制,相册
+    //绘制相机,相册,系统相机
     public enum VideoVersion {
-        record, album
+        record, album, camera
     }
 
     public CpVideoDialog(Activity activity) {
@@ -67,7 +78,7 @@ public class CpVideoDialog {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
-                requestPermission(activity, quality, VideoVersion.album);
+                requestPermission(activity, VideoVersion.album);
             }
         });
         //拍摄
@@ -75,7 +86,11 @@ public class CpVideoDialog {
             @Override
             public void onClick(View arg0) {
                 picDialog.dismiss();
-                requestPermission(activity, quality, VideoVersion.record);
+                if (isSysCamera) {
+                    requestPermission(activity, VideoVersion.camera);
+                } else {
+                    requestPermission(activity, VideoVersion.record);
+                }
             }
         });
 
@@ -90,14 +105,17 @@ public class CpVideoDialog {
     }
 
     //请求权限
-    public void requestPermission(final Activity activity, final int quality, final VideoVersion ver) {
+    public void requestPermission(final Activity activity, final VideoVersion ver) {
         permissionUtil = new PermissionUtil(new PermissionProxy() {
             @Override
             public void granted(Object source, int requestCode) {
                 switch (ver) {
                     case record:
 //                        VideoRecordActivity.startActivityForResult(activity, REQUEST_CODE_FOR_RECORD, quality);
-                        VideoRecordActivity.startActivityForResult(activity, REQUEST_CODE_FOR_RECORD, quality,duration);
+                        VideoRecordActivity.startActivityForResult(activity, REQUEST_CODE_FOR_RECORD, quality, duration);
+                        break;
+                    case camera:
+                        openCamera(activity);
                         break;
                     case album:
                         openVideoFile(activity);
@@ -143,17 +161,67 @@ public class CpVideoDialog {
         activity.startActivityForResult(intent, REQUEST_FOR_VIDEO_FILE);
     }
 
+    /**
+     * 打开系统相机：选择文件视频
+     */
+    private void openCamera(Activity activity) {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        Uri camera_URI;
+//        String camera_video_output_path = CpVideoUtil.getOutputMediaFile(activity);
+//        File videoFile = new File(camera_video_output_path);//视频存储地址
+//        if (videoFile.exists()) {
+//            videoFile.delete();
+//        }
+//        videoFile.mkdir();
+        File videoFile = new File(CpVideoUtil.getAlbumStorageDir(), "temp_video" );
+        if (!videoFile.exists()) {
+            videoFile.mkdir();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//FileProvider只能用于高版本的app中
+            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            camera_URI = FileProvider.getUriForFile(activity, AppUtils.getAppId(activity) + ".provider", videoFile);
+        } else {
+            camera_URI = Uri.fromFile(videoFile);
+        }
+        //储存地址
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, camera_URI);
+        //用于控制录制视频的质量；0——低质量；1——高质量
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, quality);
+        if (duration > 1 * 1000) {//大于1s才设置最大时长，否则不限时长
+            //允许记录的最长时间(以 秒 为单位)  例如：限制为60S
+            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, duration / 1000);
+        }
+        //允许的最大大小(以 B 为单位)  例如：限制大小为100M
+        intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, sys_max_size_limit);
+        activity.startActivityForResult(intent, REQUEST_CODE_FOR_CAMERA);
+
+        intent.putExtra("android.intent.extras.CAMERA_FACING",1);
+    }
 
     /**
      * 跳转到压缩页面 压缩
-     *
      * @param activity
      * @param inputPath
      */
-    public void copressVideo(Activity activity, String inputPath) {
-        VideoCompressActivity.startActivityForResult(activity, REQUEST_CODE_FOR_COMPRESS, inputPath);
+    public void compressVideo(Activity activity, String inputPath) {
+        if (!ObjectUtils.isEmpty(inputPath)) {
+            VideoCompressActivity.startActivityForResult(activity, REQUEST_CODE_FOR_COMPRESS, inputPath);
+        }
     }
 
+    /**
+     * 跳转到压缩页面 压缩
+     * @param activity
+     * @param inputPath
+     * @param quality :值为 VideoController.COMPRESS_QUALITY_HIGH,
+     *                VideoController.COMPRESS_QUALITY_MEDIUM，
+     *                VideoController.COMPRESS_QUALITY_LOW
+     */
+    public void compressVideo(Activity activity, String inputPath,int quality) {
+        if (!ObjectUtils.isEmpty(inputPath)) {
+            VideoCompressActivity.startActivityForResult(activity, REQUEST_CODE_FOR_COMPRESS, inputPath,quality);
+        }
+    }
     /**
      * （必须调用本方法）
      * 权限申请结果处理,在Activity或者Fragment的onRequestPermissionsResult方法中的super方法上一行调用
@@ -188,27 +256,38 @@ public class CpVideoDialog {
         TimeUtils.isCheckFastClick = true;
     }
 
-    public int getDuration() {
-        return duration;
-    }
-
     /**
      * 设置录制视频的时长，-1表示不限制时长 ，单位 ms
-     * @param duration
+     * eg：15s 则传入15*1000
      */
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
-    public int getQuality() {
-        return quality;
-    }
     /**
-     * quality 拍摄视频的质量，值为VideoRecordActivity.Q480，Q720，Q1080，Q21600,质量越高，画质越清晰，文件越大
+     * 1、绘制相机： quality 拍摄视频的质量，
+     * 值为VideoRecordActivity.Q480，Q720，Q1080，Q21600,质量越高，画质越清晰，文件越大
+     * 2、系统相机 CamcorderProfile.QUALITY_HIGH1——高质量，  QUALITY_LOW0——低质量；
      */
     public void setQuality(int quality) {
         this.quality = quality;
     }
+
+    /**
+     * 录制视频是否使用系统相机,true 使用系统相机，false 使用绘制相机
+     */
+    public void setSysCamera(boolean sysCamera) {
+        isSysCamera = sysCamera;
+    }
+
+    /**
+     * 系统相机：允许的最大大小(以 B 为单位)
+     * 例如：限制大小为100M 则设置1024L * 1024 * 100
+     */
+    public void setSys_max_size_limit(long sys_max_size_limit) {
+        this.sys_max_size_limit = sys_max_size_limit;
+    }
+
 }
 
 
