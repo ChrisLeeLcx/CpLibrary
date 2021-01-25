@@ -27,6 +27,7 @@ import android.view.View;
 import java.io.File;
 import java.util.List;
 
+import cn.lee.cplibrary.constant.CpConfig;
 import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
@@ -73,7 +74,7 @@ public class PhotoUtil {
      * @param savedInstanceState
      */
     public static void init(Activity activity, Bundle savedInstanceState) {
-        PermissionUtils.checkPermissionArray(activity, permissionArray, 0x10);
+        PermissionUtils.checkPermissionArray(activity, permissionArray, CpConfig.REQUEST_CODE_PER_PHOTO);
         createCameraTempFile(savedInstanceState);
     }
 
@@ -84,12 +85,12 @@ public class PhotoUtil {
      * @param savedInstanceState
      */
     public static void checkPermission(Activity activity, Bundle savedInstanceState) {
-        PermissionUtils.checkPermissionArray(activity, permissionArray, 0x10);
+        PermissionUtils.checkPermissionArray(activity, permissionArray, CpConfig.REQUEST_CODE_PER_PHOTO);
         cn.lee.cplibrary.util.takephotos.PhotoUtil.createCameraTempFile(savedInstanceState);
     }
 
     public static void checkPermission(Fragment fragment, Bundle savedInstanceState) {
-        PermissionUtils.checkPermissionArray(fragment, permissionArray, 0x10);
+        PermissionUtils.checkPermissionArray(fragment, permissionArray, CpConfig.REQUEST_CODE_PER_PHOTO);
         cn.lee.cplibrary.util.takephotos.PhotoUtil.createCameraTempFile(savedInstanceState);
     }
 

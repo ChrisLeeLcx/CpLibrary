@@ -19,6 +19,10 @@ public class CpConfig {
     private String imgCachePath;//項目的图片件缓存目录
     private String logCachePath;//項目的日志文件目录
     private String videoCachePath;//項目的视频缓存目录
+    //所有权限请求码
+    public static final int REQUEST_CODE_PER_PHOTO = 600;//拍照权限请求码
+    public static final int REQUEST_CODE_PER_VIDEO = 601;//视频权限请求码
+    public static final int REQUEST_CODE_PER_LOC = 602;//定位权限请求码
 
     public CpConfig(Context context) {
         this.context = context;

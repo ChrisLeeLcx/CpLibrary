@@ -22,8 +22,6 @@ import java.util.ArrayList;
 
 public class PermissionUtils {
     private static final String TAG = "PermissionUtils";
-    public static final int PERMISSION_REQUEST_CODE = 0x10;
-    public static final int PERMISSION_SETTING_REQ_CODE = 0x1000;
 
     /**
      * 单个权限申请

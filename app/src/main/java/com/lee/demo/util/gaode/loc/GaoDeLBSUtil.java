@@ -25,6 +25,7 @@ import com.lee.demo.base.BaseApplication;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.lee.cplibrary.constant.CpConfig;
 import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.SharedPreferencesUtils;
@@ -43,7 +44,6 @@ import cn.lee.cplibrary.util.timer.TimeUtils;
  */
 
 public class GaoDeLBSUtil {
-    public static final int REQUESTCODE_PERMISSON = 401;
     private static final String SP_NAME_LOC_SERVICE = "sp_name_need_loc_service";
     private static final String KEY_LOC_SERVICE = "key_need_loc_service";
     private long httpTimeOut = 30000;
@@ -232,9 +232,9 @@ public class GaoDeLBSUtil {
             permissionUtil = new PermissionUtil(proxy);
         }
         if (obj instanceof Fragment) {
-            permissionUtil.requestPermissions((Fragment) obj, REQUESTCODE_PERMISSON, getLocationPermissions());
+            permissionUtil.requestPermissions((Fragment) obj, CpConfig.REQUEST_CODE_PER_LOC, getLocationPermissions());
         } else if (obj instanceof Activity) {
-            permissionUtil.requestPermissions((Activity) obj, REQUESTCODE_PERMISSON, getLocationPermissions());
+            permissionUtil.requestPermissions((Activity) obj, CpConfig.REQUEST_CODE_PER_LOC, getLocationPermissions());
         } else {
             throw new IllegalArgumentException("not supported!" + object.getClass().getName() + "is not a activity or fragment");
         }

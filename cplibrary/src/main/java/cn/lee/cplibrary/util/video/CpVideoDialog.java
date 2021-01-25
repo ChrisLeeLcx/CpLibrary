@@ -17,6 +17,8 @@ import java.io.File;
 import java.util.List;
 
 import cn.lee.cplibrary.R;
+import cn.lee.cplibrary.constant.CpConfig;
+import cn.lee.cplibrary.util.LogUtil;
 import cn.lee.cplibrary.util.ObjectUtils;
 import cn.lee.cplibrary.util.ToastUtil;
 import cn.lee.cplibrary.util.dialog.CpComDialog;
@@ -24,7 +26,6 @@ import cn.lee.cplibrary.util.permissionutil.PermissionProxy;
 import cn.lee.cplibrary.util.permissionutil.PermissionUtil;
 import cn.lee.cplibrary.util.system.AppUtils;
 import cn.lee.cplibrary.util.timer.TimeUtils;
-import cn.lee.cplibrary.util.video.videocompressor.VideoController;
 
 /**
  * 获取拍摄短视频或者相册中的视频
@@ -45,7 +46,6 @@ public class CpVideoDialog {
 
     /***********录像权限相关开始***********/
     private static PermissionUtil permissionUtil;
-    public static final int REQUEST_CODE_PER = 500;//权限请求码
     private static final String[] permissionArray = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,//写
             Manifest.permission.READ_EXTERNAL_STORAGE,//读
@@ -143,7 +143,7 @@ public class CpVideoDialog {
                 return false;
             }
         });
-        permissionUtil.requestPermissions(activity, REQUEST_CODE_PER, permissionArray);
+        permissionUtil.requestPermissions(activity, CpConfig.REQUEST_CODE_PER_VIDEO, permissionArray);
     }
 
     /**
@@ -173,7 +173,7 @@ public class CpVideoDialog {
 //            videoFile.delete();
 //        }
 //        videoFile.mkdir();
-        File videoFile = new File(CpVideoUtil.getAlbumStorageDir(), "temp_video" );
+        File videoFile = new File(CpVideoUtil.getAlbumStorageDir(), "temp_video");
         if (!videoFile.exists()) {
             videoFile.mkdir();
         }
@@ -195,11 +195,12 @@ public class CpVideoDialog {
         intent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, sys_max_size_limit);
         activity.startActivityForResult(intent, REQUEST_CODE_FOR_CAMERA);
 
-        intent.putExtra("android.intent.extras.CAMERA_FACING",1);
+        intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
     }
 
     /**
      * 跳转到压缩页面 压缩
+     *
      * @param activity
      * @param inputPath
      */
@@ -211,23 +212,28 @@ public class CpVideoDialog {
 
     /**
      * 跳转到压缩页面 压缩
+     *
      * @param activity
      * @param inputPath
-     * @param quality :值为 VideoController.COMPRESS_QUALITY_HIGH,
-     *                VideoController.COMPRESS_QUALITY_MEDIUM，
-     *                VideoController.COMPRESS_QUALITY_LOW
+     * @param quality   :值为 VideoController.COMPRESS_QUALITY_HIGH,
+     *                  VideoController.COMPRESS_QUALITY_MEDIUM，
+     *                  VideoController.COMPRESS_QUALITY_LOW
      */
-    public void compressVideo(Activity activity, String inputPath,int quality) {
+    public void compressVideo(Activity activity, String inputPath, int quality) {
         if (!ObjectUtils.isEmpty(inputPath)) {
-            VideoCompressActivity.startActivityForResult(activity, REQUEST_CODE_FOR_COMPRESS, inputPath,quality);
+            VideoCompressActivity.startActivityForResult(activity, REQUEST_CODE_FOR_COMPRESS, inputPath, quality);
         }
     }
+
     /**
      * （必须调用本方法）
      * 权限申请结果处理,在Activity或者Fragment的onRequestPermissionsResult方法中的super方法上一行调用
      * eg：
      */
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (permissionUtil == null ||requestCode!=CpConfig.REQUEST_CODE_PER_VIDEO) {
+            return;
+        }
         permissionUtil.onRequestPermissionsResult(activity, requestCode, permissions, grantResults);
     }
 
