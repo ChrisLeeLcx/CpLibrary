@@ -21,6 +21,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.lee.demo.R;
 import com.lee.demo.base.BaseApplication;
+import com.lee.demo.constant.Config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -299,6 +300,9 @@ public class GaoDeLBSUtil {
      */
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         LogUtil.i("", "GaoDeLBSUtil：5、权限申请结果的一些事情");
+        if(permissionUtil==null || requestCode!= CpConfig.REQUEST_CODE_PER_LOC){
+            return;
+        }
         if (isHandleResult) {
             if (object instanceof Fragment) {
                 permissionUtil.onRequestPermissionsResult((Fragment) object, requestCode, permissions, grantResults);
