@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.lee.demo.R;
 import com.lee.demo.base.BaseApplication;
-import com.lee.demo.base.BaseWebViewActivity;
+import com.lee.demo.ui.activity.webview.WebViewDMActivity;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
 import com.lee.demo.util.scanner.OCRDemoActivity;
 
@@ -22,17 +22,16 @@ import com.lee.demo.util.scanner.OCRDemoActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.lee.cplibrary.util.permissionutil.PermissionDemoActivity;
-
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<ActivityBean> totalList = new ArrayList<>();
-    BaseApplication  baseApplication ;
+    BaseApplication baseApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-           baseApplication = (BaseApplication) getApplication();
+        baseApplication = (BaseApplication) getApplication();
         recyclerView = findViewById(R.id.recyclerView);
         initData();
         initRecyclerView();
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     private void initData() {
         totalList.add(new ActivityBean("未知分类", OtherActivity.class));
         totalList.add(new ActivityBean("未知分类1", OtherActivity1.class));
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("网格字母索引（不带悬浮效果）", GridSideBarActivity.class));
         totalList.add(new ActivityBean("各种EditText", EditTextActivity.class));
         totalList.add(new ActivityBean("水波纹效果", ObjectRippleActivity.class));
-        totalList.add(new ActivityBean("网页加载", BaseWebViewActivity.class));
+        totalList.add(new ActivityBean("网页加载", WebViewDMActivity.class));
         totalList.add(new ActivityBean("轮播图和滚轮广告", RollPagerActivity.class));
         totalList.add(new ActivityBean("拖拽排序RecyclerView", DragSortRvActivity.class));
         totalList.add(new ActivityBean("滑动点击删除Rv", SlideMenuActivity.class));
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("各种截图", ShotActivity.class));
         totalList.add(new ActivityBean("短信监听", GetVerCodeActivity.class));
         totalList.add(new ActivityBean("高德定位", GDLocationActivity.class));
-        totalList.add(new ActivityBean("视频拍摄播放功能",  VideoDemoActivity.class));
+        totalList.add(new ActivityBean("视频拍摄播放功能", VideoDemoActivity.class));
         totalList.add(new ActivityBean("识别", OCRDemoActivity.class));
     }
 

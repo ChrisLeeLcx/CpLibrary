@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.lee.demo.R;
 import com.lee.demo.base.BaseActivity;
-import com.lee.demo.base.BaseWebViewActivity;
+import com.lee.demo.ui.activity.webview.BaseWebViewActivity;
 import com.lee.demo.base.SwipeBackActivity;
 import com.lee.demo.util.BitmapUtils;
 

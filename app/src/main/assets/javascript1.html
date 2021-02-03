@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<h1 style="text-align:center;">我是HTML页面</h1>
+<script>
+    function callJS(x) {
+        alert("Android调用了JS的callJS方法，接收到安卓传入数据："+x);
+        return "我是js的callJs方法返回值";
+    }
+    function callAndroid1(){
+       // 由于对象映射，所以调用test对象等于调用Android映射的对象
+          test.hello("js调用了android中的hello方法");
+    }
+    function callAndroid2(){
+        /*约定的url协议为：js://webview?arg1=111&arg2=222*/
+            document.location = "js://webview?arg1=111&arg2=222";
+    }
+    function callAndroid3(){
+        // 调用prompt（）
+        var result=prompt("js://demo?arg1=111&arg2=222");
+        alert("demo " + result);
+    }
+
+      function callAndroidCamera(){
+       // 由于对象映射，所以调用test对象等于调用Android映射的对象
+          test.hello("js调用了android中的hello方法");
+    }
+</script>
+<button type="button" id="button1" onclick="callAndroid1()">js调用Android函数:方式1</button>
+<br><br><button type="button" id="button2" onclick="callAndroid2()">js调用Android函数:方式2</button>
+<br><br><button type="button" id="button3" onclick="callAndroid3()">js调用Android函数:方式3</button>
+<br><br><button type="button" id="button4" onclick="callAndroid4()">js调用Android相机</button>
+</body>
+</html>

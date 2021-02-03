@@ -42,6 +42,7 @@ dependencies {
     compile "com.android.support:design:27.1.1"
     implementation 'com.nineoldandroids:library:2.4.0'//基本动画库
 //    compile 'cn.carbswang.android:NumberPickerView:1.1.0'//选择器
+    //视频压缩库
     compile files('libs/aspectjrt-1.7.3.jar')
     implementation files('libs/isoparser-1.0.6.jar')
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片测试</title>
+    <link rel="stylesheet" href="./upload_photo_files/salvation_style.css">
+    <script src="./upload_photo_files/jquery-1.9.1.min.js"></script>
+    <script src="./upload_photo_files/jweixin-1.0.0.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <div class="upload_pic" id="upload_pic">
+        <!--添加图片按钮-->
+        <div class="add_pic pic_model" style="height: 400px;">
+            <div class="add_pic_div">
+                <!--type="file"：选择文件，accept标注接受的是图片或视频，有capture在手机端调用相机，无则是选取文件 -->
+<!--                <input type="file" accept="image/*" capture="camera"><br><br>-->
+<!--                <input type="file" accept="image/*" capture /><br><br>-->
+<!--                <input type="file" accept="video/*" capture="camera" /><br><br>-->
+<!--                <input type="file">-->
+                    <input type="file" accept="image/*" capture="camera"><br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var picWidth = ($(window).width() - 82) * 0.33
+    /*添加照片*/
+    $('.add_pic_div input').change(function(){
+        var file = this.files[0]; //选择上传的文件
+        var r = new FileReader();
+        r.readAsDataURL(file); //Base64
+        $(r).load(function(){
+
+            var addImg = '<div class="pic_model"><img style="height: '+picWidth+'px" src="'+ this.result +'" alt="" /><span class="delete"></span></div>'
+            $('.upload_pic').append(addImg);
+
+            console.log($('.pic_model').length)
+
+        });
+    });
+</script>
+</body>
+</html>
