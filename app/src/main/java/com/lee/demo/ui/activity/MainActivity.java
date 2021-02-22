@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("高德定位", GDLocationActivity.class));
         totalList.add(new ActivityBean("视频拍摄播放功能", VideoDemoActivity.class));
         totalList.add(new ActivityBean("识别", OCRDemoActivity.class));
+
     }
 
     private void initRecyclerView() {
