@@ -81,24 +81,24 @@
         <activity android:name=".ui.activity.webview.WebViewDMActivity"/>
         <activity android:name=".ui.activity.webview.ByWebViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-<!--        <activity-->
-<!--            android:name=".util.scanner.ScannerActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name=".util.scanner.OCRDemoActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name=".util.scanner.SLicencePlateActivity"-->
-<!--            android:screenOrientation="portrait" />-->
-<!--        <activity-->
-<!--            android:name=".util.scanner.SBankCardActivity"-->
-<!--            android:screenOrientation="landscape" />-->
-<!--        <activity-->
-<!--            android:name=".util.scanner.SDrivingLicenceActivity"-->
-<!--            android:screenOrientation="landscape" />-->
-<!--        <activity-->
-<!--            android:name=".util.scanner.SIDCardActivity"-->
-<!--            android:screenOrientation="landscape" />-->
+        <activity
+            android:name=".util.scanner.ScannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.scanner.OCRDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.scanner.SLicencePlateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.scanner.SBankCardActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".util.scanner.SDrivingLicenceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".util.scanner.SIDCardActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
