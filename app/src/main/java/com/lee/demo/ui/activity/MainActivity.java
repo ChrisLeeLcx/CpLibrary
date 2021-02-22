@@ -16,7 +16,7 @@ import com.lee.demo.R;
 import com.lee.demo.base.BaseApplication;
 import com.lee.demo.ui.activity.webview.WebViewDMActivity;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
-import com.lee.demo.util.scanner.OCRDemoActivity;
+
 
 
 import java.util.ArrayList;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("视频拍摄播放功能", VideoDemoActivity.class));
         totalList.add(new ActivityBean("识别", OCRDemoActivity.class));
 
+//        totalList.add(new ActivityBean("识别", OCRDemoActivity.class));
     }
 
     private void initRecyclerView() {
