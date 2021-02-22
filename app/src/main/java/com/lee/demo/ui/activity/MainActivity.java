@@ -14,7 +14,6 @@ import android.widget.Button;
 
 import com.lee.demo.R;
 import com.lee.demo.base.BaseApplication;
-import com.lee.demo.ui.activity.webview.WebViewDMActivity;
 import com.lee.demo.util.gaode.loc.GaoDeLBSUtil;
 
 
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         totalList.add(new ActivityBean("网格字母索引（不带悬浮效果）", GridSideBarActivity.class));
         totalList.add(new ActivityBean("各种EditText", EditTextActivity.class));
         totalList.add(new ActivityBean("水波纹效果", ObjectRippleActivity.class));
-        totalList.add(new ActivityBean("网页加载", WebViewDMActivity.class));
+//        totalList.add(new ActivityBean("网页加载", WebViewDMActivity.class));
         totalList.add(new ActivityBean("轮播图和滚轮广告", RollPagerActivity.class));
         totalList.add(new ActivityBean("拖拽排序RecyclerView", DragSortRvActivity.class));
         totalList.add(new ActivityBean("滑动点击删除Rv", SlideMenuActivity.class));
